@@ -2,23 +2,36 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <sstream>
 #include <GL/glew.h>
 
-OpenGL::OpenGL(vector2i pos, vector2i size) {
+OpenGL::OpenGL(vector2i position, vector2i size) {
     glewExperimental = true;
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        std::cout << "glewInit failed: " << glewGetErrorString(err) << std::endl;
+    GLenum error = glewInit();
+    if (error != GLEW_OK) {
+        std::cout << "glewInit failed: " << glewGetErrorString(error) << std::endl;
         return;
     }
 
-    glViewport(pos.x, pos.y, size.x, size.y);
+    std::cout << "Vendor graphic card: " << glGetString(GL_VENDOR) << std::endl;
+    std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
+    std::cout << "GL version: " << glGetString(GL_VERSION) << std::endl;
+    std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+
+    // glEnable(GL_DEPTH_TEST);
+    // glDepthFunc(GL_LEQUAL);
+    // glEnable(GL_BLEND);
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // glEnable(GL_SCISSOR_TEST);
+
+    glViewport(position.x, position.y, size.x, size.y);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
 //Creating stuff to draw, not really init
 void OpenGL::init() {
     //xyz rgb
+    //TODO: add uv
     float vertices[] = {
         0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,     // top right
         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,    // bottom right
@@ -53,34 +66,34 @@ void OpenGL::init() {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
+void OpenGL::clear() {
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void OpenGL::draw() {
     glBindVertexArray(vertexArrayObject);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
-void OpenGL::clear() {
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 Shader::Shader() {
-    vertexShader = compile(GL_VERTEX_SHADER, readFile("../shaders/vertex.glsl"));
-    fragmentShader = compile(GL_FRAGMENT_SHADER, readFile("../shaders/fragment.glsl"));
+    vertexShader = compile(GL_VERTEX_SHADER, readFile("../shaders/vertex.glsl").c_str());
+    fragmentShader = compile(GL_FRAGMENT_SHADER, readFile("../shaders/fragment.glsl").c_str());
     createProgram();
 }
 
-const char* Shader::readFile(const std::string& path) {
-    std::string content;
+std::string Shader::readFile(const std::string& path) {
+    std::stringstream result;
     std::ifstream file;
     file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
         file.open(path);
-        content = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+        result << file.rdbuf();
         file.close();
     } catch (std::ifstream::failure e) {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ\n" << path << std::endl;
     }
-    return strcpy(new char[content.length() + 1], content.c_str());
+    return result.str();
 }
 
 unsigned int Shader::compile(unsigned int type, const char *source) {

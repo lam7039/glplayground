@@ -9,9 +9,9 @@ class Window {
     SDL_Window *instance;
     SDL_GLContext context;
 public:
-    vector2i pos, size;
+    vector2i position, size;
     
-    Window(const std::string& title, int width = 800, int height = 500, int x = -1, int y = -1);
+    Window(const std::string& title, vector2i size = vector2i(800, 500), vector2i position = vector2i(-1, -1));
     bool isRunning();
     void swap();
     void close();

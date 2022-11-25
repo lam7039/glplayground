@@ -8,17 +8,17 @@
 class OpenGL {
     unsigned int vertexArrayObject, vertexBufferObject, elementBufferObject;
 public:
-    OpenGL(vector2i pos, vector2i size);
+    OpenGL(vector2i position, vector2i size);
     void init();
-    void draw();
     void clear();
+    void draw();
 };
 
 class Shader {
     unsigned int programId;
     unsigned int vertexShader, fragmentShader;
 
-    const char* readFile(const std::string& path);
+    std::string readFile(const std::string& path);
     unsigned int compile(unsigned int type, const char *source);
     unsigned int createProgram();
 public:

@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv) {
     Window window("Gamedev practice");
-    OpenGL opengl(window.pos, window.size);
+    OpenGL opengl(window.position, window.size);
     Shader shader;
 
     opengl.init();
