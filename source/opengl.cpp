@@ -1,11 +1,10 @@
 #include "opengl.hpp"
 #include <iostream>
 #include <fstream>
-#include <cstring>
 #include <sstream>
 #include <GL/glew.h>
 
-OpenGL::OpenGL(vector2i position, vector2i size) {
+GLContext::GLContext() {
     glewExperimental = true;
     GLenum error = glewInit();
     if (error != GLEW_OK) {
@@ -13,76 +12,34 @@ OpenGL::OpenGL(vector2i position, vector2i size) {
         return;
     }
 
-    std::cout << "Vendor graphic card: " << glGetString(GL_VENDOR) << std::endl;
-    std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
-    std::cout << "GL version: " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << "Vendor graphic card: " << glGetString(GL_VENDOR) << std::endl
+              << "Renderer: " << glGetString(GL_RENDERER) << std::endl
+              << "GL version: " << glGetString(GL_VERSION) << std::endl
+              << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     // glEnable(GL_DEPTH_TEST);
     // glDepthFunc(GL_LEQUAL);
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // glEnable(GL_SCISSOR_TEST);
+}
 
+void GLContext::init(vector2i position, vector2i size, vector3f color) {
     glViewport(position.x, position.y, size.x, size.y);
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glClearColor(color.x, color.y, color.z, 1.0f);
 }
 
-//Creating stuff to draw, not really init
-void OpenGL::init() {
-    //xyz rgb
-    //TODO: add uv
-    float vertices[] = {
-        0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,     // top right
-        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,    // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // bottom left
-        -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f     // top left 
-    };
-
-    unsigned int indices[] = {
-        0, 1, 3,
-        1, 2, 3
-    };
-
-    glGenVertexArrays(1, &vertexArrayObject);
-    glBindVertexArray(vertexArrayObject);
-
-    glGenBuffers(1, &vertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glGenBuffers(1, &elementBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-}
-
-void OpenGL::clear() {
+void GLContext::clear() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void OpenGL::draw() {
-    glBindVertexArray(vertexArrayObject);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
-}
-
-Shader::Shader() {
-    vertexShader = compile(GL_VERTEX_SHADER, readFile("../shaders/vertex.glsl").c_str());
-    fragmentShader = compile(GL_FRAGMENT_SHADER, readFile("../shaders/fragment.glsl").c_str());
+Shader::Shader(const std::string &vertexSource, const std::string &fragmentSource) {
+    vertexShader = compile(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
+    fragmentShader = compile(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
     createProgram();
 }
 
-std::string Shader::readFile(const std::string& path) {
+std::string Shader::readFile(const std::string &path) {
     std::stringstream result;
     std::ifstream file;
     file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -137,6 +94,10 @@ void Shader::use() {
     glUseProgram(programId);
 }
 
+void Shader::setWireframe() {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
 void Shader::setBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(programId, name.c_str()), value);
 }
@@ -147,4 +108,45 @@ void Shader::setInt(const std::string &name, int value) const {
 
 void Shader::setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(programId, name.c_str()), value);
+}
+
+VertexArray::VertexArray() {
+    //xyz rgb
+    //TODO: add uv
+    float vertices[] = {
+        0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,     // top right
+        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,    // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // bottom left
+        -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f     // top left 
+    };
+
+    unsigned int indices[] = {
+        0, 1, 3,
+        1, 2, 3
+    };
+
+    glGenVertexArrays(1, &vertexArrayObject);
+    glBindVertexArray(vertexArrayObject);
+
+    glGenBuffers(1, &vertexBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glGenBuffers(1, &elementBufferObject);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void VertexArray::draw() {
+    glBindVertexArray(vertexArrayObject);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }

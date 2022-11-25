@@ -3,11 +3,12 @@
 
 int main(int argc, char **argv) {
     Window window("Gamedev practice");
-    OpenGL opengl(window.position, window.size);
+    GLContext context;
     Shader shader;
+    VertexArray vertices;
 
-    opengl.init();
-
+    context.init(window.position, window.size);
+    shader.setWireframe();
     while (window.isRunning()) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
@@ -17,9 +18,9 @@ int main(int argc, char **argv) {
             }
         }
         
-        opengl.clear();
+        context.clear();
         shader.use();
-        opengl.draw();
+        vertices.draw();
         window.swap();
     }
 
