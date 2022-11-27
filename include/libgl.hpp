@@ -38,6 +38,6 @@ public:
 class Texture {
     unsigned int id;
 public:
-    Texture(vector2i size, const void *pixels, unsigned int bytesPerPixel);
+    Texture(vector2i size, const void *pixels, bool hasAlpha);
     void bind();
 };

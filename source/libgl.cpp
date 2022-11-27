@@ -18,8 +18,8 @@ void LibGL::init(vector2i position, vector2i size, vector3f color) {
 
     // glEnable(GL_DEPTH_TEST);
     // glDepthFunc(GL_LEQUAL);
-    // glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // glEnable(GL_SCISSOR_TEST);
 
     glViewport(position.x, position.y, size.x, size.y);
@@ -150,20 +150,21 @@ void Object::draw() {
     glBindVertexArray(0);
 }
 
-Texture::Texture(vector2i size, const void *pixels, unsigned int bytesPerPixel) {
+Texture::Texture(vector2i size, const void *pixels, bool hasAlpha) {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
 
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    // float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+    // glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    int mode = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+    int mode = hasAlpha ? GL_RGBA : GL_RGB;
+    std::cout << "Has alpha: " << hasAlpha << std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, mode, size.x, size.y, 0, mode, GL_UNSIGNED_BYTE, pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
 }

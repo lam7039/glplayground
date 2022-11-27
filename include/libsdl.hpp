@@ -16,7 +16,7 @@ struct Window {
 struct Surface {
     SDL_Surface *surfaceSDL;
     vector2i size;
-    unsigned int bytesPerPixel;
+    bool hasAlpha;
     void *pixels;
 };
 

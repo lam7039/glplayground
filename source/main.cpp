@@ -12,12 +12,12 @@ int main(int argc, char **argv) {
     Shader shader;
     Object object;
 
-    Surface *surface = sdl.loadSurface("../assets/image.jpg");
-    Texture texture(surface->size, surface->pixels, surface->bytesPerPixel);
+    Surface *surface = sdl.loadSurface("../assets/mario.png");
+    Texture texture(surface->size, surface->pixels, surface->hasAlpha);
     sdl.freeSurface(surface);
 
     shader.use();
-    shader.setInt("ourTexture", 0);
+    // shader.setInt("ourTexture", 0);
 
     // shader.setWireframe();
     while (window->running) {

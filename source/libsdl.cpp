@@ -53,7 +53,7 @@ Surface *LibSDL::loadSurface(const std::string &path) const {
     if (!surfaceSDL->pixels) {
         std::cout << "Failed to load texture" << std::endl;
     }
-    Surface *surface = new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel, surfaceSDL->pixels };
+    Surface *surface = new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel == 4, surfaceSDL->pixels };
     return surface;
 }
 
