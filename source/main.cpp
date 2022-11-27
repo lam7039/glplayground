@@ -1,5 +1,5 @@
 #include "libsdl.hpp"
-#include "opengl.hpp"
+#include "libgl.hpp"
 
 int main(int argc, char **argv) {
     LibSDL sdl;
