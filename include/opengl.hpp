@@ -4,13 +4,12 @@
 
 #include <string>
 
-#include "vector2.hpp"
-#include "vector3.hpp"
+#include "renderer.hpp"
 
-class GLContext {
+class LibGL : public Renderer {
 public:
-    void init(vector2i position, vector2i size, vector3f color = vector3f(0.2f, 0.2f, 0.2f));
-    void clear();
+    void init(vector2i position, vector2i size, vector3f color = vector3f(0.2f, 0.2f, 0.2f)) override;
+    void clear() override;
 };
 
 class Shader {
@@ -39,6 +38,6 @@ public:
 class Texture {
     unsigned int id;
 public:
-    Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel);
+    Texture(vector2i size, const void *pixels, unsigned int bytesPerPixel);
     void bind();
 };

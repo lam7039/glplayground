@@ -45,17 +45,19 @@ void LibSDL::swapWindow(Window *window) {
 void LibSDL::destroyWindow(Window *window) {
     SDL_GL_DeleteContext(window->context);
     SDL_DestroyWindow(window->instance);
+    delete window;
 }
 
 Surface *LibSDL::loadSurface(const std::string &path) const {
-    SDL_Surface *surface = IMG_Load(path.c_str());
-    if (!surface->pixels) {
+    SDL_Surface *surfaceSDL = IMG_Load(path.c_str());
+    if (!surfaceSDL->pixels) {
         std::cout << "Failed to load texture" << std::endl;
     }
-    Surface *texture = new Surface { surface, surface->w, surface->h, surface->format->BytesPerPixel, surface->pixels };
-    return texture;
+    Surface *surface = new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel, surfaceSDL->pixels };
+    return surface;
 }
 
-void LibSDL::freeSurface(SDL_Surface *surface) {
-    SDL_FreeSurface(surface);
+void LibSDL::freeSurface(Surface *surface) {
+    SDL_FreeSurface(surface->surfaceSDL);
+    delete surface;
 }

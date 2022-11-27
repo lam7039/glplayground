@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 
-void GLContext::init(vector2i position, vector2i size, vector3f color) {
+void LibGL::init(vector2i position, vector2i size, vector3f color) {
     glewExperimental = true;
     if (GLenum error = glewInit(); error != GLEW_OK) {
         std::cout << "glewInit failed: " << glewGetErrorString(error) << std::endl;
@@ -26,7 +26,7 @@ void GLContext::init(vector2i position, vector2i size, vector3f color) {
     glClearColor(color.x, color.y, color.z, 1.0f);
 }
 
-void GLContext::clear() {
+void LibGL::clear() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -150,7 +150,7 @@ void Object::draw() {
     glBindVertexArray(0);
 }
 
-Texture::Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel) {
+Texture::Texture(vector2i size, const void *pixels, unsigned int bytesPerPixel) {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
 
@@ -164,7 +164,7 @@ Texture::Texture(int width, int height, const void *pixels, unsigned int bytesPe
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int mode = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, mode, size.x, size.y, 0, mode, GL_UNSIGNED_BYTE, pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 

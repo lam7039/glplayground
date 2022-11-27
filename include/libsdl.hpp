@@ -14,8 +14,8 @@ struct Window {
 };
 
 struct Surface {
-    SDL_Surface *surface;
-    int width, height;
+    SDL_Surface *surfaceSDL;
+    vector2i size;
     unsigned int bytesPerPixel;
     void *pixels;
 };
@@ -31,5 +31,5 @@ public:
     void destroyWindow(Window *window);
 
     Surface *loadSurface(const std::string &path) const;
-    void freeSurface(SDL_Surface *surface);
+    void freeSurface(Surface *surface);
 };

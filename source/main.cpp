@@ -3,18 +3,18 @@
 
 int main(int argc, char **argv) {
     LibSDL sdl;
-    GLContext context;
+    Renderer *renderer = new LibGL;
 
     sdl.init();
     Window *window = sdl.createWindow("Gamedev practice");
-    context.init(window->position, window->size);
+    renderer->init(window->position, window->size);
 
     Shader shader;
     Object object;
 
     Surface *surface = sdl.loadSurface("../assets/image.jpg");
-    Texture texture(surface->width, surface->height, surface->pixels, surface->bytesPerPixel);
-    sdl.freeSurface(surface->surface);
+    Texture texture(surface->size, surface->pixels, surface->bytesPerPixel);
+    sdl.freeSurface(surface);
 
     shader.use();
     shader.setInt("ourTexture", 0);
@@ -29,9 +29,8 @@ int main(int argc, char **argv) {
             }
         }
         
-        context.clear();
+        renderer->clear();
         shader.use();
-        // shader.setInt("ourTexture", 0);
         texture.bind();
         object.draw();
         sdl.swapWindow(window);
