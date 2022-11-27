@@ -1,6 +1,6 @@
 #include "libsdl.hpp"
 #include "opengl.hpp"
-#include <iostream>
+
 int main(int argc, char **argv) {
     LibSDL sdl;
     GLContext context;
@@ -12,23 +12,32 @@ int main(int argc, char **argv) {
     Shader shader;
     Object object;
 
-    shader.setWireframe();
+    Surface *surface = sdl.loadSurface("../assets/image.jpg");
+    Texture texture(surface->width, surface->height, surface->pixels, surface->bytesPerPixel);
+    sdl.freeSurface(surface->surface);
+
+    shader.use();
+    shader.setInt("ourTexture", 0);
+
+    // shader.setWireframe();
     while (window->running) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
-                sdl.closeWindow(window);
+                window->running = false;
                 break;
             }
         }
         
         context.clear();
         shader.use();
+        // shader.setInt("ourTexture", 0);
+        texture.bind();
         object.draw();
         sdl.swapWindow(window);
     }
 
-    sdl.deleteWindow(window);
+    sdl.destroyWindow(window);
     sdl.quit();
     return 0;
 }

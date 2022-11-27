@@ -13,6 +13,13 @@ struct Window {
     SDL_GLContext context;
 };
 
+struct Surface {
+    SDL_Surface *surface;
+    int width, height;
+    unsigned int bytesPerPixel;
+    void *pixels;
+};
+
 class LibSDL {
     
 public:
@@ -21,9 +28,8 @@ public:
 
     Window *createWindow(const std::string &title, vector2i size = vector2i(800, 500), vector2i position = vector2i(-1, -1));
     void swapWindow(Window *window);
-    void closeWindow(Window *window);
-    void deleteWindow(Window *window);
+    void destroyWindow(Window *window);
 
-    SDL_Surface *loadSurface(const std::string &path) const;
+    Surface *loadSurface(const std::string &path) const;
     void freeSurface(SDL_Surface *surface);
 };

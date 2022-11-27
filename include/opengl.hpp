@@ -36,8 +36,9 @@ public:
     void draw();
 };
 
-// class Texture {
-//     unsigned int id;
-// public:
-//     Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel);
-// };
+class Texture {
+    unsigned int id;
+public:
+    Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel);
+    void bind();
+};

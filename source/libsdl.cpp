@@ -27,7 +27,9 @@ void LibSDL::quit() {
 
 Window *LibSDL::createWindow(const std::string &title, vector2i size, vector2i position) {
     Window *window = new Window { true, position, size };
-    window->instance = SDL_CreateWindow(title.c_str(), position.x != -1 ? position.x : SDL_WINDOWPOS_CENTERED, position.y != -1 ? position.y : SDL_WINDOWPOS_CENTERED, size.x, size.y, SDL_WINDOW_OPENGL);
+    int x = position.x != -1 ? position.x : SDL_WINDOWPOS_CENTERED;
+    int y = position.y != -1 ? position.y : SDL_WINDOWPOS_CENTERED;
+    window->instance = SDL_CreateWindow(title.c_str(), x, y, size.x, size.y, SDL_WINDOW_OPENGL);
     if (window->instance == NULL) {
         std::cout << "Window Creation Error: " << SDL_GetError() << std::endl;
         return nullptr;
@@ -40,20 +42,18 @@ void LibSDL::swapWindow(Window *window) {
     SDL_GL_SwapWindow(window->instance);
 }
 
-void LibSDL::closeWindow(Window *window) {
-    std::cout << "exiting..." << std::endl;
-    window->running = false;
-}
-
-void LibSDL::deleteWindow(Window *window) {
+void LibSDL::destroyWindow(Window *window) {
     SDL_GL_DeleteContext(window->context);
     SDL_DestroyWindow(window->instance);
 }
 
-SDL_Surface *LibSDL::loadSurface(const std::string &path) const {
-    SDL_Texture *texture = NULL;
+Surface *LibSDL::loadSurface(const std::string &path) const {
     SDL_Surface *surface = IMG_Load(path.c_str());
-    return surface;
+    if (!surface->pixels) {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    Surface *texture = new Surface { surface, surface->w, surface->h, surface->format->BytesPerPixel, surface->pixels };
+    return texture;
 }
 
 void LibSDL::freeSurface(SDL_Surface *surface) {
