@@ -164,7 +164,6 @@ Texture::Texture(vector2i size, const void *pixels, bool hasAlpha) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int mode = hasAlpha ? GL_RGBA : GL_RGB;
-    std::cout << "Has alpha: " << hasAlpha << std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, mode, size.x, size.y, 0, mode, GL_UNSIGNED_BYTE, pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
 }
