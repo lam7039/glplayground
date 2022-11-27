@@ -1,29 +1,34 @@
-#include "window.hpp"
+#include "libsdl.hpp"
 #include "opengl.hpp"
-
+#include <iostream>
 int main(int argc, char **argv) {
-    Window window("Gamedev practice");
+    LibSDL sdl;
     GLContext context;
-    Shader shader;
-    VertexArray vertices;
 
-    context.init(window.position, window.size);
+    sdl.init();
+    Window *window = sdl.createWindow("Gamedev practice");
+    context.init(window->position, window->size);
+
+    Shader shader;
+    Object object;
+
     shader.setWireframe();
-    while (window.isRunning()) {
+    while (window->running) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
-                window.close();
+                sdl.closeWindow(window);
                 break;
             }
         }
         
         context.clear();
         shader.use();
-        vertices.draw();
-        window.swap();
+        object.draw();
+        sdl.swapWindow(window);
     }
 
-    window.quit();
+    sdl.deleteWindow(window);
+    sdl.quit();
     return 0;
 }

@@ -1,30 +1,27 @@
 #include "opengl.hpp"
+#include <GL/glew.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <GL/glew.h>
 
-GLContext::GLContext() {
+void GLContext::init(vector2i position, vector2i size, vector3f color) {
     glewExperimental = true;
-    GLenum error = glewInit();
-    if (error != GLEW_OK) {
+    if (GLenum error = glewInit(); error != GLEW_OK) {
         std::cout << "glewInit failed: " << glewGetErrorString(error) << std::endl;
         return;
     }
 
-    std::cout << "Vendor graphic card: " << glGetString(GL_VENDOR) << std::endl
-              << "Renderer: " << glGetString(GL_RENDERER) << std::endl
-              << "GL version: " << glGetString(GL_VERSION) << std::endl
-              << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << "Vendor graphic card:  " << glGetString(GL_VENDOR) << std::endl
+              << "Renderer:             " << glGetString(GL_RENDERER) << std::endl
+              << "GL version:           " << glGetString(GL_VERSION) << std::endl
+              << "GLSL version:         " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     // glEnable(GL_DEPTH_TEST);
     // glDepthFunc(GL_LEQUAL);
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // glEnable(GL_SCISSOR_TEST);
-}
 
-void GLContext::init(vector2i position, vector2i size, vector3f color) {
     glViewport(position.x, position.y, size.x, size.y);
     glClearColor(color.x, color.y, color.z, 1.0f);
 }
@@ -110,9 +107,9 @@ void Shader::setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(programId, name.c_str()), value);
 }
 
-VertexArray::VertexArray() {
+Object::Object() {
     //xyz rgb
-    //TODO: add uv
+    //TODO: add st (which is the same as uv with 2D textures)
     float vertices[] = {
         0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,     // top right
         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,    // bottom right
@@ -123,6 +120,13 @@ VertexArray::VertexArray() {
     unsigned int indices[] = {
         0, 1, 3,
         1, 2, 3
+    };
+
+    float texCoords[] = {
+        0.0f, 0.0f,  // lower-left corner  
+        1.0f, 0.0f,  // lower-right corner
+        0.0f, 1.0f,  // top-left corner
+        1.0f, 1.0f   // top-right corner
     };
 
     glGenVertexArrays(1, &vertexArrayObject);
@@ -145,8 +149,25 @@ VertexArray::VertexArray() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void VertexArray::draw() {
+void Object::draw() {
     glBindVertexArray(vertexArrayObject);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+
+// Texture::Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel) {
+//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
+//     float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+//     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+//     glGenTextures(1, &id);
+//     glBindTexture(GL_TEXTURE_2D, id);
+//     int mode = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+//     glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
+// }

@@ -3,12 +3,12 @@
 #define GLEW_STATIC
 
 #include <string>
+
 #include "vector2.hpp"
 #include "vector3.hpp"
 
 class GLContext {
 public:
-    GLContext();
     void init(vector2i position, vector2i size, vector3f color = vector3f(0.2f, 0.2f, 0.2f));
     void clear();
 };
@@ -29,9 +29,15 @@ public:
     void setFloat(const std::string &name, float value) const;
 };
 
-class VertexArray {
+class Object {
     unsigned int vertexArrayObject, vertexBufferObject, elementBufferObject;
 public:
-    VertexArray();
+    Object();
     void draw();
 };
+
+// class Texture {
+//     unsigned int id;
+// public:
+//     Texture(int width, int height, const void *pixels, unsigned int bytesPerPixel);
+// };
