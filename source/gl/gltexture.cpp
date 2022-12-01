@@ -1,8 +1,11 @@
 #include "gl.hpp"
+#include "draw.hpp"
 
-void TextureGL::init(vector2i size, const void *data, bool hasAlpha) {
-    glGenTextures(1, &id);
-    glBindTexture(GL_TEXTURE_2D, id);
+static GLTexture texture;
+
+void Texture::init(vector2i size, const void *data, bool hasAlpha) {
+    glGenTextures(1, &texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -18,10 +21,10 @@ void TextureGL::init(vector2i size, const void *data, bool hasAlpha) {
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void TextureGL::bind() {
-    glBindTexture(GL_TEXTURE_2D, id);
+void Texture::bind() {
+    glBindTexture(GL_TEXTURE_2D, texture.id);
 }
 
-void TextureGL::free() {
-    glDeleteTextures(1, &id);
+void Texture::free() {
+    glDeleteTextures(1, &texture.id);
 }

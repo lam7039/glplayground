@@ -1,18 +1,21 @@
 #include "libsdl.hpp"
+#include "draw.hpp"
 #include "object.hpp"
-#include "gl.hpp"
 
 int main(int argc, char **argv) {
     LibSDL sdl;
-    ContextGL context;
+    Context context;
 
     sdl.init();
     Window *window = sdl.createWindow("Gamedev practice");
-    context.init(window->position, window->size);
+    context.init(window->position, window->size, sdl.getProc());
 
     Object object;
 
-    Surface *surface = sdl.loadSurface("../assets/mario.png");
+    Surface *surface = sdl.loadSurface("../assets/image.jpg");
+    if (!surface) {
+        return 1;
+    }
     object.init(surface->size, surface->pixels, surface->hasAlpha);
     sdl.freeSurface(surface);
 

@@ -6,6 +6,13 @@ void LibSDL::init() {
         std::cout << "Video Initialization Error: " << SDL_GetError() << std::endl;
         return;
     }
+
+    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+    int status = IMG_Init(flags);
+    if ((status & flags) != flags) {
+        std::cout << "Failed to initialize SDL2_image: " << IMG_GetError() << std::endl;
+        return;
+    }
     
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
@@ -22,6 +29,7 @@ void LibSDL::init() {
 }
 
 void LibSDL::quit() {
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -38,6 +46,10 @@ Window *LibSDL::createWindow(const std::string &title, vector2i size, vector2i p
     return window;
 }
 
+GL_PROC LibSDL::getProc() const {
+    return (GL_PROC)SDL_GL_GetProcAddress;
+}
+
 void LibSDL::swapWindow(Window *window) {
     SDL_GL_SwapWindow(window->instance);
 }
@@ -50,8 +62,9 @@ void LibSDL::destroyWindow(Window *window) {
 
 Surface *LibSDL::loadSurface(const std::string &path) const {
     SDL_Surface *surfaceSDL = IMG_Load(path.c_str());
-    if (!surfaceSDL->pixels) {
-        std::cout << "Failed to load texture" << std::endl;
+    if (!surfaceSDL || !surfaceSDL->pixels) {
+        std::cout << "Failed to load texture: \n" << IMG_GetError() << std::endl;
+        return nullptr;
     }
     Surface *surface = new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel == 4, surfaceSDL->pixels };
     return surface;

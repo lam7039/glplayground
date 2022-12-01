@@ -1,45 +1,27 @@
 #pragma once
 
+// #include <assert.h>
+// assert(glGetError() == GL_NO_ERROR);
+
 #include <string>
 #include <glad/gl.h>
-// #include "thirdparty/include/glad/glad.h"
 
-#include "draw.hpp"
+#include "vector2.hpp"
 #include "vector3.hpp"
 
-class ContextGL {
-public:
-    void init(vector2i position, vector2i size, vector3f color = vector3f(0.2f, 0.2f, 0.2f));
-    void clear();
+struct GLShader {
+    unsigned int programId { 0 };
+    unsigned int vertexShader { 0 };
+    unsigned int fragmentShader { 0 };
 };
 
-class ShaderGL : public Shader {
-    unsigned int programId;
-    unsigned int vertexShader, fragmentShader;
-
-    std::string readFile(const std::string &path);
-    unsigned int compile(unsigned int type, const char *source);
-    unsigned int createProgram();
-public:
-    void init(const std::string &vertexSource = "../shaders/vertex.glsl", const std::string &fragmentSource = "../shaders/fragment.glsl") override;
-    void use() override;
-    void setWireframe() override;
-    void setBool(const std::string &name, bool value) const override;
-    void setInt(const std::string &name, int value) const override;
-    void setFloat(const std::string &name, float value) const override;
+struct GLTexture {
+    unsigned int id { 0 };
+    vector2i size;
 };
 
-class TextureGL : public Texture {
-    unsigned int id;
-public:
-    void init(vector2i size, const void *data, bool hasAlpha) override;
-    void bind() override;
-    void free() override;
-};
-
-class VertexArraysGL : public VertexArrays {
-    unsigned int vertexArrayObject, vertexBufferObject, elementBufferObject;
-public:
-    void init();
-    void draw();
+struct GLVertexArray {
+    unsigned int vertexArrayObject { 0 };
+    unsigned int vertexBufferObject { 0 };
+    unsigned int elementBufferObject { 0 };
 };
