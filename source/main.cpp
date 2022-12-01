@@ -1,25 +1,21 @@
 #include "libsdl.hpp"
-#include "libgl.hpp"
+#include "object.hpp"
+#include "gl.hpp"
 
 int main(int argc, char **argv) {
     LibSDL sdl;
-    Renderer *renderer = new LibGL;
+    ContextGL context;
 
     sdl.init();
     Window *window = sdl.createWindow("Gamedev practice");
-    renderer->init(window->position, window->size);
+    context.init(window->position, window->size);
 
-    Shader shader;
     Object object;
 
     Surface *surface = sdl.loadSurface("../assets/mario.png");
-    Texture texture(surface->size, surface->pixels, surface->hasAlpha);
+    object.init(surface->size, surface->pixels, surface->hasAlpha);
     sdl.freeSurface(surface);
 
-    shader.use();
-    // shader.setInt("ourTexture", 0);
-
-    // shader.setWireframe();
     while (window->running) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
@@ -29,13 +25,12 @@ int main(int argc, char **argv) {
             }
         }
         
-        renderer->clear();
-        shader.use();
-        texture.bind();
+        context.clear();
         object.draw();
         sdl.swapWindow(window);
     }
 
+    object.free();
     sdl.destroyWindow(window);
     sdl.quit();
     return 0;
