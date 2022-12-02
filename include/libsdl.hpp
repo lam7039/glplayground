@@ -36,4 +36,6 @@ public:
 
     Surface *loadSurface(const std::string &path) const;
     void freeSurface(Surface *surface);
+
+    std::string workspace() const;
 };

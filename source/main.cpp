@@ -10,9 +10,9 @@ int main(int argc, char **argv) {
     Window *window = sdl.createWindow("Gamedev practice");
     context.init(window->position, window->size, sdl.getProc());
 
-    Object object;
+    Object object(sdl.workspace());
 
-    Surface *surface = sdl.loadSurface("../assets/image.jpg");
+    Surface *surface = sdl.loadSurface("/assets/image.jpg");
     if (!surface) {
         return 1;
     }

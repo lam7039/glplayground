@@ -61,16 +61,21 @@ void LibSDL::destroyWindow(Window *window) {
 }
 
 Surface *LibSDL::loadSurface(const std::string &path) const {
-    SDL_Surface *surfaceSDL = IMG_Load(path.c_str());
+    const std::string& file = workspace() + path;
+    SDL_Surface *surfaceSDL = IMG_Load(file.c_str());
     if (!surfaceSDL || !surfaceSDL->pixels) {
         std::cout << "Failed to load texture: \n" << IMG_GetError() << std::endl;
         return nullptr;
     }
-    Surface *surface = new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel == 4, surfaceSDL->pixels };
-    return surface;
+    return new Surface { surfaceSDL, vector2i(surfaceSDL->w, surfaceSDL->h), surfaceSDL->format->BytesPerPixel == 4, surfaceSDL->pixels };
 }
 
 void LibSDL::freeSurface(Surface *surface) {
     SDL_FreeSurface(surface->surfaceSDL);
     delete surface;
+}
+
+std::string LibSDL::workspace() const {
+    std::string path = SDL_GetBasePath();
+    return path.substr(0, path.length() - 7);
 }

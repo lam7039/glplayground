@@ -19,7 +19,7 @@ public:
 
 class Shader {
 public:
-    void init(const std::string &vertexSource = "../shaders/vertex.glsl", const std::string &fragmentSource = "../shaders/fragment.glsl");
+    void init(std::string vertexSource = "../shaders/vertex.glsl", std::string fragmentSource = "../shaders/fragment.glsl");
     void use();
     void setWireframe();
     void setBool(const std::string &name, bool value) const;

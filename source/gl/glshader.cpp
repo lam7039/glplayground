@@ -57,7 +57,7 @@ unsigned int createProgram() {
     return 1;
 }
 
-void Shader::init(const std::string &vertexSource, const std::string &fragmentSource) {
+void Shader::init(std::string vertexSource, std::string fragmentSource) {
     glshader.vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
     glshader.fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
     createProgram();

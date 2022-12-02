@@ -6,11 +6,6 @@ void Context::init(vector2i position, vector2i size, GL_PROC proc) {
     this->position = position;
     this->size = size;
 
-    // if (!gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress)) {
-    //     std::cout << "Failed to initialize GLAD" << std::endl;
-    //     return;
-    // }
-
     if (!gladLoadGL((GLADloadfunc)proc)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
