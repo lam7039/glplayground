@@ -10,18 +10,18 @@
 #include "vector3.hpp"
 
 struct GLShader {
-    unsigned int programId { 0 };
-    unsigned int vertexShader { 0 };
-    unsigned int fragmentShader { 0 };
+    unsigned int programId {0};
+    unsigned int vertexShader {0};
+    unsigned int fragmentShader {0};
 };
 
 struct GLTexture {
-    unsigned int id { 0 };
+    unsigned int id {0};
     vector2i size;
 };
 
 struct GLVertexArray {
-    unsigned int vertexArrayObject { 0 };
-    unsigned int vertexBufferObject { 0 };
-    unsigned int elementBufferObject { 0 };
+    unsigned int vertexArrayObject {0};
+    unsigned int vertexBufferObject {0};
+    unsigned int elementBufferObject {0};
 };

@@ -4,15 +4,13 @@
 #include "vector2.hpp"
 #include "vector3.hpp"
 
-typedef void (*GL_PROC)(unsigned int);
-
 class Context {
 public:
     vector2i position;
     vector2i size;
     vector3f color;
 
-    void init(vector2i position, vector2i size, GL_PROC proc);
+    void init(vector2i position, vector2i size, void **proc);
     void clearColor(vector3f color = vector3f(0.2f, 0.2f, 0.2f));
     void clear();
 };

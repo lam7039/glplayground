@@ -2,7 +2,7 @@
 #include "draw.hpp"
 #include <iostream>
 
-void Context::init(vector2i position, vector2i size, GL_PROC proc) {
+void Context::init(vector2i position, vector2i size, void **proc) {
     this->position = position;
     this->size = size;
 
