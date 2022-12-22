@@ -1,16 +1,9 @@
-#include "libsdl.hpp"
+#include "sdl.hpp"
 #include <iostream>
 
 void LibSDL::init() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "Video Initialization Error: " << SDL_GetError() << std::endl;
-        return;
-    }
-
-    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-    int status = IMG_Init(flags);
-    if ((status & flags) != flags) {
-        std::cout << "Failed to initialize SDL2_image: " << IMG_GetError() << std::endl;
         return;
     }
     
@@ -26,13 +19,9 @@ void LibSDL::init() {
     // SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     // SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     // SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 3);
-    
-    std::string path = SDL_GetBasePath();
-    workspace = path.substr(0, path.length() - 7);
 }
 
 void LibSDL::quit() {
-    IMG_Quit();
     SDL_Quit();
 }
 
@@ -49,7 +38,7 @@ Window *LibSDL::createWindow(const std::string &title, vector2i size, vector2i p
     return window;
 }
 
-void **LibSDL::getProc() const {
+void **LibSDL::getOpenGLFuncName() const {
     return (void**)SDL_GL_GetProcAddress;
 }
 
@@ -63,17 +52,11 @@ void LibSDL::destroyWindow(Window *window) {
     delete window;
 }
 
-Surface *LibSDL::loadSurface(const std::string &path) const {
-    const std::string& file = workspace + path;
-    SDL_Surface *surface = IMG_Load(file.c_str());
-    if (!surface || !surface->pixels) {
-        std::cout << "Failed to load texture: \n" << IMG_GetError() << std::endl;
-        return nullptr;
-    }
-    return new Surface {(SDL_Surface*)surface, vector2i(surface->w, surface->h), surface->format->BytesPerPixel == 4, surface->pixels};
-}
-
-void LibSDL::freeSurface(Surface *surface) {
-    SDL_FreeSurface((SDL_Surface*)surface->surface);
-    delete surface;
+void LibSDL::pollEvents() {
+    // SDL_Event event;
+    // while (SDL_PollEvent(&event)) {
+    //     if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
+    //         quit();
+    //     }
+    // }
 }

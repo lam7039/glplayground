@@ -4,13 +4,15 @@
 
 #include "vector2.hpp"
 #include "vector3.hpp"
+#include "object.hpp"
 
 class Renderer {
 
 public:
-    virtual void init(vector2i position, vector2i size, vector3f color = vector3f(0.2f, 0.2f, 0.2f)) = 0;
-    virtual void clear() = 0;
+    void add(Object *object);
+    void draw();
+    void destroy();
 
-// protected:
-//     std::vector<Object> *objects;
+protected:
+    std::vector<Object*> objects;
 };

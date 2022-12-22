@@ -4,13 +4,27 @@
 #include "vector2.hpp"
 #include "vector3.hpp"
 
+struct Window {
+    bool running {false};
+    vector2i position, size;
+    void **window {nullptr};
+    void *context {nullptr};
+};
+
+struct Surface {
+    void *surface;
+    vector2i size;
+    bool hasAlpha;
+    void *pixels;
+};
+
 class Context {
 public:
     vector2i position;
     vector2i size;
     vector3f color;
 
-    void init(vector2i position, vector2i size, void **proc);
+    void init(vector2i position, vector2i size, void **glFuncName);
     void clearColor(vector3f color = vector3f(0.2f, 0.2f, 0.2f));
     void clear();
 };

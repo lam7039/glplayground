@@ -11,5 +11,5 @@ public:
     Object(std::string basePath);
     void init(vector2i size, const void *data, bool hasAlpha);
     void draw();
-    void free();
+    void destroy();
 };

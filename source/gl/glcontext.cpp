@@ -1,12 +1,13 @@
 #include "gl.hpp"
 #include "draw.hpp"
+// #include "game.hpp" or maybe put context class in windows.hpp?
 #include <iostream>
 
-void Context::init(vector2i position, vector2i size, void **proc) {
+void Context::init(vector2i position, vector2i size, void **glFuncName) {
     this->position = position;
     this->size = size;
 
-    if (!gladLoadGL((GLADloadfunc)proc)) {
+    if (!gladLoadGL((GLADloadfunc)glFuncName)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
     }
