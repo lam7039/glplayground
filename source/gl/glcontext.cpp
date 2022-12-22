@@ -3,9 +3,10 @@
 // #include "game.hpp" or maybe put context class in windows.hpp?
 #include <iostream>
 
+static GLContext context;
+
 void Context::init(vector2i position, vector2i size, void **glFuncName) {
-    this->position = position;
-    this->size = size;
+    context = { position, size, { 0.2f, 0.2f, 0.2f } };
 
     if (!gladLoadGL((GLADloadfunc)glFuncName)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -28,7 +29,7 @@ void Context::init(vector2i position, vector2i size, void **glFuncName) {
 }
 
 void Context::clearColor(vector3f color) {
-    this->color = color;
+    vector3f c = color != context.color ? color : context.color;
     glClearColor(color.x, color.y, color.z, 1.0f);
 }
 

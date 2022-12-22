@@ -12,6 +12,13 @@ public:
         this->x = x;
         this->y = y;
     }
+
+    bool operator == (const vector2<T> &a) {
+        return (this->x == a.x && this->y == a.y);
+    }
+    bool operator != (const vector2<T> &a) {
+        return (this->x != a.x || this->y != a.y);
+    }
 };
 
 typedef vector2<float> vector2f;

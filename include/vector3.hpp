@@ -13,6 +13,13 @@ public:
         this->y = y;
         this->z = z;
     }
+
+    bool operator == (const vector3<T> &a) {
+        return (this->x == a.x && this->y == a.y && this->z == a.z);
+    }
+    bool operator != (const vector3<T> &a) {
+        return (this->x != a.x || this->y != a.y || this->z != a.z);
+    }
 };
 
 typedef vector3<float> vector3f;

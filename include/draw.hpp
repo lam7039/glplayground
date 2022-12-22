@@ -20,10 +20,6 @@ struct Surface {
 
 class Context {
 public:
-    vector2i position;
-    vector2i size;
-    vector3f color;
-
     void init(vector2i position, vector2i size, void **glFuncName);
     void clearColor(vector3f color = vector3f(0.2f, 0.2f, 0.2f));
     void clear();

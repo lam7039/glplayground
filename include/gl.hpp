@@ -9,6 +9,12 @@
 #include "vector2.hpp"
 #include "vector3.hpp"
 
+struct GLContext {
+    vector2i position;
+    vector2i size;
+    vector3f color;
+};
+
 struct GLShader {
     unsigned int programId {0};
     unsigned int vertexShader {0};
