@@ -22,8 +22,9 @@ struct GLShader {
 };
 
 struct GLTexture {
-    unsigned int id {0};
     vector2i size;
+    bool alpha;
+    unsigned int id {0};
 };
 
 struct GLVertexArray {

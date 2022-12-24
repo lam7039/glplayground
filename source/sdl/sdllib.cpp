@@ -1,7 +1,8 @@
 #include "sdl.hpp"
+#include <SDL2/SDL.h>
 #include <iostream>
 
-void LibSDL::init() {
+void SDLlib::init() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "Video Initialization Error: " << SDL_GetError() << std::endl;
         return;
@@ -21,11 +22,11 @@ void LibSDL::init() {
     // SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 3);
 }
 
-void LibSDL::quit() {
+void SDLlib::quit() {
     SDL_Quit();
 }
 
-Window *LibSDL::createWindow(const std::string &title, vector2i size, vector2i position) {
+Window *SDLlib::createWindow(const std::string &title, vector2i size, vector2i position) {
     Window *window = new Window {true, position, size};
     int x = position.x != -1 ? position.x : SDL_WINDOWPOS_CENTERED;
     int y = position.y != -1 ? position.y : SDL_WINDOWPOS_CENTERED;
@@ -38,25 +39,25 @@ Window *LibSDL::createWindow(const std::string &title, vector2i size, vector2i p
     return window;
 }
 
-void **LibSDL::getOpenGLFuncName() const {
+void **SDLlib::getOpenGLFuncName() const {
     return (void**)SDL_GL_GetProcAddress;
 }
 
-void LibSDL::swapWindow(Window *window) {
+void SDLlib::swapWindow(Window *window) {
     SDL_GL_SwapWindow((SDL_Window*)window->window);
 }
 
-void LibSDL::destroyWindow(Window *window) {
+void SDLlib::destroyWindow(Window *window) {
     SDL_GL_DeleteContext(window->context);
     SDL_DestroyWindow((SDL_Window*)window->window);
     delete window;
 }
 
-void LibSDL::pollEvents() {
-    // SDL_Event event;
-    // while (SDL_PollEvent(&event)) {
-    //     if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
-    //         quit();
-    //     }
-    // }
+void SDLlib::pollEvents(Window *window) {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
+            window->running = false;
+        }
+    }
 }

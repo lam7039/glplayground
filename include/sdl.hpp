@@ -1,24 +1,23 @@
 #pragma once
 
 #include <string>
-#include <SDL2/SDL.h>
 
 #include "draw.hpp"
 
-class LibSDL {
+class SDLlib {
 public:
     void init();
     void quit();
 
-    Window *createWindow(const std::string &title, vector2i size = vector2i(800, 500), vector2i position = vector2i(-1, -1));
+    Window *createWindow(const std::string &title, vector2i size = {800, 500}, vector2i position = {-1, -1});
     void **getOpenGLFuncName() const;
     void swapWindow(Window *window);
     void destroyWindow(Window *window);
 
-    void pollEvents();
+    void pollEvents(Window *window);
 };
 
-class ImageSDL {
+class SDLimage {
 public:
     static std::string workspace;
 

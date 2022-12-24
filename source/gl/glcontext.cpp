@@ -6,7 +6,7 @@
 static GLContext context;
 
 void Context::init(vector2i position, vector2i size, void **glFuncName) {
-    context = { position, size, { 0.2f, 0.2f, 0.2f } };
+    context = {position, size, {0.2f, 0.2f, 0.2f}};
 
     if (!gladLoadGL((GLADloadfunc)glFuncName)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -29,7 +29,6 @@ void Context::init(vector2i position, vector2i size, void **glFuncName) {
 }
 
 void Context::clearColor(vector3f color) {
-    vector3f c = color != context.color ? color : context.color;
     glClearColor(color.x, color.y, color.z, 1.0f);
 }
 

@@ -11,13 +11,13 @@ class Windows {
     std::string workspace;
     std::vector<Window*> windows;
 public:
-    LibSDL sdllib;
-    ImageSDL sdlimage;
+    SDLlib sdllib;
+    SDLimage sdlimage;
     Context context;
 
     Windows();
 
-    void add(std::string title, vector2i size = vector2i(800, 500), vector2i position = vector2i(-1, -1));
+    void add(std::string title, vector2i size = {800, 500}, vector2i position = {-1, -1});
     void remove();
     void quit();
 

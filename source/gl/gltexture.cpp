@@ -4,6 +4,8 @@
 static GLTexture texture;
 
 void Texture::init(vector2i size, const void *data, bool hasAlpha) {
+    texture = {size, hasAlpha};
+
     glGenTextures(1, &texture.id);
     glBindTexture(GL_TEXTURE_2D, texture.id);
 
