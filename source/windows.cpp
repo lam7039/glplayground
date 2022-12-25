@@ -1,42 +1,59 @@
 #include "windows.hpp"
 
-Windows::Windows() {
+WindowManager::WindowManager() {
     sdllib.init();
-    sdlimage.init();
-    glFuncName = sdllib.getOpenGLFuncName();
-    workspace = sdlimage.workspace;
+    glFunc = sdllib.getOpenGLFunc();
 }
 
-void Windows::add(std::string title, vector2i size, vector2i position) {
+void WindowManager::add(std::string title, vector2i size, vector2i position) {
     Window *window = sdllib.createWindow(title, size, position);
-    context.init(window->position, window->size, glFuncName);
+    context.init(window->position, window->size, glFunc);
     windows.push_back(window);
 }
 
-void Windows::remove() {
+Window *WindowManager::find(unsigned int i) {
+    return windows[i];
+}
+
+void WindowManager::remove() {
     sdllib.destroyWindow(windows.back());
     windows.pop_back();
 }
 
-void Windows::quit() {
+void WindowManager::quit() {
     for (int i = 0; i < windows.size(); i++) {
         remove();
     }
 
-    sdlimage.quit();
     sdllib.quit();
 }
 
-void Windows::update() {
+void WindowManager::pollEvents() {
     for (int i = 0; i < windows.size(); i++) {
-        
+        sdllib.pollEvents(windows[i]);
     }
 }
 
-void Windows::render() {
+void WindowManager::clearContext() {
     context.clear();
-    for (int i = 0; i < windows.size(); i++) {
+}
 
-        sdllib.swapWindow(windows[i]);        
+void WindowManager::swap() {
+    for (int i = 0; i < windows.size(); i++) {
+        sdllib.swapWindow(windows[i]);
     }
 }
+
+// void WindowManager::update() {
+//     for (int i = 0; i < windows.size(); i++) {
+        
+//     }
+// }
+
+// void WindowManager::render() {
+//     context.clear();
+//     for (int i = 0; i < windows.size(); i++) {
+
+//         sdllib.swapWindow(windows[i]);        
+//     }
+// }

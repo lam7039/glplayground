@@ -18,8 +18,8 @@ void SDLimage::quit() {
 }
 
 Surface *SDLimage::loadSurface(const std::string &path) const {
-    const std::string& file = workspace + path;
-    SDL_Surface *surface = IMG_Load(file.c_str());
+    // const std::string& file = workspace + path;
+    SDL_Surface *surface = IMG_Load(path.c_str());
     if (!surface || !surface->pixels) {
         std::cout << "Failed to load texture: \n" << IMG_GetError() << std::endl;
         return nullptr;

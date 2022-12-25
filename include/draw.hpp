@@ -11,18 +11,19 @@ struct Window {
     void *context {nullptr};
 };
 
-struct Surface {
-    void *surface;
-    vector2i size;
-    bool hasAlpha;
-    void *pixels;
-};
-
 class Context {
 public:
     void init(vector2i position, vector2i size, void **glFuncName);
     void clearColor(vector3f color = {0.2f, 0.2f, 0.2f});
     void clear();
+};
+
+//to AssetLoader?
+struct Surface {
+    void *surface;
+    vector2i size;
+    bool hasAlpha;
+    void *pixels;
 };
 
 class Shader {

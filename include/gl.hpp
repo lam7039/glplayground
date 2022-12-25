@@ -23,7 +23,7 @@ struct GLShader {
 
 struct GLTexture {
     vector2i size;
-    bool alpha;
+    bool alpha {false};
     unsigned int id {0};
 };
 

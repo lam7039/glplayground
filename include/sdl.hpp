@@ -10,7 +10,7 @@ public:
     void quit();
 
     Window *createWindow(const std::string &title, vector2i size = {800, 500}, vector2i position = {-1, -1});
-    void **getOpenGLFuncName() const;
+    void **getOpenGLFunc() const;
     void swapWindow(Window *window);
     void destroyWindow(Window *window);
 

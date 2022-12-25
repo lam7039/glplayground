@@ -4,23 +4,25 @@
 #include <string>
 
 #include "sdl.hpp"
-#include "draw.hpp"
 
-class Windows {
-    void **glFuncName;
-    std::string workspace;
-    std::vector<Window*> windows;
-public:
+class WindowManager {
     SDLlib sdllib;
-    SDLimage sdlimage;
     Context context;
 
-    Windows();
+    void **glFunc;
+    std::vector<Window*> windows;
+public:
+    WindowManager();
 
     void add(std::string title, vector2i size = {800, 500}, vector2i position = {-1, -1});
+    Window *find(unsigned int i);
     void remove();
     void quit();
 
-    void update();
-    void render();
+    void pollEvents();
+    void clearContext();
+    void swap();
+
+    // void update();
+    // void render();
 };

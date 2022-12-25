@@ -1,37 +1,30 @@
-#include "sdl.hpp"
-#include "draw.hpp"
+#include "windows.hpp"
+#include "assets.hpp"
 #include "object.hpp"
 
 int main(int argc, char **argv) {
-    SDLlib sdllib;
-    SDLimage sdlimage;
-    Context context;
+    WindowManager windowmanager;
+    windowmanager.add("Gamedev practice");
 
-    sdllib.init();
-    sdlimage.init();
-    
-    Window *window = sdllib.createWindow("Gamedev practice");
-    context.init(window->position, window->size, sdllib.getOpenGLFuncName());
-    Object object(sdlimage.workspace);
+    AssetLoader assetloader;
+    assetloader.load("image", "assets/image.jpg");
 
-    Surface *surface = sdlimage.loadSurface("assets/image.jpg");
-    if (!surface) {
-        return 1;
-    }
-    object.init(surface->size, surface->pixels, surface->hasAlpha);
-    sdlimage.freeSurface(surface);
+    Object object(assetloader.getWorkspace());
+    Asset asset = assetloader.find("image");
+    object.init(asset.surface->size, asset.surface->pixels, asset.surface->hasAlpha);
+    assetloader.free("image");
 
-    while (window->running) {
-        sdllib.pollEvents(window);
+    while (windowmanager.find(0)->running) {
+        windowmanager.pollEvents();
         
-        context.clear();
+        windowmanager.clearContext();
         object.draw();
-        sdllib.swapWindow(window);
+        windowmanager.swap();
     }
 
     object.destroy();
-    sdllib.destroyWindow(window);
-    sdlimage.quit();
-    sdllib.quit();
+
+    assetloader.quit();
+    windowmanager.quit();
     return 0;
 }

@@ -39,7 +39,7 @@ Window *SDLlib::createWindow(const std::string &title, vector2i size, vector2i p
     return window;
 }
 
-void **SDLlib::getOpenGLFuncName() const {
+void **SDLlib::getOpenGLFunc() const {
     return (void**)SDL_GL_GetProcAddress;
 }
 
