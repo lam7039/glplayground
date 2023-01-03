@@ -28,6 +28,15 @@ void WindowManager::quit() {
     sdllib.quit();
 }
 
+// bool WindowManager::running() {
+//     for (int i = 0; i < windows.size(); i++) {
+//         if (!windows[i]->running) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
+
 void WindowManager::pollEvents() {
     for (int i = 0; i < windows.size(); i++) {
         sdllib.pollEvents(windows[i]);

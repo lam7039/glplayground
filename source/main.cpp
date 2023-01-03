@@ -7,11 +7,11 @@ int main(int argc, char **argv) {
     windowmanager.add("Gamedev practice");
 
     AssetLoader assetloader;
-    assetloader.load("image", "assets/image.jpg");
+    assetloader.load({"image", "assets/image.jpg"});
 
     Object object(assetloader.getWorkspace());
-    Asset asset = assetloader.find("image");
-    object.init(asset.surface->size, asset.surface->pixels, asset.surface->hasAlpha);
+    Asset *asset = assetloader.find("image");
+    object.init(asset->surface->size, asset->surface->pixels, asset->surface->hasAlpha);
     assetloader.free("image");
 
     while (windowmanager.find(0)->running) {

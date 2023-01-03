@@ -7,24 +7,27 @@ AssetLoader::AssetLoader() {
     sdlimage.init();
 }
 
-void AssetLoader::load(std::string name, std::string path, AssetType type) {
-    assets[name] = {type, name, path, sdlimage.loadSurface(sdlimage.workspace + path)};
+void AssetLoader::load(Asset asset) {
+    asset.surface = sdlimage.loadSurface(sdlimage.workspace + asset.path);
+    assets[asset.name] = &asset;
 }
 
 void AssetLoader::loadAll() {
     std::string path = sdlimage.workspace + "assets";
-    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+    for (const auto &entry : std::filesystem::directory_iterator(path)) {
         std::string filename = std::filesystem::path(entry.path()).stem();
         std::cout << entry.path() << std::endl << filename << std::endl;
-        assets[filename] = {AssetType::IMAGE, filename, entry.path(), sdlimage.loadSurface(entry.path())};
+        Asset asset = {filename, entry.path()};
+        asset.surface = sdlimage.loadSurface(entry.path());
+        assets[filename] = &asset;
     }
 }
 
 void AssetLoader::free(std::string name) {
-    sdlimage.freeSurface(assets[name].surface);
+    sdlimage.freeSurface(assets[name]->surface);
 }
 
-Asset AssetLoader::find(std::string name) {
+Asset *AssetLoader::find(std::string name) {
     return assets[name];
 }
 

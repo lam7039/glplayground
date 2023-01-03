@@ -60,4 +60,11 @@ void SDLlib::pollEvents(Window *window) {
             window->running = false;
         }
     }
+    // while (SDL_PollEvent(&event)) {
+    //     if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE) {
+    //         if (SDL_GetWindowID((SDL_Window*)window->window) == event.window.windowID) {
+    //             window->running = false;
+    //         }
+    //     }
+    // }
 }

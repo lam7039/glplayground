@@ -19,6 +19,7 @@ public:
     void remove();
     void quit();
 
+    // bool running();
     void pollEvents();
     void clearContext();
     void swap();
