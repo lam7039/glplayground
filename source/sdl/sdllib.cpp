@@ -39,6 +39,10 @@ Window *SDLlib::createWindow(const std::string &title, vector2i size, vector2i p
     return window;
 }
 
+void SDLlib::setCurrent(Window *window) {
+    SDL_GL_MakeCurrent((SDL_Window*)window->window, window->context);
+}
+
 void **SDLlib::getOpenGLFunc() const {
     return (void**)SDL_GL_GetProcAddress;
 }

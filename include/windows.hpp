@@ -15,14 +15,16 @@ public:
     WindowManager();
 
     void add(std::string title, vector2i size = {800, 500}, vector2i position = {-1, -1});
+    int windowCount();
     Window *find(unsigned int i);
     void remove();
     void quit();
 
     // bool running();
-    void pollEvents();
+    void setCurrent(int windowId);
+    void pollEvents(int windowId);
     void clearContext();
-    void swap();
+    void swap(int windowId);
 
     // void update();
     // void render();

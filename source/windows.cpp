@@ -11,6 +11,10 @@ void WindowManager::add(std::string title, vector2i size, vector2i position) {
     windows.push_back(window);
 }
 
+int WindowManager::windowCount() {
+    return windows.size();
+}
+
 Window *WindowManager::find(unsigned int i) {
     return windows[i];
 }
@@ -37,20 +41,20 @@ void WindowManager::quit() {
 //     return true;
 // }
 
-void WindowManager::pollEvents() {
-    for (int i = 0; i < windows.size(); i++) {
-        sdllib.pollEvents(windows[i]);
-    }
+void WindowManager::setCurrent(int windowId) {
+    sdllib.setCurrent(windows[windowId]);
+}
+
+void WindowManager::pollEvents(int windowId) {
+    sdllib.pollEvents(windows[windowId]);
 }
 
 void WindowManager::clearContext() {
     context.clear();
 }
 
-void WindowManager::swap() {
-    for (int i = 0; i < windows.size(); i++) {
-        sdllib.swapWindow(windows[i]);
-    }
+void WindowManager::swap(int windowId) {
+    sdllib.swapWindow(windows[windowId]);
 }
 
 // void WindowManager::update() {
