@@ -10,32 +10,32 @@ static std::array<Vertex, 4> createQuad(float x, float y, float textureId) {
     float size = 1.0f;
     
     // top right
-    Vertex v1;
-    v1.position = {x + size, y, 0.0f};
-    v1.color = {1.0f, 0.0f, 0.0f};
-    v1.texCoords = {1.0f, 0.0f};
-    v1.textureId = textureId;
-
-    // bottom right
     Vertex v0;
-    v0.position = {x + size, y + size, 0.0f};
-    v0.color = {0.0f, 1.0f, 0.0f};
+    v0.position = {x + size, y, 0.0f};
+    v0.color = {1.0f, 0.0f, 0.0f};
     v0.texCoords = {1.0f, 1.0f};
     v0.textureId = textureId;
 
-    // bottom left
-    Vertex v3;
-    v3.position = {x, y + size, 0.0f};
-    v3.color = {0.0f, 0.0f, 1.0f};
-    v3.texCoords = {0.0f, 1.0f};
-    v3.textureId = textureId;
+    // bottom right
+    Vertex v1;
+    v1.position = {x + size, y + size, 0.0f};
+    v1.color = {0.0f, 1.0f, 0.0f};
+    v1.texCoords = {1.0f, 0.0f};
+    v1.textureId = textureId;
 
-    // top left 
+    // bottom left
     Vertex v2;
-    v2.position = {x, y, 0.0f};
-    v2.color = {1.0f, 1.0f, 1.0f};
+    v2.position = {x, y + size, 0.0f};
+    v2.color = {0.0f, 0.0f, 1.0f};
     v2.texCoords = {0.0f, 0.0f};
     v2.textureId = textureId;
+
+    // top left 
+    Vertex v3;
+    v3.position = {x, y, 0.0f};
+    v3.color = {1.0f, 1.0f, 1.0f};
+    v3.texCoords = {0.0f, 1.0f};
+    v3.textureId = textureId;
 
     return {v0, v1, v2, v3};
 }
@@ -77,26 +77,12 @@ void VertexArray::init() {
 }
 
 void VertexArray::bind() {
-    //xyz rgb st, index
-    // float vertices[] = {
-    //      0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f,   0.0f, // top right
-    //      0.0f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,   0.0f, // bottom right
-    //     -1.0f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f,   0.0f, // bottom left
-    //     -1.0f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   0.0f, // top left 
-        
-    //      1.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f,   1.0f, // top right
-    //      1.0f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,   1.0f, // bottom right
-    //      0.0f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f,   1.0f, // bottom left
-    //      0.0f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   1.0f, // top left 
-    // };
-
     auto q0 = createQuad(-1.0f, -0.5f, 0.0f);
     auto q1 = createQuad( 0.0f, -0.5f, 1.0f);
 
     Vertex vertices[8];
     memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
     memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
-
 
     glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
