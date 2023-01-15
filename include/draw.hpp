@@ -34,17 +34,20 @@ public:
     void setBool(const std::string &name, bool value) const;
     void setInt(const std::string &name, int value) const;
     void setFloat(const std::string &name, float value) const;
+    void setImage(const std::string &name, int *samplers) const;
+    int programId() const;
 };
 
 class Texture {
+    unsigned int textureId;
 public:
-    void init(vector2i size, const void *data, bool hasAlpha);
-    void bind();
-    void free();
+    void load(std::string path);
+    void bind(int index);
+    void destroy();
 };
 
 class VertexArray {
 public:
-    void init();
+    void init(int shaderProgramId);
     void draw();
 };

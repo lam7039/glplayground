@@ -26,9 +26,8 @@ class AssetLoader {
 public:
     AssetLoader();
 
-    void load(Asset asset);
+    Asset *load(Asset asset);
     void loadAll();
-    void free(std::string name);
     Asset *find(std::string name);
     void quit();
 

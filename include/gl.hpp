@@ -21,11 +21,10 @@ struct GLShader {
     unsigned int fragmentShader {0};
 };
 
-struct GLTexture {
-    vector2i size;
-    bool alpha {false};
-    unsigned int id {0};
-};
+// struct GLTexture {
+//     vector2i size;
+//     unsigned int id {0};
+// };
 
 struct GLVertexArray {
     unsigned int vertexArrayObject {0};

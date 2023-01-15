@@ -7,9 +7,10 @@ AssetLoader::AssetLoader() {
     sdlimage.init();
 }
 
-void AssetLoader::load(Asset asset) {
+Asset *AssetLoader::load(Asset asset) {
     asset.surface = sdlimage.loadSurface(sdlimage.workspace + asset.path);
     assets[asset.name] = &asset;
+    return assets[asset.name];
 }
 
 void AssetLoader::loadAll() {
@@ -21,10 +22,6 @@ void AssetLoader::loadAll() {
         asset.surface = sdlimage.loadSurface(entry.path());
         assets[filename] = &asset;
     }
-}
-
-void AssetLoader::free(std::string name) {
-    sdlimage.freeSurface(assets[name]->surface);
 }
 
 Asset *AssetLoader::find(std::string name) {

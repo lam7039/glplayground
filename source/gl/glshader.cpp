@@ -82,3 +82,12 @@ void Shader::setInt(const std::string &name, int value) const {
 void Shader::setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(glshader.programId, name.c_str()), value);
 }
+
+void Shader::setImage(const std::string &name, int *samplers) const {
+    int count = sizeof(samplers) / sizeof(int);
+    glUniform1iv(glGetUniformLocation(glshader.programId, name.c_str()), count, samplers);
+}
+
+int Shader::programId() const {
+    return glshader.programId;
+}

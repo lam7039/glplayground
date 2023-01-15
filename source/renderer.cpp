@@ -6,7 +6,7 @@ void Renderer::add(Object *object) {
 
 void Renderer::draw() {
     for (int i = 0; i < objects.size(); i++) {
-        objects[i]->draw();
+        // objects[i]->draw();
     }
 }
 
