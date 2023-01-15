@@ -4,6 +4,21 @@
 #include "vector2.hpp"
 #include "vector3.hpp"
 
+//to AssetLoader?
+struct Surface {
+    void *surface;
+    vector2i size;
+    bool hasAlpha;
+    void *pixels;
+};
+
+struct Vertex {
+    vector3f position;
+    vector3f color;
+    vector2f texCoords;
+    float textureId;
+};
+
 struct Window {
     bool running {false};
     vector2i position, size;
@@ -18,14 +33,6 @@ public:
     void clear();
 };
 
-//to AssetLoader?
-struct Surface {
-    void *surface;
-    vector2i size;
-    bool hasAlpha;
-    void *pixels;
-};
-
 class Shader {
 public:
     void init(std::string vertexSource = "../shaders/vertex.glsl", std::string fragmentSource = "../shaders/fragment.glsl");
@@ -35,7 +42,6 @@ public:
     void setInt(const std::string &name, int value) const;
     void setFloat(const std::string &name, float value) const;
     void setImage(const std::string &name, int *samplers) const;
-    int programId() const;
 };
 
 class Texture {
@@ -48,6 +54,7 @@ public:
 
 class VertexArray {
 public:
-    void init(int shaderProgramId);
+    void init();
+    void bind();
     void draw();
 };

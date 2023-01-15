@@ -8,7 +8,7 @@ void Object::init(Asset *asset) {
     shader.init(basePath + "shaders/vertex.glsl", basePath + "shaders/fragment.glsl");
     shader.use();
 
-    vertexArrays.init(shader.programId());
+    vertexArrays.init();
     texture.load(asset->path);
 }
 

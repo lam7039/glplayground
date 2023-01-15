@@ -87,7 +87,3 @@ void Shader::setImage(const std::string &name, int *samplers) const {
     int count = sizeof(samplers) / sizeof(int);
     glUniform1iv(glGetUniformLocation(glshader.programId, name.c_str()), count, samplers);
 }
-
-int Shader::programId() const {
-    return glshader.programId;
-}

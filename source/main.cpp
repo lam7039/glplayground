@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     int samplers[2] = { 0, 1 };
     shader.setImage("ourTextures", samplers);
 
-    vertexArrays.init(shader.programId());
+    vertexArrays.init();
     imageTexture.load("assets/image.jpg");
     marioTexture.load("assets/mario.png");
     
@@ -47,6 +47,8 @@ int main(int argc, char **argv) {
         shader.use();
         imageTexture.bind(0);
         marioTexture.bind(1);
+
+        vertexArrays.bind();
         vertexArrays.draw();
 
         windowmanager.swap(0);

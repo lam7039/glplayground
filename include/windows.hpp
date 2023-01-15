@@ -14,7 +14,7 @@ class WindowManager {
 public:
     WindowManager();
 
-    void add(std::string title, vector2i size = {800, 500}, vector2i position = {-1, -1});
+    void add(std::string title, vector2i size = {1920, 1080}, vector2i position = {-1, -1});
     int windowCount();
     Window *find(unsigned int i);
     void remove();
