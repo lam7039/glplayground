@@ -41,17 +41,31 @@ static std::array<Vertex, 4> createQuad(float x, float y, float textureId) {
 }
 
 void VertexArray::init() {
+    const size_t maxQuadCount = 8;
+    const size_t maxVertexCount = maxQuadCount * 4;
+    const size_t maxIndexCount = maxQuadCount * 6;
+
+
     glCreateVertexArrays(1, &glVertexArray.vertexArrayObject);
     glBindVertexArray(glVertexArray.vertexArrayObject);
 
     glCreateBuffers(1, &glVertexArray.vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, 1000 * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, maxQuadCount * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 
-    unsigned int indices[] = {
-        0, 1, 3, 1, 2, 3,
-        4, 5, 7, 5, 6, 7
-    };
+    unsigned int indices[maxIndexCount];
+    unsigned int offset = 0;
+    for (size_t i = 0; i < maxIndexCount; i += 6) {
+        indices [i + 0] = 0 + offset;
+        indices [i + 1] = 1 + offset;
+        indices [i + 2] = 3 + offset;
+
+        indices [i + 3] = 1 + offset;
+        indices [i + 4] = 2 + offset;
+        indices [i + 5] = 3 + offset;
+
+        offset += 4;
+    }
 
     glCreateBuffers(1, &glVertexArray.elementBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVertexArray.elementBufferObject);
