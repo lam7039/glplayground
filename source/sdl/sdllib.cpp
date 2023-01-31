@@ -26,7 +26,7 @@ void SDLlib::quit() {
     SDL_Quit();
 }
 
-Window *SDLlib::createWindow(const std::string &title, vector2i size, vector2i position) {
+Window *SDLlib::createWindow(const std::string &title, glm::vec2 size, glm::vec2 position) {
     Window *window = new Window {true, position, size};
     int x = position.x != -1 ? position.x : SDL_WINDOWPOS_CENTERED;
     int y = position.y != -1 ? position.y : SDL_WINDOWPOS_CENTERED;

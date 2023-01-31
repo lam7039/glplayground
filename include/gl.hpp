@@ -5,14 +5,12 @@
 
 #include <string>
 #include <glad/gl.h>
-
-#include "vector2.hpp"
-#include "vector3.hpp"
+#include <glm/glm.hpp>
 
 struct GLContext {
-    vector2i position;
-    vector2i size;
-    vector3f color;
+    glm::vec2 position;
+    glm::vec2 size;
+    glm::vec4 color;
 };
 
 struct GLShader {
@@ -22,7 +20,7 @@ struct GLShader {
 };
 
 // struct GLTexture {
-//     vector2i size;
+//     glm::vec2 size;
 //     unsigned int id {0};
 // };
 

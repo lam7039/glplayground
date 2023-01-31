@@ -2,8 +2,6 @@
 
 #include <vector>
 
-#include "vector2.hpp"
-#include "vector3.hpp"
 #include "object.hpp"
 
 class Renderer {

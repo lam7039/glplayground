@@ -9,7 +9,7 @@ public:
     void init();
     void quit();
 
-    Window *createWindow(const std::string &title, vector2i size = {800, 500}, vector2i position = {-1, -1});
+    Window *createWindow(const std::string &title, glm::vec2 size = {800, 500}, glm::vec2 position = {-1, -1});
     void setCurrent(Window *window);
     void **getOpenGLFunc() const;
     void swapWindow(Window *window);

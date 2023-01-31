@@ -2,6 +2,8 @@
 #include "assets.hpp"
 // #include "object.hpp"
 
+//TODO: replace SDL with GLFW, OpenAL, stbi image, GLM
+
 int main(int argc, char **argv) {
     WindowManager windowmanager;
     windowmanager.add("Gamedev practice");

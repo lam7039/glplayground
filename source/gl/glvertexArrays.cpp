@@ -12,28 +12,28 @@ static std::array<Vertex, 4> createQuad(float x, float y, float textureId) {
     // top right
     Vertex v0;
     v0.position = {x + size, y, 0.0f};
-    v0.color = {1.0f, 0.0f, 0.0f};
+    v0.color = {1.0f, 0.0f, 0.0f, 1.0f};
     v0.texCoords = {1.0f, 1.0f};
     v0.textureId = textureId;
 
     // bottom right
     Vertex v1;
     v1.position = {x + size, y + size, 0.0f};
-    v1.color = {0.0f, 1.0f, 0.0f};
+    v1.color = {0.0f, 1.0f, 0.0f, 1.0f};
     v1.texCoords = {1.0f, 0.0f};
     v1.textureId = textureId;
 
     // bottom left
     Vertex v2;
     v2.position = {x, y + size, 0.0f};
-    v2.color = {0.0f, 0.0f, 1.0f};
+    v2.color = {0.0f, 0.0f, 1.0f, 1.0f};
     v2.texCoords = {0.0f, 0.0f};
     v2.textureId = textureId;
 
     // top left 
     Vertex v3;
     v3.position = {x, y, 0.0f};
-    v3.color = {1.0f, 1.0f, 1.0f};
+    v3.color = {1.0f, 1.0f, 1.0f, 1.0f};
     v3.texCoords = {0.0f, 1.0f};
     v3.textureId = textureId;
 
@@ -44,7 +44,6 @@ void VertexArray::init() {
     const size_t maxQuadCount = 8;
     const size_t maxVertexCount = maxQuadCount * 4;
     const size_t maxIndexCount = maxQuadCount * 6;
-
 
     glCreateVertexArrays(1, &glVertexArray.vertexArrayObject);
     glBindVertexArray(glVertexArray.vertexArrayObject);

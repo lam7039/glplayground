@@ -5,7 +5,7 @@ WindowManager::WindowManager() {
     glFunc = sdllib.getOpenGLFunc();
 }
 
-void WindowManager::add(std::string title, vector2i size, vector2i position) {
+void WindowManager::add(std::string title, glm::vec2 size, glm::vec2 position) {
     Window *window = sdllib.createWindow(title, size, position);
     context.init(window->position, window->size, glFunc);
     windows.push_back(window);

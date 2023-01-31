@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 
+#include <glm/glm.hpp>
 #include "sdl.hpp"
 
 class WindowManager {
@@ -14,7 +15,7 @@ class WindowManager {
 public:
     WindowManager();
 
-    void add(std::string title, vector2i size = {1920, 1080}, vector2i position = {-1, -1});
+    void add(std::string title, glm::vec2 size = {1920, 1080}, glm::vec2 position = {-1, -1});
     int windowCount();
     Window *find(unsigned int i);
     void remove();

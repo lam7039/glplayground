@@ -1,35 +1,34 @@
 #pragma once
 
 #include <string>
-#include "vector2.hpp"
-#include "vector3.hpp"
+#include <glm/glm.hpp>
 
 //to AssetLoader?
 struct Surface {
     void *surface;
-    vector2i size;
+    glm::vec2 size;
     bool hasAlpha;
     void *pixels;
 };
 
 struct Vertex {
-    vector3f position;
-    vector3f color;
-    vector2f texCoords;
+    glm::vec3 position;
+    glm::vec4 color;
+    glm::vec2 texCoords;
     float textureId;
 };
 
 struct Window {
     bool running {false};
-    vector2i position, size;
+    glm::vec2 position, size;
     void **window {nullptr};
     void *context {nullptr};
 };
 
 class Context {
 public:
-    void init(vector2i position, vector2i size, void **glFuncName);
-    void clearColor(vector3f color = {0.2f, 0.2f, 0.2f});
+    void init(glm::vec2 position, glm::vec2 size, void **glFuncName);
+    void clearColor(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f});
     void clear();
 };
 
