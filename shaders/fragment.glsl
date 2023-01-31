@@ -2,7 +2,7 @@
 out vec4 FragColor;
 // layout (location = 0) out vec4 o_Color;
 
-in vec3 color;
+in vec4 color;
 in vec2 texCoord;
 in float textureId;
 

@@ -2,7 +2,7 @@
 #include "assets.hpp"
 // #include "object.hpp"
 
-//TODO: replace SDL with GLFW, OpenAL, stbi image, GLM
+//TODO: replace SDL with GLFW, OpenAL, stbi image
 
 int main(int argc, char **argv) {
     WindowManager windowmanager;
