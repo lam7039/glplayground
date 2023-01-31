@@ -2,6 +2,9 @@
 #include "assets.hpp"
 // #include "object.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 //TODO: replace SDL with GLFW, OpenAL, stbi image
 
 int main(int argc, char **argv) {
@@ -12,7 +15,11 @@ int main(int argc, char **argv) {
     // Asset *imageAsset = assetloader.load({"image", "assets/image.jpg"});
     // Asset *marioAsset = assetloader.load({"mario", "assets/mario.png"});
 
+    // glm::mat4 projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
     Shader shader;
+
     VertexArray vertexArrays;
     Texture imageTexture;
     Texture marioTexture;
@@ -26,6 +33,7 @@ int main(int argc, char **argv) {
     imageTexture.load("assets/image.jpg");
     marioTexture.load("assets/mario.png");
     
+    shader.setMatrix("mvp_matrix", projection);
 
 
     // Object object(assetloader.getWorkspace());

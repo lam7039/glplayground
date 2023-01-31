@@ -33,14 +33,17 @@ public:
 };
 
 class Shader {
+    int getLocation(const std::string &name) const;
 public:
     void init(std::string vertexSource = "../shaders/vertex.glsl", std::string fragmentSource = "../shaders/fragment.glsl");
     void use();
     void setWireframe();
-    void setBool(const std::string &name, bool value) const;
-    void setInt(const std::string &name, int value) const;
-    void setFloat(const std::string &name, float value) const;
-    void setImage(const std::string &name, int *samplers) const;
+
+    void setBool(const std::string &name, bool value);
+    void setInt(const std::string &name, int value);
+    void setFloat(const std::string &name, float value);
+    void setImage(const std::string &name, int *samplers);
+    void setMatrix(const std::string &name, const glm::mat4 &matrix);
 };
 
 class Texture {

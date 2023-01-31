@@ -71,19 +71,27 @@ void Shader::setWireframe() {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-void Shader::setBool(const std::string &name, bool value) const {
-    glUniform1i(glGetUniformLocation(glshader.programId, name.c_str()), value);
+int Shader::getLocation(const std::string &name) const {
+    return glGetUniformLocation(glshader.programId, name.c_str());
 }
 
-void Shader::setInt(const std::string &name, int value) const {
-    glUniform1i(glGetUniformLocation(glshader.programId, name.c_str()), value);
+void Shader::setBool(const std::string &name, bool value) {
+    glUniform1i(getLocation(name), value);
 }
 
-void Shader::setFloat(const std::string &name, float value) const {
-    glUniform1f(glGetUniformLocation(glshader.programId, name.c_str()), value);
+void Shader::setInt(const std::string &name, int value) {
+    glUniform1i(getLocation(name), value);
 }
 
-void Shader::setImage(const std::string &name, int *samplers) const {
+void Shader::setFloat(const std::string &name, float value) {
+    glUniform1f(getLocation(name), value);
+}
+
+void Shader::setImage(const std::string &name, int *samplers) {
     int count = sizeof(samplers) / sizeof(int);
-    glUniform1iv(glGetUniformLocation(glshader.programId, name.c_str()), count, samplers);
+    glUniform1iv(getLocation(name), count, samplers);
+}
+
+void Shader::setMatrix(const std::string &name, const glm::mat4 &matrix) {
+    glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }

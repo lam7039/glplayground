@@ -8,8 +8,11 @@ out vec4 color;
 out vec2 texCoord;
 out float textureId;
 
+uniform mat4 mvp_matrix;
+
 void main() {
-    gl_Position = vec4(inPosition, 1.0);
+    // gl_Position = vec4(inPosition, 1.0);
+    gl_Position = mvp_matrix * vec4(inPosition, 1.0);
     color = inColor;
     texCoord = inTexCoord;
     textureId = inTextureId;
