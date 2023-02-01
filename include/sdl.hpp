@@ -17,13 +17,3 @@ public:
 
     void pollEvents(Window *window);
 };
-
-class SDLimage {
-public:
-    static std::string workspace;
-
-    void init();
-    void quit();
-    Surface *loadSurface(const std::string &path) const;
-    void freeSurface(Surface *surface);
-};

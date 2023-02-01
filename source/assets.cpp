@@ -1,38 +1,41 @@
 #include "assets.hpp"
-#include "sdl.hpp"
-#include <iostream>
 #include <filesystem>
+#include <iostream>
+
+Asset::Asset(const std::string &name, AssetType type) : name(name), type(type) {}
+
+void Asset::bind() {}
+void Asset::bind(int index) {}
 
 AssetLoader::AssetLoader() {
-    sdlimage.init();
+    workspace = std::string(std::filesystem::current_path()) + "/../";
 }
 
-Asset *AssetLoader::load(Asset asset) {
-    asset.surface = sdlimage.loadSurface(sdlimage.workspace + asset.path);
-    assets[asset.name] = &asset;
-    return assets[asset.name];
+Asset *AssetLoader::loadTexture(const std::string &name, const std::string &path) {
+    assets[name] = new Texture(name, workspace + path);
+    return assets[name];
 }
 
-void AssetLoader::loadAll() {
-    std::string path = sdlimage.workspace + "assets";
-    for (const auto &entry : std::filesystem::directory_iterator(path)) {
-        std::string filename = std::filesystem::path(entry.path()).stem();
-        std::cout << entry.path() << std::endl << filename << std::endl;
-        Asset asset = {filename, entry.path()};
-        asset.surface = sdlimage.loadSurface(entry.path());
-        assets[filename] = &asset;
-    }
+Asset *AssetLoader::loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath) {
+    assets[name] = new Shader(name, workspace + vertexPath, workspace + fragmentPath);
+    return assets[name];
 }
 
 Asset *AssetLoader::find(std::string name) {
     return assets[name];
 }
 
-void AssetLoader::quit() {
-    assets.clear();
-    sdlimage.quit();
+void AssetLoader::bind() {
+    find("main")->bind();
+    find("image")->bind(0);
+    find("mario")->bind(1);
 }
 
-std::string AssetLoader::getWorkspace() const {
-    return sdlimage.workspace;
+void AssetLoader::quit() {
+    for (auto asset : assets) {
+        if (asset.second->type == IMAGE) {
+            static_cast<Texture*>(asset.second)->destroy();
+        }
+    }
+    assets.clear();
 }

@@ -1,5 +1,5 @@
 #include "gl.hpp"
-#include "draw.hpp"
+#include "assets.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -57,13 +57,13 @@ unsigned int createProgram() {
     return 1;
 }
 
-void Shader::init(std::string vertexSource, std::string fragmentSource) {
+Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource) : Asset(name, SHADER) {
     glshader.vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
     glshader.fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
     createProgram();
 }
 
-void Shader::use() {
+void Shader::bind() {
     glUseProgram(glshader.programId);
 }
 

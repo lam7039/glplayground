@@ -6,9 +6,7 @@
 
 static GLVertexArray glVertexArray;
 
-static std::array<Vertex, 4> createQuad(float x, float y, float textureId) {
-    float size = 1.0f;
-    
+static std::array<Vertex, 4> createQuad(float x, float y, float size, float textureId) {
     // top right
     Vertex v0;
     v0.position = {x + size, y, 0.0f};
@@ -90,8 +88,8 @@ void VertexArray::init() {
 }
 
 void VertexArray::bind() {
-    auto q0 = createQuad(-1.0f, -0.5f, 0.0f);
-    auto q1 = createQuad( 0.0f, -0.5f, 1.0f);
+    auto q0 = createQuad(50.0f, 200.0f, 150.0f, 0.0f);
+    auto q1 = createQuad(300.0f, 200.0f, 150.0f, 1.0f);
 
     Vertex vertices[8];
     memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));

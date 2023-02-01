@@ -1,11 +1,12 @@
 #include "gl.hpp"
-#include "sdl.hpp"
+#include "assets.hpp"
+#include <iostream>
 
-static SDLimage sdlimage;
+#include "stb/stb_image.h"
 
-//previous load params: vector2i size, void *data, bool hasAlpha
-void Texture::load(std::string path) {
-    Surface *surface = sdlimage.loadSurface(sdlimage.workspace + path);
+Texture::Texture(const std::string &name, const std::string &path) : Asset(name, IMAGE) {
+    int width, height, nrChannels;
+    unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
     glCreateTextures(GL_TEXTURE_2D, 1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
@@ -18,12 +19,12 @@ void Texture::load(std::string path) {
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int mode = surface->hasAlpha ? GL_RGBA : GL_RGB;
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, surface->size.x, surface->size.y, 0, mode, GL_UNSIGNED_BYTE, surface->pixels);
+    
+    int mode = nrChannels == 4 ? GL_RGBA : GL_RGB;
+    glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    sdlimage.freeSurface(surface);
+    stbi_image_free(pixels);
 }
 
 void Texture::bind(int index) {
