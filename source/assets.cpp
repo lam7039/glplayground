@@ -8,7 +8,9 @@ void Asset::bind() {}
 void Asset::bind(int index) {}
 
 AssetLoader::AssetLoader() {
+    //TODO: current_path annoyingly gets the path from the current active file in the editor for some reason
     workspace = std::string(std::filesystem::current_path()) + "/../";
+    std::cout << "Current workspace: " << workspace << std::endl;
 }
 
 Asset *AssetLoader::loadTexture(const std::string &name, const std::string &path) {

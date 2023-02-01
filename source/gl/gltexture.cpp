@@ -5,6 +5,8 @@
 #include "stb/stb_image.h"
 
 Texture::Texture(const std::string &name, const std::string &path) : Asset(name, IMAGE) {
+    stbi_set_flip_vertically_on_load(1);
+    
     int width, height, nrChannels;
     unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
