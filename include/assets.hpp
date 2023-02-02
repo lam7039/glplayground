@@ -3,8 +3,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "sdl.hpp"
-#include "draw.hpp"
+#include "glm/glm.hpp"
 
 enum AssetType {
     IMAGE,

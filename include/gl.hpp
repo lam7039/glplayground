@@ -4,13 +4,23 @@
 // assert(glGetError() == GL_NO_ERROR);
 
 #include <string>
-#include <glad/gl.h>
-#include <glm/glm.hpp>
+
+// #define GLFW_INCLUDE_NONE
+#include "glad/gl.h"
+#include "glm/glm.hpp"
+#include "glfw/glfw3.h"
 
 struct GLContext {
     glm::vec2 position;
     glm::vec2 size;
     glm::vec4 color;
+};
+
+struct GLWindow {
+    std::string name;
+    glm::vec2 position {-1, -1};
+    glm::vec2 size {800, 500};
+    GLFWwindow *window {nullptr};
 };
 
 struct GLShader {

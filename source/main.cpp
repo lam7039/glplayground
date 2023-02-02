@@ -1,16 +1,17 @@
-#include "windows.hpp"
 #include "assets.hpp"
+#include "window.hpp"
+#include "vertex.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-//TODO: replace SDL with GLFW, OpenAL
+//TODO: OpenAL
 
 int main(int argc, char **argv) {
-    WindowManager windowmanager;
-    windowmanager.add("Gamedev practice");
+    Window window("glplayground");
 
-    glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 500.0f, -1.0f, 1.0f);
+    // glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 500.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
 
     AssetLoader assetloader;
     Shader *shader = static_cast<Shader*>(assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl"));
@@ -26,20 +27,19 @@ int main(int argc, char **argv) {
     VertexArray vertexArrays;
     vertexArrays.init();
 
-    while (windowmanager.find(0)->running) {
-        windowmanager.setCurrent(0);
-        windowmanager.pollEvents(0);
+    while (window.running()) {
+        window.pollEvents();
         
-        windowmanager.clearContext();
+        window.clear();
         assetloader.bind();
 
         vertexArrays.bind();
         vertexArrays.draw();
 
-        windowmanager.swap(0);
+        window.swap();
     }
 
     assetloader.quit();
-    windowmanager.quit();
+    window.quit();
     return 0;
 }

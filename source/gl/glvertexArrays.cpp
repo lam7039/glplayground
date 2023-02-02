@@ -1,5 +1,5 @@
 #include "gl.hpp"
-#include "draw.hpp"
+#include "vertex.hpp"
 #include <iostream>
 #include <array>
 #include <string.h>
