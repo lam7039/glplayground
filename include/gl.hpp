@@ -10,12 +10,6 @@
 #include "glm/glm.hpp"
 #include "glfw/glfw3.h"
 
-struct GLContext {
-    glm::vec2 position;
-    glm::vec2 size;
-    glm::vec4 color;
-};
-
 struct GLWindow {
     std::string name;
     glm::vec2 position {-1, -1};

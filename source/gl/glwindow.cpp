@@ -1,8 +1,7 @@
-#include "gl.hpp"
 #include "window.hpp"
+#include "gl.hpp"
 #include <iostream>
 
-static GLContext context;
 static GLWindow container;
 
 Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
@@ -11,15 +10,13 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     }
 
     container.window = glfwCreateWindow(size.x, size.y, title.c_str(), NULL, NULL);
+
     glfwMakeContextCurrent(container.window);
-    glfwSwapInterval(1);
-
-    context = {position, size, {0.2f, 0.2f, 0.2f, 1.0f}};
-
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
     }
+    glfwSwapInterval(1);
 
     std::cout << "Vendor graphic card:  " << glGetString(GL_VENDOR) << std::endl
               << "Renderer:             " << glGetString(GL_RENDERER) << std::endl
