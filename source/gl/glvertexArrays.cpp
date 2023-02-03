@@ -43,12 +43,12 @@ void VertexArray::init() {
     const size_t maxVertexCount = maxQuadCount * 4;
     const size_t maxIndexCount = maxQuadCount * 6;
 
-    glCreateVertexArrays(1, &glVertexArray.vertexArrayObject);
-    glBindVertexArray(glVertexArray.vertexArrayObject);
+    GLCall(glCreateVertexArrays(1, &glVertexArray.vertexArrayObject));
+    GLCall(glBindVertexArray(glVertexArray.vertexArrayObject));
 
-    glCreateBuffers(1, &glVertexArray.vertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, maxQuadCount * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+    GLCall(glCreateBuffers(1, &glVertexArray.vertexBufferObject));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, maxQuadCount * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW));
 
     unsigned int indices[maxIndexCount];
     unsigned int offset = 0;
@@ -64,27 +64,27 @@ void VertexArray::init() {
         offset += 4;
     }
 
-    glCreateBuffers(1, &glVertexArray.elementBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVertexArray.elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    GLCall(glCreateBuffers(1, &glVertexArray.elementBufferObject));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glVertexArray.elementBufferObject));
+    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW));
 
     //position
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, position));
+    GLCall(glEnableVertexAttribArray(0));
+    GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, position)));
     
     //color
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color));
+    GLCall(glEnableVertexAttribArray(1));
+    GLCall(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color)));
     
     //texcoords
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, texCoords));
+    GLCall(glEnableVertexAttribArray(2));
+    GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, texCoords)));
     
     //texture id
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, textureId));
+    GLCall(glEnableVertexAttribArray(3));
+    GLCall(glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, textureId)));
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
 void VertexArray::bind() {
@@ -95,12 +95,12 @@ void VertexArray::bind() {
     memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
     memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
 
-    glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject));
+    GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices));
 }
 
 void VertexArray::draw() {
-    glBindVertexArray(glVertexArray.vertexArrayObject);
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
+    GLCall(glBindVertexArray(glVertexArray.vertexArrayObject));
+    GLCall(glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr));
+    GLCall(glBindVertexArray(0));
 }

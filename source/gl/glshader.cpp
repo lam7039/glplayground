@@ -22,14 +22,14 @@ std::string readFile(const std::string &path) {
 
 unsigned int compileShader(unsigned int type, const char *source) {
     unsigned int shader = glCreateShader(type);
-    glShaderSource(shader, 1, &source, NULL);
-    glCompileShader(shader);
+    GLCall(glShaderSource(shader, 1, &source, NULL));
+    GLCall(glCompileShader(shader));
 
     int success;
     char infoLog[512];
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
     if (!success) {
-        glGetShaderInfoLog(shader, 512, NULL, infoLog);
+        GLCall(glGetShaderInfoLog(shader, 512, NULL, infoLog));
         std::string errorType = type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
         std::cout << "ERROR::SHADER::" << errorType << "::COMPILATION_FAILED\n" << infoLog << std::endl;
         return 0;
@@ -38,22 +38,22 @@ unsigned int compileShader(unsigned int type, const char *source) {
 }
 
 unsigned int createProgram() {
-    glshader.programId = glCreateProgram();
-    glAttachShader(glshader.programId, glshader.vertexShader);
-    glAttachShader(glshader.programId, glshader.fragmentShader);
-    glLinkProgram(glshader.programId);
+    GLCall(glshader.programId = glCreateProgram());
+    GLCall(glAttachShader(glshader.programId, glshader.vertexShader));
+    GLCall(glAttachShader(glshader.programId, glshader.fragmentShader));
+    GLCall(glLinkProgram(glshader.programId));
 
     int success;
     char infoLog[512];
-    glGetProgramiv(glshader.programId, GL_LINK_STATUS, &success);
+    GLCall(glGetProgramiv(glshader.programId, GL_LINK_STATUS, &success));
     if (!success) {
-        glGetProgramInfoLog(glshader.programId, 512, NULL, infoLog);
+        GLCall(glGetProgramInfoLog(glshader.programId, 512, NULL, infoLog));
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
         return 0;
     }
 
-    glDeleteShader(glshader.fragmentShader);
-    glDeleteShader(glshader.vertexShader);
+    GLCall(glDeleteShader(glshader.fragmentShader));
+    GLCall(glDeleteShader(glshader.vertexShader));
     return 1;
 }
 
@@ -64,34 +64,35 @@ Shader::Shader(const std::string &name, const std::string &vertexSource, const s
 }
 
 void Shader::bind() {
-    glUseProgram(glshader.programId);
+    GLCall(glUseProgram(glshader.programId));
 }
 
 void Shader::setWireframe() {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 }
 
 int Shader::getLocation(const std::string &name) const {
-    return glGetUniformLocation(glshader.programId, name.c_str());
+    GLCall(int location = glGetUniformLocation(glshader.programId, name.c_str()));
+    return location;
 }
 
 void Shader::setBool(const std::string &name, bool value) {
-    glUniform1i(getLocation(name), value);
+    GLCall(glUniform1i(getLocation(name), value));
 }
 
 void Shader::setInt(const std::string &name, int value) {
-    glUniform1i(getLocation(name), value);
+    GLCall(glUniform1i(getLocation(name), value));
 }
 
 void Shader::setFloat(const std::string &name, float value) {
-    glUniform1f(getLocation(name), value);
+    GLCall(glUniform1f(getLocation(name), value));
 }
 
 void Shader::setImage(const std::string &name, int *samplers) {
     int count = sizeof(samplers) / sizeof(int);
-    glUniform1iv(getLocation(name), count, samplers);
+    GLCall(glUniform1iv(getLocation(name), count, samplers));
 }
 
 void Shader::setMatrix(const std::string &name, const glm::mat4 &matrix) {
-    glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]);
+    GLCall(glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }
