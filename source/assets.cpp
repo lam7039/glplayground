@@ -14,7 +14,7 @@ AssetLoader::AssetLoader() {
 }
 
 Asset *AssetLoader::loadTexture(const std::string &name, const std::string &path) {
-    assets[name] = new Texture(name, workspace + path);
+    assets[name] = new Texture(name, workspace + path, true);
     return assets[name];
 }
 
@@ -23,14 +23,15 @@ Asset *AssetLoader::loadShader(const std::string &name, const std::string &verte
     return assets[name];
 }
 
-Asset *AssetLoader::find(std::string name) {
-    return assets[name];
+template <typename T>
+T *AssetLoader::find(const std::string &name) {
+    return static_cast<T*>(assets[name]);
 }
 
 void AssetLoader::bind() {
-    find("main")->bind();
-    find("image")->bind(0);
-    find("mario")->bind(1);
+    find<Shader>("main")->bind();
+    find<Texture>("image")->bind(0);
+    find<Texture>("mario")->bind(1);
 }
 
 void AssetLoader::quit() {

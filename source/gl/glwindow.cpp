@@ -1,8 +1,7 @@
+#define GLFW_INCLUDE_NONE
 #include "window.hpp"
+#include "glfw/glfw3.h"
 #include "gl.hpp"
-#include <iostream>
-
-static GLWindow container;
 
 Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     if (!glfwInit()) {
@@ -10,9 +9,9 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
         return;
     }
 
-    container.window = glfwCreateWindow(size.x, size.y, title.c_str(), NULL, NULL);
+    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
 
-    glfwMakeContextCurrent(container.window);
+    glfwMakeContextCurrent((GLFWwindow*)window);
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
@@ -24,44 +23,46 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
               << "GL version:           " << glGetString(GL_VERSION) << std::endl
               << "GLSL version:         " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
-    // GLCall(glEnable(GL_DEPTH_TEST));
-    // GLCall(glDepthFunc(GL_LEQUAL));
-    GLCall(glEnable(GL_BLEND));
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-    // GLCall(glEnable(GL_SCISSOR_TEST));
+    // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
+    // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));
+    CHECK_GL_ERROR(glEnable(GL_BLEND));
+    CHECK_GL_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    // CHECK_GL_ERROR(glEnable(GL_SCISSOR_TEST));
 
-    GLCall(glViewport(position.x, position.y, size.x, size.y));
+    CHECK_GL_ERROR(glViewport(position.x, position.y, size.x, size.y));
     this->clearColor();
+    this->clear();
+    this->swap();
 }
 
 glm::vec2 Window::size() const {
     int width, height;
-    glfwGetFramebufferSize(container.window, &width, &height);
+    glfwGetFramebufferSize((GLFWwindow*)window, &width, &height);
     return glm::vec2 {width, height};
 }
 
 bool Window::running() {
-    return !glfwWindowShouldClose(container.window);
+    return !glfwWindowShouldClose((GLFWwindow*)window);
 }
 
 void Window::pollEvents() {
     glfwPollEvents();
 }
 
-void Window::clear() {
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
+void Window::clearColor(glm::vec4 color) {
+    CHECK_GL_ERROR(glClearColor(color.x, color.y, color.z, color.a));
 }
 
-void Window::clearColor(glm::vec4 color) {
-    GLCall(glClearColor(color.x, color.y, color.z, color.a));
+void Window::clear() {
+    CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT));
 }
 
 void Window::swap() {
-    glfwSwapBuffers(container.window);
+    glfwSwapBuffers((GLFWwindow*)window);
 }
 
 void Window::destroy() {
-    glfwDestroyWindow(container.window);
+    glfwDestroyWindow((GLFWwindow*)window);
 }
 
 void Window::quit() {

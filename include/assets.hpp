@@ -23,7 +23,6 @@ public:
 };
 
 class Shader : public Asset {
-    int getLocation(const std::string &name) const;
 public:
     Shader(const std::string &name, const std::string &vertexSource = "../shaders/vertex.glsl", const std::string &fragmentSource = "../shaders/fragment.glsl");
     
@@ -35,27 +34,36 @@ public:
     void setFloat(const std::string &name, float value);
     void setImage(const std::string &name, int *samplers);
     void setMatrix(const std::string &name, const glm::mat4 &matrix);
+
+private:
+    unsigned int programId {0};
+    int getLocation(const std::string &name) const;
 };
 
 class Texture : public Asset {
-    unsigned int textureId;
 public:
-    Texture(const std::string &name, const std::string &path);
+    Texture(const std::string &name, const std::string &path, bool mipmap = false);
 
     void bind(int index) override;
     void destroy();
+    
+private:
+    unsigned int textureId {0};
 };
 
 class AssetLoader {
-    std::string workspace;
-    std::unordered_map<std::string, Asset*> assets;
 public:
     AssetLoader();
 
-    Asset *find(std::string name);
+    template <typename T>
+    T *find(const std::string &name);
     Asset *loadTexture(const std::string &name, const std::string &path);
-    Asset *loadShader(const std::string &name, std::string const &vertexPath, const std::string &fragmentPath);
+    Asset *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
     
     void bind();
     void quit();
+    
+private:
+    std::string workspace;
+    std::unordered_map<std::string, Asset*> assets;
 };

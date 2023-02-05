@@ -14,4 +14,5 @@ public:
     void init();
     void bind();
     void draw();
+    void quit();
 };

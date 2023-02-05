@@ -10,26 +10,27 @@
 int main(int argc, char **argv) {
     Window window("glplayground");
 
-    // glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 500.0f, -1.0f, 1.0f);
-    glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
-
     AssetLoader assetloader;
-    Shader *shader = static_cast<Shader*>(assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl"));
-
-    int samplers[2] = { 0, 1 };
-    shader->bind();
-    shader->setImage("ourTextures", samplers);
-    shader->setMatrix("mvp_matrix", projection);
-
+    assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl");
     assetloader.loadTexture("image", "assets/image.jpg");
     assetloader.loadTexture("mario", "assets/mario.png");
+
+    Shader *shader = assetloader.find<Shader>("main");
+    shader->bind();
+
+    int samplers[2]; //should be limit of GL_MAX_TEXTURE_IMAGE_UNITS
+    for (int i = 0; i < 2; i++) {
+        samplers[i] = i;
+    }
+    shader->setImage("ourTextures", samplers);
+
+    glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
+    shader->setMatrix("mvp_matrix", projection);
 
     VertexArray vertexArrays;
     vertexArrays.init();
 
     while (window.running()) {
-        window.pollEvents();
-        
         window.clear();
         assetloader.bind();
 
@@ -37,9 +38,11 @@ int main(int argc, char **argv) {
         vertexArrays.draw();
 
         window.swap();
+        window.pollEvents();
     }
 
     assetloader.quit();
+    vertexArrays.quit();
     window.quit();
     return 0;
 }
