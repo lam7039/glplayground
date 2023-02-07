@@ -1,6 +1,6 @@
 #include "assets.hpp"
 #include "window.hpp"
-#include "vertex.hpp"
+#include "rectangle.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -27,22 +27,24 @@ int main(int argc, char **argv) {
     glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
     shader->setMatrix("mvp_matrix", projection);
 
-    VertexArray vertexArrays;
-    vertexArrays.init();
+    {
+        Rectangle image(50.0f, 250.0f, 200.0f, 150.0f, 0.0f);
+        Rectangle mario(500.0f, 250.0f, 150.0f, 200.0f, 1.0f);
 
-    while (window.running()) {
-        window.clear();
-        assetloader.bind();
+        while (window.running()) {
+            window.clear();
+            assetloader.bind();
 
-        vertexArrays.bind();
-        vertexArrays.draw();
+            image.draw();
+            mario.draw();
 
-        window.swap();
-        window.pollEvents();
+            window.swap();
+            window.pollEvents();
+        }
+
+        assetloader.quit();
     }
-
-    assetloader.quit();
-    vertexArrays.quit();
+    
     window.quit();
     return 0;
 }
