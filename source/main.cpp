@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-//TODO: OpenAL
+//TODO: ImGui, OpenAL
 
 int main(int argc, char **argv) {
     Window window("glplayground");
@@ -45,6 +45,5 @@ int main(int argc, char **argv) {
         assetloader.quit();
     }
     
-    window.quit();
     return 0;
 }

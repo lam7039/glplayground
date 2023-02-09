@@ -10,6 +10,7 @@ public:
 
     void draw();
 private:
+    //TODO: move vertices to VertexArray
     std::vector<Vertex> vertices;
     VertexArray vertexArray;
 

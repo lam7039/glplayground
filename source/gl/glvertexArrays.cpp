@@ -1,6 +1,5 @@
 #include "gl.hpp"
 #include "vertex.hpp"
-#include <array>
 #include <string.h>
 
 // static const unsigned int maxTextures = 32;
@@ -17,8 +16,6 @@
 
 //     std::array<unsigned int, maxTextures> textureSlots;
 //     unsigned int textureSlotIndex {1};
-
-    
 // };
 
 enum DrawMode {
@@ -33,17 +30,17 @@ enum DrawUsage {
 
 static GLVertexArray glVertexArray;
 
-static std::vector<unsigned int> generateIndices(int indexCount) {
+static std::vector<unsigned int> generateRectangleIndices(int indexCount) {
     std::vector<unsigned int> indices(indexCount);
     unsigned int offset = 0;
     for (unsigned int i = 0; i < indexCount; i += 6) {
         indices[i + 0] = 0 + offset;
         indices[i + 1] = 1 + offset;
-        indices[i + 2] = 3 + offset;
+        indices[i + 2] = 2 + offset;
 
-        indices[i + 3] = 1 + offset;
+        indices[i + 3] = 3 + offset;
         indices[i + 4] = 2 + offset;
-        indices[i + 5] = 3 + offset;
+        indices[i + 5] = 0 + offset;
 
         offset += 4;
     }
@@ -62,18 +59,16 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
 }
 
 void VertexArray::init(std::vector<Vertex> &vertices) {
-    const int maxQuadCount = 8;
-    const int maxVertexCount = maxQuadCount * 4;
-    const int maxIndexCount = maxQuadCount * 6;
-
-    int result;
-    CHECK_GL_ERROR(glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &result));
-    std::cout << result << std::endl;
+    indexCount = vertices.size() * 6;
+    std::vector<unsigned int> indices = generateRectangleIndices(indexCount);
+    
+//     int result;
+//     CHECK_GL_ERROR(glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &result));
+//     std::cout << result << std::endl;
 
     CHECK_GL_ERROR(glCreateVertexArrays(1, &glVertexArray.vertexArrayObject));
     CHECK_GL_ERROR(glBindVertexArray(glVertexArray.vertexArrayObject));
 
-    std::vector<unsigned int> indices = generateIndices(maxIndexCount);
     bind_object(DrawMode::ArrayBuffer, &glVertexArray.vertexBufferObject, nullptr, vertices.size() * sizeof(Vertex), DrawUsage::Dynamic);
     bind_object(DrawMode::ElementArrayBuffer, &glVertexArray.elementBufferObject, indices.data(), indices.size() * sizeof(unsigned int), DrawUsage::Static);
 
@@ -92,7 +87,7 @@ void VertexArray::bind(std::vector<Vertex> &vertices) {
 
 void VertexArray::draw() {
     CHECK_GL_ERROR(glBindVertexArray(glVertexArray.vertexArrayObject));
-    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr));
+    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr));
     CHECK_GL_ERROR(glBindVertexArray(0));
 }
 
