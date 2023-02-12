@@ -11,6 +11,7 @@ struct Vertex {
 };
 
 class VertexArray {
+    unsigned int vertexDataSize {0};
     unsigned int indexCount {0};
 public:
     void init(std::vector<Vertex> &vertices);

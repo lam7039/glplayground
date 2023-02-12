@@ -59,6 +59,7 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
 }
 
 void VertexArray::init(std::vector<Vertex> &vertices) {
+    vertexDataSize = vertices.size() * sizeof(Vertex);
     indexCount = vertices.size() * 6;
     std::vector<unsigned int> indices = generateRectangleIndices(indexCount);
     
@@ -69,7 +70,7 @@ void VertexArray::init(std::vector<Vertex> &vertices) {
     CHECK_GL_ERROR(glCreateVertexArrays(1, &glVertexArray.vertexArrayObject));
     CHECK_GL_ERROR(glBindVertexArray(glVertexArray.vertexArrayObject));
 
-    bind_object(DrawMode::ArrayBuffer, &glVertexArray.vertexBufferObject, nullptr, vertices.size() * sizeof(Vertex), DrawUsage::Dynamic);
+    bind_object(DrawMode::ArrayBuffer, &glVertexArray.vertexBufferObject, nullptr, vertexDataSize, DrawUsage::Dynamic);
     bind_object(DrawMode::ElementArrayBuffer, &glVertexArray.elementBufferObject, indices.data(), indices.size() * sizeof(unsigned int), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
@@ -82,7 +83,7 @@ void VertexArray::init(std::vector<Vertex> &vertices) {
 
 void VertexArray::bind(std::vector<Vertex> &vertices) {
     CHECK_GL_ERROR(glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject));
-    CHECK_GL_ERROR(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data()));
+    CHECK_GL_ERROR(glBufferSubData(GL_ARRAY_BUFFER, 0, vertexDataSize, vertices.data()));
 }
 
 void VertexArray::draw() {

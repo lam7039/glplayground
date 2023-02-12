@@ -6,6 +6,7 @@ class Rectangle {
 public:
     Rectangle();
     ~Rectangle();
+    //TODO: don't set textureId in Rectangle
     Rectangle(float x, float y, float width, float height, float textureId = 0);
 
     void draw();

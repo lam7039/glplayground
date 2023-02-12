@@ -6,10 +6,10 @@
 class Window {
 public:
     Window(const std::string &title, glm::vec2 size = {1280, 720}, glm::vec2 position = {-1, -1});
-    ~Window();
     
     glm::vec2 size() const;
     bool running();
+    void *get() const;
     
     void pollEvents();
     void clearColor(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f});
