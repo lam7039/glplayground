@@ -4,7 +4,7 @@
 #include <vector>
 
 struct Vertex {
-    glm::vec3 position;
+    glm::vec3 position {0.0f};
     glm::vec4 color {1.0f};
     glm::vec2 texCoords;
     float textureId {0.0f};

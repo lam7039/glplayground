@@ -39,10 +39,9 @@ int main(int argc, char **argv) {
             window.clear();
             assetloader.bind();
 
-            imgui.render();
-
             image.draw();
             mario.draw();
+            imgui.render();
 
             window.swap();
 

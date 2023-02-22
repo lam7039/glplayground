@@ -8,7 +8,9 @@ void ImGuiWrapper::attach(void *window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.IniFilename = "../debug/imgui.ini";
+    io.LogFilename = "../log/imgui_log.txt";
+    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -34,16 +36,18 @@ void ImGuiWrapper::render() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-    ImGui::Begin("Hello ImGui!");
+    ImGui::Begin("Hel lo ImGui!");
     ImGui::Text("Some useful text");
     ImGui::End();
+
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	// ImGuiIO& io = ImGui::GetIO();
+    ImGui::EndFrame();
+	// ImGuiIO &io = ImGui::GetIO();
     // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     //     GLFWwindow* backup_current_context = glfwGetCurrentContext();
     //     ImGui::UpdatePlatformWindows();
