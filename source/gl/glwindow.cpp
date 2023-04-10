@@ -18,7 +18,6 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     }
     glfwSwapInterval(1);
 
-
     std::cout << "Vendor graphic card:  " << glGetString(GL_VENDOR) << std::endl
               << "Renderer:             " << glGetString(GL_RENDERER) << std::endl
               << "GL version:           " << glGetString(GL_VERSION) << std::endl

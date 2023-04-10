@@ -38,15 +38,15 @@ void ImGuiWrapper::render() {
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-    ImGui::Begin("Hel lo ImGui!");
+    ImGui::Begin("Hello ImGui!");
     ImGui::Text("Some useful text");
     ImGui::End();
+
+    ImGui::EndFrame();
 
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    ImGui::EndFrame();
 	// ImGuiIO &io = ImGui::GetIO();
     // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     //     GLFWwindow* backup_current_context = glfwGetCurrentContext();

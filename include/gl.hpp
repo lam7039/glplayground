@@ -6,12 +6,16 @@
 #include "glad/gl.h"
 
 #if 1
-#define ASSERT(x) if (!(x)) raise(SIGTRAP);
-#define CHECK_GL_ERROR(GL_CALL) GLClearError();\
-    GL_CALL;\
-    ASSERT(GLLogCall(#GL_CALL, __FILE__, __LINE__))
+    #ifdef _WIN32
+        #define ASSERT(x) if (!(x)) __debugbreak();
+    #else
+        #define ASSERT(x) if (!(x)) raise(SIGTRAP);
+    #endif
+    #define CHECK_GL_ERROR(GL_CALL) GLClearError();\
+        GL_CALL;\
+        ASSERT(GLLogCall(#GL_CALL, __FILE__, __LINE__))
 #else
-#define CHECK_GL_ERROR(GL_CALL) GL_CALL;
+    #define CHECK_GL_ERROR(GL_CALL) GL_CALL;
 #endif
 
 static void GLClearError() {

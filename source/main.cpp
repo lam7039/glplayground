@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-//TODO: OpenAL
+//TODO: OpenAL, assimp
 
 int main(int argc, char **argv) {
     Window window("glplayground");
