@@ -11,15 +11,15 @@
 //TODO: OpenAL, assimp
 
 int main(int argc, char **argv) {
-    std::filesystem::path current_path = std::filesystem::current_path();
-
+    std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
+    
     Window window("glplayground");
     ImGuiWrapper imgui;
 
-    AssetLoader assetloader(std::string(current_path) + "/../");
-    Shader *shader = assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl");
-    Texture *imageTexture = assetloader.loadTexture("image", "assets/image.jpg");
-    Texture *marioTexture = assetloader.loadTexture("mario", "assets/mario.png");
+    AssetLoader assetloader(std::filesystem::current_path());
+    Shader *shader = assetloader.loadShader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    Texture *imageTexture = assetloader.loadTexture("image", "/assets/image.jpg");
+    Texture *marioTexture = assetloader.loadTexture("mario", "/assets/mario.png");
     assetloader.bind();
 
     // Shader *shader = assetloader.find<Shader>("main");

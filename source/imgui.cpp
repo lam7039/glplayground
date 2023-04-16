@@ -8,8 +8,8 @@ void ImGuiWrapper::attach(void *window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO(); (void)io;
-    io.IniFilename = "../debug/imgui.ini";
-    io.LogFilename = "../log/imgui_log.txt";
+    io.IniFilename = "debug/imgui.ini";
+    io.LogFilename = "log/imgui_log.txt";
     // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
