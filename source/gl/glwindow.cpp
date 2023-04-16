@@ -45,7 +45,7 @@ bool Window::running() {
     return !glfwWindowShouldClose((GLFWwindow*)window);
 }
 
-void *Window::get() const {
+void *Window::instance() const {
     return window;
 }
 

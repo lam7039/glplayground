@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
         Rectangle image(50.0f, 250.0f, 200.0f, 150.0f, imageTexture->getTextureId());
         Rectangle mario(500.0f, 250.0f, 150.0f, 200.0f, marioTexture->getTextureId());
 
-        imgui.attach(window.get());
+        imgui.attach(window.instance());
 
         while (window.running()) {
             window.clear();
@@ -47,7 +47,6 @@ int main(int argc, char **argv) {
             imgui.render();
 
             window.swap();
-
             window.pollEvents();
         }
 

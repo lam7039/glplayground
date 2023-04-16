@@ -9,7 +9,7 @@ public:
     
     glm::vec2 size() const;
     bool running();
-    void *get() const;
+    void *instance() const;
     
     void pollEvents();
     void clearColor(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f});
