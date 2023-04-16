@@ -24,7 +24,7 @@ public:
 
 class Shader : public Asset {
 public:
-    Shader(const std::string &name, const std::string &vertexSource = "../shaders/vertex.glsl", const std::string &fragmentSource = "../shaders/fragment.glsl");
+    Shader(const std::string &name, const std::string &vertexSource = "/shaders/vertex.glsl", const std::string &fragmentSource = "/shaders/fragment.glsl");
     
     void bind() override;
     void setWireframe();
@@ -46,6 +46,8 @@ public:
 
     void bind(int index) override;
     void destroy();
+
+    unsigned int getTextureId() const;
     
 private:
     unsigned int textureId {0};
@@ -53,12 +55,12 @@ private:
 
 class AssetLoader {
 public:
-    AssetLoader();
+    AssetLoader(const std::string &workspace);
 
     template <typename T>
     T *find(const std::string &name);
-    Asset *loadTexture(const std::string &name, const std::string &path);
-    Asset *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
+    Texture *loadTexture(const std::string &name, const std::string &path);
+    Shader *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
     
     void bind();
     void quit();

@@ -3,23 +3,26 @@
 #include "rectangle.hpp"
 #include "imgui.hpp"
 
+#include <filesystem>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 //TODO: OpenAL, assimp
 
 int main(int argc, char **argv) {
+    std::filesystem::path current_path = std::filesystem::current_path();
+
     Window window("glplayground");
     ImGuiWrapper imgui;
 
-    AssetLoader assetloader;
-    assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl");
-    assetloader.loadTexture("image", "assets/image.jpg");
-    assetloader.loadTexture("mario", "assets/mario.png");
+    AssetLoader assetloader(std::string(current_path) + "/../");
+    Shader *shader = assetloader.loadShader("main", "shaders/vertex.glsl", "shaders/fragment.glsl");
+    Texture *imageTexture = assetloader.loadTexture("image", "assets/image.jpg");
+    Texture *marioTexture = assetloader.loadTexture("mario", "assets/mario.png");
+    assetloader.bind();
 
-    Shader *shader = assetloader.find<Shader>("main");
-    shader->bind();
-
+    // Shader *shader = assetloader.find<Shader>("main");
     int samplers[2]; //should be limit of GL_MAX_TEXTURE_IMAGE_UNITS
     for (int i = 0; i < 2; i++) {
         samplers[i] = i;
@@ -30,8 +33,8 @@ int main(int argc, char **argv) {
     shader->setMatrix("mvp_matrix", projection);
 
     {
-        Rectangle image(50.0f, 250.0f, 200.0f, 150.0f, 0.0f);
-        Rectangle mario(500.0f, 250.0f, 150.0f, 200.0f, 1.0f);
+        Rectangle image(50.0f, 250.0f, 200.0f, 150.0f, imageTexture->getTextureId());
+        Rectangle mario(500.0f, 250.0f, 150.0f, 200.0f, marioTexture->getTextureId());
 
         imgui.attach(window.get());
 

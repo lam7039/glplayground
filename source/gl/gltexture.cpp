@@ -37,3 +37,7 @@ void Texture::bind(int index) {
 void Texture::destroy() {
     CHECK_GL_ERROR(glDeleteTextures(1, &textureId));
 }
+
+unsigned int Texture::getTextureId() const {
+    return textureId;
+}

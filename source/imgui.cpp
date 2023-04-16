@@ -38,12 +38,23 @@ void ImGuiWrapper::render() {
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
+    ImGui::Begin("My First Tool");
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("File")){
+            if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+            if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
+            if (ImGui::MenuItem("Close", "Ctrl+W"))  { /* Do stuff */ }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+    ImGui::End();
+
     ImGui::Begin("Hello ImGui!");
     ImGui::Text("Some useful text");
     ImGui::End();
 
     ImGui::EndFrame();
-
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
