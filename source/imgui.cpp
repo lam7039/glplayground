@@ -31,27 +31,57 @@ void ImGuiWrapper::detach() {
     ImGui::DestroyContext();
 }
 
-void ImGuiWrapper::render() {
+
+void ImGuiWrapper::new_frame() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+}
+
+void ImGuiWrapper::render(glm::vec3 &positionBackgroundTexture, glm::vec3 &positionMarioTexture) {
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-    ImGui::Begin("My First Tool");
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("File")){
-            if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-            if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
-            if (ImGui::MenuItem("Close", "Ctrl+W"))  { /* Do stuff */ }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
-    ImGui::End();
+    // ImGui::Begin("My First Tool");
+    // if (ImGui::BeginMenuBar()) {
+    //     if (ImGui::BeginMenu("File")){
+    //         if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+    //         if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
+    //         if (ImGui::MenuItem("Close", "Ctrl+W"))  { /* Do stuff */ }
+    //         ImGui::EndMenu();
+    //     }
+    //     ImGui::EndMenuBar();
+    // }
+    // ImGui::End();
+
+    // ImGui::Begin("Hello ImGui!");
+    // for (auto& [name, object] : objects) {
+    //     switch (object->type) {
+    //         case AssetType::IMAGE:
+    //             ImGui::Text((name + " Position").c_str());
+    //             ImGui::SliderFloat((name + " X").c_str(), &object->position.x, 0.0f, 1280.0f - 200.0f);
+    //             ImGui::SliderFloat((name + " Y").c_str(), &object->position.y, 0.0f, 720.0f - 150.0f);
+
+    //             ImGui::Text((name + " Size").c_str());
+    //             ImGui::SliderFloat((name + " X").c_str(), &object->size.x, 0.0f, 1280.0f - 200.0f);
+    //             ImGui::SliderFloat((name + " Y").c_str(), &object->size.y, 0.0f, 720.0f - 150.0f);
+    //         break;
+    //     }
+    // }
+    // ImGui::End();
 
     ImGui::Begin("Hello ImGui!");
-    ImGui::Text("Some useful text");
+
+    ImGui::Text("Background Texture Position");
+    ImGui::SliderFloat("BPX", &positionBackgroundTexture.x, 0.0f, 1280.0f - 200.0f);
+    ImGui::SliderFloat("BPY", &positionBackgroundTexture.y, 0.0f, 720.0f - 150.0f);
+
+    ImGui::Separator();
+
+    ImGui::Text("Mario Texture Position");
+    ImGui::SliderFloat("MPX", &positionMarioTexture.x, 0.0f, 1280.0f - 150.0f);
+    ImGui::SliderFloat("MPY", &positionMarioTexture.y, 0.0f, 720.0f - 200.0f);
+    
     ImGui::End();
 
     ImGui::EndFrame();

@@ -20,6 +20,9 @@ public:
     virtual void bind();
     virtual void bind(int index);
     Asset(const std::string &name, AssetType type);
+
+    // virtual void create(const std::string &name, AssetType type);
+    // virtual void destroy();
 };
 
 class Shader : public Asset {
@@ -61,7 +64,9 @@ public:
     T *find(const std::string &name);
     Texture *loadTexture(const std::string &name, const std::string &path);
     Shader *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
-    
+    std::unordered_map<std::string, Asset*> *getAll();
+
+
     void bind();
     void quit();
     

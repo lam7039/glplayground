@@ -28,7 +28,7 @@ enum DrawUsage {
     Static = GL_STATIC_DRAW
 };
 
-static GLVertexArray glVertexArray;
+// static GLVertexArray glVertexArray;
 
 static std::vector<unsigned int> generateRectangleIndices(int indexCount) {
     std::vector<unsigned int> indices(indexCount);
@@ -67,11 +67,11 @@ void VertexArray::init(std::vector<Vertex> &vertices) {
 //     CHECK_GL_ERROR(glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &result));
 //     std::cout << result << std::endl;
 
-    CHECK_GL_ERROR(glCreateVertexArrays(1, &glVertexArray.vertexArrayObject));
-    CHECK_GL_ERROR(glBindVertexArray(glVertexArray.vertexArrayObject));
+    CHECK_GL_ERROR(glCreateVertexArrays(1, &vertexArrayObject));
+    CHECK_GL_ERROR(glBindVertexArray(vertexArrayObject));
 
-    bind_object(DrawMode::ArrayBuffer, &glVertexArray.vertexBufferObject, nullptr, vertexDataSize, DrawUsage::Dynamic);
-    bind_object(DrawMode::ElementArrayBuffer, &glVertexArray.elementBufferObject, indices.data(), indices.size() * sizeof(unsigned int), DrawUsage::Static);
+    bind_object(DrawMode::ArrayBuffer, &vertexBufferObject, nullptr, vertexDataSize, DrawUsage::Dynamic);
+    bind_object(DrawMode::ElementArrayBuffer, &elementBufferObject, indices.data(), indices.size() * sizeof(unsigned int), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
     vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color));
@@ -82,19 +82,19 @@ void VertexArray::init(std::vector<Vertex> &vertices) {
 }
 
 void VertexArray::bind(std::vector<Vertex> &vertices) {
-    CHECK_GL_ERROR(glBindBuffer(GL_ARRAY_BUFFER, glVertexArray.vertexBufferObject));
+    CHECK_GL_ERROR(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject));
     CHECK_GL_ERROR(glBufferSubData(GL_ARRAY_BUFFER, 0, vertexDataSize, vertices.data()));
 }
 
 void VertexArray::draw() {
-    CHECK_GL_ERROR(glBindVertexArray(glVertexArray.vertexArrayObject));
+    CHECK_GL_ERROR(glBindVertexArray(vertexArrayObject));
     CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr));
     CHECK_GL_ERROR(glBindVertexArray(0));
 }
 
 void VertexArray::clear() {
-    CHECK_GL_ERROR(glDeleteVertexArrays(1, &glVertexArray.vertexArrayObject));
-    CHECK_GL_ERROR(glDeleteBuffers(1, &glVertexArray.vertexBufferObject));
-    CHECK_GL_ERROR(glDeleteBuffers(1, &glVertexArray.elementBufferObject));
-    CHECK_GL_ERROR(glDeleteTextures(1, &glVertexArray.elementBufferObject));
+    CHECK_GL_ERROR(glDeleteVertexArrays(1, &vertexArrayObject));
+    CHECK_GL_ERROR(glDeleteBuffers(1, &vertexBufferObject));
+    CHECK_GL_ERROR(glDeleteBuffers(1, &elementBufferObject));
+    CHECK_GL_ERROR(glDeleteTextures(1, &elementBufferObject));
 }

@@ -1,18 +1,23 @@
-#include "rectangle.hpp"
+#include "quad.hpp"
 
-Rectangle::Rectangle() {
+Quad::Quad() {
     setTexCoords(0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
 }
 
-Rectangle::Rectangle(float x, float y, float width, float height, float textureId) {
-    setTexCoords(x, y, width, height, textureId);
+Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
+    setTexCoords(position.x, position.y, size.x, size.y, textureId);
 }
 
-Rectangle::~Rectangle() {
+Quad::~Quad() {
+    destroy();
+}
+
+void Quad::destroy() {
+    vertices.clear();
     vertexArray.clear();
 }
 
-void Rectangle::setTexCoords(float x, float y, float width, float height, float textureId) {
+void Quad::setTexCoords(float x, float y, float width, float height, float textureId) {
     vertices.push_back({
         glm::vec3 {x, y, 0.0f},
         glm::vec4 {1.0f},
@@ -40,7 +45,9 @@ void Rectangle::setTexCoords(float x, float y, float width, float height, float 
     vertexArray.init(vertices);
 }
 
-void Rectangle::draw() {
+void Quad::draw(glm::vec3 &position, glm::vec3 &size, float textureId) {
+    setTexCoords(position.x, position.y, size.x, size.y, textureId);
     vertexArray.bind(vertices);
     vertexArray.draw();
+    vertices.clear();
 }

@@ -2,14 +2,15 @@
 
 #include "vertex.hpp"
 
-class Rectangle {
+class Quad {
 public:
-    Rectangle();
-    ~Rectangle();
-    //TODO: don't set textureId in Rectangle
-    Rectangle(float x, float y, float width, float height, float textureId = 0);
+    Quad();
+    ~Quad();
+    //TODO: don't set textureId in Quad
+    Quad(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
 
-    void draw();
+    void draw(glm::vec3 &position, glm::vec3 &size, float textureId);
+    void destroy();
 private:
     //TODO: move vertices to VertexArray
     std::vector<Vertex> vertices;

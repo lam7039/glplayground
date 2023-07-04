@@ -5,7 +5,9 @@
 
 #include "glad/gl.h"
 
-#if 1
+#if NDEBUG
+    #define CHECK_GL_ERROR(GL_CALL) GL_CALL;
+#else
     #ifdef _WIN32
         #define ASSERT(x) if (!(x)) __debugbreak();
     #else
@@ -14,8 +16,6 @@
     #define CHECK_GL_ERROR(GL_CALL) GLClearError();\
         GL_CALL;\
         ASSERT(GLLogCall(#GL_CALL, __FILE__, __LINE__))
-#else
-    #define CHECK_GL_ERROR(GL_CALL) GL_CALL;
 #endif
 
 static void GLClearError() {
@@ -40,8 +40,8 @@ struct GLShader {
     unsigned int fragmentShader {0};
 };
 
-struct GLVertexArray {
-    unsigned int vertexArrayObject {0};
-    unsigned int vertexBufferObject {0};
-    unsigned int elementBufferObject {0};
-};
+// struct GLVertexArray {
+//     unsigned int vertexArrayObject {0};
+//     unsigned int vertexBufferObject {0};
+//     unsigned int elementBufferObject {0};
+// };

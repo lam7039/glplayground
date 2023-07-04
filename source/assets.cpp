@@ -20,6 +20,10 @@ Shader *AssetLoader::loadShader(const std::string &name, const std::string &vert
     return static_cast<Shader*>(assets[name]);
 }
 
+std::unordered_map<std::string, Asset*> *AssetLoader::getAll() {
+    return &assets;
+}
+
 template <typename T>
 T *AssetLoader::find(const std::string &name) {
     return static_cast<T*>(assets[name]);
