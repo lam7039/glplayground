@@ -53,8 +53,6 @@ void Quad::draw(glm::vec3 &position, glm::vec3 &size, float textureId) {
     vertices.clear();
 }
 
-#include <iostream>
-
 std::vector<unsigned int> Quad::generateIndices() {
     std::vector<unsigned int> indexData(24);
     unsigned int offset = 0;
