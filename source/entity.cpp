@@ -1,9 +1,21 @@
 #include "entity.hpp"
 
-void Object::update() {
-    
+GameObject::GameObject() {
+    position = {0.0f, 0.0f, 0.0f};
 }
 
-void Object::draw() {
+void GameObject::draw() {
+    quad.draw(position, size, textureId);
+}
+
+void GameObject::setPosition(float x, float y, float z) {
+    position = {x, y, z};
+}
+
+glm::vec3 GameObject::getPosition() {
+    return position;
+}
+
+void InterfaceObject::draw() {
     quad.draw(position, size, textureId);
 }

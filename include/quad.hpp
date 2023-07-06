@@ -17,4 +17,5 @@ private:
     VertexArray vertexArray;
 
     void setTexCoords(float x, float y, float width, float height, float textureId);
+    std::vector<unsigned int> generateIndices(int indexCount);
 };

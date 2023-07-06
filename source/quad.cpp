@@ -42,7 +42,8 @@ void Quad::setTexCoords(float x, float y, float width, float height, float textu
         glm::vec2 {0.0f, 1.0f},
         textureId
     });
-    vertexArray.init(vertices);
+    std::vector<unsigned int> indices = generateIndices(vertices.size() * 6);
+    vertexArray.init(vertices, indices);
 }
 
 void Quad::draw(glm::vec3 &position, glm::vec3 &size, float textureId) {
@@ -50,4 +51,21 @@ void Quad::draw(glm::vec3 &position, glm::vec3 &size, float textureId) {
     vertexArray.bind(vertices);
     vertexArray.draw();
     vertices.clear();
+}
+
+std::vector<unsigned int> Quad::generateIndices(int indexCount) {
+    std::vector<unsigned int> indices(indexCount);
+    unsigned int offset = 0;
+    for (unsigned int i = 0; i < indexCount; i += 6) {
+        indices[i + 0] = 0 + offset;
+        indices[i + 1] = 1 + offset;
+        indices[i + 2] = 2 + offset;
+
+        indices[i + 3] = 3 + offset;
+        indices[i + 4] = 2 + offset;
+        indices[i + 5] = 0 + offset;
+
+        offset += 4;
+    }
+    return indices;
 }

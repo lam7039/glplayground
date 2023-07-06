@@ -1,5 +1,5 @@
 #include "renderer.hpp"
-
+#include "mesh.hpp"
 
 // static std::array<Vertex, 4> createQuad(float x, float y, float size, float textureId) {
 //     // top right
@@ -32,3 +32,15 @@
 
 //     return {v0, v1, v2, v3};
 // }
+
+void Renderer::init() {
+
+}
+
+void Renderer::loadMeshData(const Entity &entity) {
+    // Mesh mesh()
+}
+
+void Renderer::render() {
+
+}

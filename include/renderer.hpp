@@ -1,6 +1,6 @@
 #pragma once
 
-#include "assets.hpp"
+#include "entity.hpp"
 #include "vertex.hpp"
 
 // struct Vertex {
@@ -42,3 +42,12 @@
 //     unsigned int vertexArrayObject {0};
 //     std::array<Vertex*, 1000> vertexArrays;
 // };
+
+class Renderer {
+public:
+    void init();
+    void loadMeshData(const Entity &entity);
+    void render();
+private:
+
+};

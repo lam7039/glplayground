@@ -30,23 +30,6 @@ enum DrawUsage {
 
 // static GLVertexArray glVertexArray;
 
-static std::vector<unsigned int> generateRectangleIndices(int indexCount) {
-    std::vector<unsigned int> indices(indexCount);
-    unsigned int offset = 0;
-    for (unsigned int i = 0; i < indexCount; i += 6) {
-        indices[i + 0] = 0 + offset;
-        indices[i + 1] = 1 + offset;
-        indices[i + 2] = 2 + offset;
-
-        indices[i + 3] = 3 + offset;
-        indices[i + 4] = 2 + offset;
-        indices[i + 5] = 0 + offset;
-
-        offset += 4;
-    }
-    return indices;
-}
-
 static void bind_object(DrawMode mode, unsigned int *buffer, unsigned int *object, unsigned int size, DrawUsage usage) {
     CHECK_GL_ERROR(glCreateBuffers(1, buffer));
     CHECK_GL_ERROR(glBindBuffer(mode, *buffer));
@@ -58,10 +41,9 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
     CHECK_GL_ERROR(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<const void*>(offset)));
 }
 
-void VertexArray::init(std::vector<Vertex> &vertices) {
+void VertexArray::init(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices) {
     vertexDataSize = vertices.size() * sizeof(Vertex);
     indexCount = vertices.size() * 6;
-    std::vector<unsigned int> indices = generateRectangleIndices(indexCount);
     
 //     int result;
 //     CHECK_GL_ERROR(glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &result));

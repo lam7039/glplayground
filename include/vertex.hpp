@@ -12,7 +12,7 @@ struct Vertex {
 
 class VertexArray {
 public:
-    void init(std::vector<Vertex> &vertices);
+    void init(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
     void bind(std::vector<Vertex> &vertices);
     void draw();
     void clear();
