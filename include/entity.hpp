@@ -12,7 +12,7 @@ protected:
     unsigned int textureId;
     glm::vec3 position;
     glm::vec3 size;
-    Quad quad;
+    Quad *quad;
 };
 
 class GameObject : public Entity {

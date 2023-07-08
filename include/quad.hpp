@@ -5,20 +5,17 @@
 class Quad {
 public:
     Quad();
-    ~Quad();
-    //TODO: don't set textureId in Quad
     Quad(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
+    ~Quad();
 
-    void transform(glm::vec3 &position, glm::vec3 &size, float textureId);
+    void transform(glm::vec3 &position, glm::vec3 &size);
     void destroy();
 
     Mesh &getMesh();
 private:
-    //TODO: move vertices to Mesh
     std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
     Mesh *mesh;
 
-    void setTexCoords(float x, float y, float width, float height, float textureId);
+    std::vector<Vertex> generateVertices(glm::vec3 position, glm::vec3 size, float textureId = 0);
     std::vector<unsigned int> generateIndices();
 };

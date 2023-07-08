@@ -1,21 +1,22 @@
 #include "quad.hpp"
 
 Quad::Quad() {
-    setTexCoords(0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+    mesh = new Mesh(generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f), generateIndices());
 }
 
 Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
-    indices = generateIndices();
-    setTexCoords(position.x, position.y, size.x, size.y, textureId);
-    mesh = new Mesh(vertices, indices);
+    mesh = new Mesh(generateVertices(position, size, textureId), generateIndices());
 }
 
 Quad::~Quad() {
     destroy();
 }
 
-void Quad::transform(glm::vec3 &position, glm::vec3 &size, float textureId) {
-    setTexCoords(position.x, position.y, size.x, size.y, textureId);
+void Quad::transform(glm::vec3 &position, glm::vec3 &size) {
+    vertices[0].position = {position.x, position.y, 0.0f};
+    vertices[1].position = {position.x + size.x, position.y, 0.0f};
+    vertices[2].position = {position.x + size.x, position.y + size.y, 0.0f};
+    vertices[3].position = {position.x, position.y + size.y, 0.0f};
     mesh->bind(vertices);
     vertices.clear();
 }
@@ -30,47 +31,47 @@ Mesh &Quad::getMesh() {
     return *mesh;
 }
 
-void Quad::setTexCoords(float x, float y, float width, float height, float textureId) {
+std::vector<Vertex> Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
     vertices.push_back({
-        glm::vec3 {x, y, 0.0f},
+        position,
         glm::vec4 {1.0f},
         glm::vec2 {0.0f, 0.0f},
         textureId
     });
     vertices.push_back({
-        glm::vec3 {x + width, y, 0.0f},
+        glm::vec3 {position.x + size.x, position.y, 0.0f},
         glm::vec4 {1.0f},
         glm::vec2 {1.0f, 0.0f},
         textureId
     });
     vertices.push_back({
-        glm::vec3 {x + width, y + height, 0.0f},
+        position + size,
         glm::vec4 {1.0f},
         glm::vec2 {1.0f, 1.0f},
         textureId
     });
     vertices.push_back({
-        glm::vec3 {x, y + height, 0.0f},
+        glm::vec3 {position.x, position.y + size.y, 0.0f},
         glm::vec4 {1.0f},
         glm::vec2 {0.0f, 1.0f},
         textureId
     });
-    mesh = new Mesh(vertices, indices);
+    return vertices;
 }
 
 std::vector<unsigned int> Quad::generateIndices() {
-    std::vector<unsigned int> indexData(24);
+    std::vector<unsigned int> indices(24);
     unsigned int offset = 0;
     for (unsigned int i = 0; i < 24; i += 6) {
-        indexData[i + 0] = 0 + offset;
-        indexData[i + 1] = 1 + offset;
-        indexData[i + 2] = 2 + offset;
+        indices[i + 0] = 0 + offset;
+        indices[i + 1] = 1 + offset;
+        indices[i + 2] = 2 + offset;
 
-        indexData[i + 3] = 3 + offset;
-        indexData[i + 4] = 2 + offset;
-        indexData[i + 5] = 0 + offset;
+        indices[i + 3] = 3 + offset;
+        indices[i + 4] = 2 + offset;
+        indices[i + 5] = 0 + offset;
 
         offset += 4;
     }
-    return indexData;
+    return indices;
 }

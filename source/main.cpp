@@ -51,10 +51,10 @@ int main(int argc, char **argv) {
         imgui.attach(window.instance());
 
         while (window.running()) {
-            background.transform(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
-            mario.transform(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
-            
-            renderer.clear();
+            background.transform(positionBackgroundTexture, sizeBackgroundTexture);
+            mario.transform(positionMarioTexture, sizeMarioTexture);
+
+            window.clear();
             assetloader.bind();
 
             imgui.new_frame();

@@ -47,10 +47,10 @@
 class Renderer {
 public:
     Renderer();
-    
+
     void loadMeshData(const Entity &entity);
     void draw(Mesh &mesh);
-    void clear();
+    // void clear();
 private:
 
 };

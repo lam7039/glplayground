@@ -22,7 +22,7 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
     CHECK_GL_ERROR(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<const void*>(offset)));
 }
 
-Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices) : vertexData(vertices), indexData(indices) {
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) : vertexData(vertices), indexData(indices) {
     CHECK_GL_ERROR(glCreateVertexArrays(1, &inputLayoutObject));
     CHECK_GL_ERROR(glBindVertexArray(inputLayoutObject));
 
