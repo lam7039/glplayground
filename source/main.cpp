@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     
     Window window("glplayground");
     Renderer renderer;
-    
+
     renderer.clearColor();
     renderer.clear();
     window.swap();
@@ -61,12 +61,12 @@ int main(int argc, char **argv) {
             renderer.clear();
             assetloader.bind();
 
-            imgui.new_frame();
-
             renderer.draw(background.getMesh());
             renderer.draw(mario.getMesh());
 
-            imgui.render(positionBackgroundTexture, positionMarioTexture);
+            imgui.set(positionBackgroundTexture, positionMarioTexture);
+            imgui.render();
+
 
             window.swap();
             window.pollEvents();

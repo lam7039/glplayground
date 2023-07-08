@@ -32,13 +32,18 @@ void ImGuiWrapper::detach() {
 }
 
 
-void ImGuiWrapper::new_frame() {
+void ImGuiWrapper::newFrame() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void ImGuiWrapper::render(glm::vec3 &positionBackgroundTexture, glm::vec3 &positionMarioTexture) {
+void ImGuiWrapper::endFrame() {
+    ImGui::EndFrame();
+}
+
+void ImGuiWrapper::set(glm::vec3 &positionBackgroundTexture, glm::vec3 &positionMarioTexture) {
+    newFrame();
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
@@ -84,10 +89,13 @@ void ImGuiWrapper::render(glm::vec3 &positionBackgroundTexture, glm::vec3 &posit
     
     ImGui::End();
 
-    ImGui::EndFrame();
+    endFrame();
+}
 
+void ImGuiWrapper::render() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 	// ImGuiIO &io = ImGui::GetIO();
     // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     //     GLFWwindow* backup_current_context = glfwGetCurrentContext();
