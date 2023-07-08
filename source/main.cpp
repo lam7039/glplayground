@@ -48,33 +48,33 @@ int main(int argc, char **argv) {
     glm::vec3 sizeBackgroundTexture = {200.0f, 150.0f, 0.0f};
     glm::vec3 sizeMarioTexture = {150.0f, 200.0f, 0.0f};
 
-    {
-        Quad background(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
-        Quad mario(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
+    Quad background(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
+    Quad mario(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
 
-        imgui.attach(window.instance());
+    imgui.attach(window.instance());
 
-        while (window.running()) {
-            background.transform(positionBackgroundTexture, sizeBackgroundTexture);
-            mario.transform(positionMarioTexture, sizeMarioTexture);
+    while (window.running()) {
+        background.transform(positionBackgroundTexture, sizeBackgroundTexture);
+        mario.transform(positionMarioTexture, sizeMarioTexture);
 
-            renderer.clear();
-            assetloader.bind();
+        renderer.clear();
+        assetloader.bind();
 
-            renderer.draw(background.getMesh());
-            renderer.draw(mario.getMesh());
+        renderer.draw(background.getMesh());
+        renderer.draw(mario.getMesh());
 
-            imgui.set(positionBackgroundTexture, positionMarioTexture);
-            imgui.render();
+        imgui.set(positionBackgroundTexture, positionMarioTexture);
+        imgui.render();
 
-
-            window.swap();
-            window.pollEvents();
-        }
-
-        imgui.detach();
-        assetloader.quit();
+        window.swap();
+        window.pollEvents();
     }
+
+    imgui.detach();
+    assetloader.quit();
+
+    mario.destroy();
+    background.destroy();
 
     window.destroy();
     

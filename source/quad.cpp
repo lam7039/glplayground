@@ -10,9 +10,9 @@ Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
     mesh = new Mesh(vertices, generateIndices());
 }
 
-Quad::~Quad() {
-    destroy();
-}
+// Quad::~Quad() {
+//     destroy();
+// }
 
 void Quad::transform(glm::vec3 &position, glm::vec3 &size) {
     vertices[0].position = {position.x, position.y, 0.0f};

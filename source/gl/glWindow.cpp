@@ -40,7 +40,14 @@ void *Window::instance() const {
     return window;
 }
 
+void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+        std::cout << "Test keypress" << std::endl;
+    }
+}
+
 void Window::pollEvents() {
+    glfwSetKeyCallback((GLFWwindow*)window, keyCallback);
     glfwPollEvents();
 }
 

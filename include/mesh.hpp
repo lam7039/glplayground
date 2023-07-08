@@ -12,6 +12,7 @@ struct Vertex {
 
 class Mesh {
 public:
+    //TODO: somehow use a vertexBufferId intead of passing the entire list
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 
     void bind(std::vector<Vertex> &vertices);

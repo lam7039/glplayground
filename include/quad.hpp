@@ -6,7 +6,7 @@ class Quad {
 public:
     Quad();
     Quad(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
-    ~Quad();
+    // ~Quad();
 
     void transform(glm::vec3 &position, glm::vec3 &size);
     void destroy();
