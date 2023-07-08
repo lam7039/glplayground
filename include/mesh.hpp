@@ -26,7 +26,7 @@ private:
 
     unsigned int inputLayoutObject {0};
     unsigned int vertexBufferObject {0};
-    unsigned int indexBufferObject {0};
+    unsigned int elementBufferObject {0};
     
     unsigned int getVertexDataSize() const;
 };

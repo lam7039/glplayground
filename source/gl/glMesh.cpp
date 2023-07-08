@@ -11,7 +11,7 @@ enum DrawUsage {
     Static = GL_STATIC_DRAW
 };
 
-static void bind_object(DrawMode mode, unsigned int *buffer, unsigned int *object, unsigned int size, DrawUsage usage) {
+static void bind_object(DrawMode mode, unsigned int *buffer, unsigned int size, unsigned int *object, DrawUsage usage) {
     CHECK_GL_ERROR(glCreateBuffers(1, buffer));
     CHECK_GL_ERROR(glBindBuffer(mode, *buffer));
     CHECK_GL_ERROR(glBufferData(mode, size, object, usage));
@@ -26,8 +26,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) : ve
     CHECK_GL_ERROR(glCreateVertexArrays(1, &inputLayoutObject));
     CHECK_GL_ERROR(glBindVertexArray(inputLayoutObject));
 
-    bind_object(DrawMode::ArrayBuffer, &vertexBufferObject, nullptr, getVertexDataSize(), DrawUsage::Dynamic);
-    bind_object(DrawMode::ElementArrayBuffer, &indexBufferObject, indices.data(), indices.size() * sizeof(unsigned int), DrawUsage::Static);
+    bind_object(DrawMode::ArrayBuffer, &vertexBufferObject, getVertexDataSize(), nullptr, DrawUsage::Dynamic);
+    bind_object(DrawMode::ElementArrayBuffer, &elementBufferObject, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
     vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color));
@@ -61,6 +61,6 @@ void Mesh::inputLayoutUnbind() {
 void Mesh::destroy() {
     CHECK_GL_ERROR(glDeleteVertexArrays(1, &inputLayoutObject));
     CHECK_GL_ERROR(glDeleteBuffers(1, &vertexBufferObject));
-    CHECK_GL_ERROR(glDeleteBuffers(1, &indexBufferObject));
-    CHECK_GL_ERROR(glDeleteTextures(1, &indexBufferObject));
+    CHECK_GL_ERROR(glDeleteBuffers(1, &elementBufferObject));
+    CHECK_GL_ERROR(glDeleteTextures(1, &elementBufferObject));
 }
