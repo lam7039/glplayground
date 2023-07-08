@@ -16,7 +16,7 @@ public:
 
     void bind(std::vector<Vertex> &vertices);
     void inputLayoutBind();
-    void inputLayoutUnBind();
+    void inputLayoutUnbind();
     void destroy();
     
     unsigned int getIndexCount() const;
@@ -24,9 +24,9 @@ private:
     std::vector<Vertex> vertexData;
     std::vector<unsigned int> indexData;
 
-    unsigned int inputLayoutObject;
-    unsigned int vertexBufferObject;
-    unsigned int indexBufferObject;
+    unsigned int inputLayoutObject {0};
+    unsigned int vertexBufferObject {0};
+    unsigned int indexBufferObject {0};
     
     unsigned int getVertexDataSize() const;
 };

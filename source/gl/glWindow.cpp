@@ -24,9 +24,6 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
               << "GLSL version:         " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     CHECK_GL_ERROR(glViewport(position.x, position.y, size.x, size.y));
-    this->clearColor();
-    this->clear();
-    this->swap();
 }
 
 glm::vec2 Window::size() const {
@@ -45,14 +42,6 @@ void *Window::instance() const {
 
 void Window::pollEvents() {
     glfwPollEvents();
-}
-
-void Window::clearColor(glm::vec4 color) {
-    CHECK_GL_ERROR(glClearColor(color.x, color.y, color.z, color.a));
-}
-
-void Window::clear() {
-    CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT));
 }
 
 void Window::swap() {

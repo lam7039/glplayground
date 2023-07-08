@@ -12,9 +12,13 @@ Renderer::Renderer() {
 void Renderer::draw(Mesh &mesh) {
     mesh.inputLayoutBind();
     CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr));
-    mesh.inputLayoutUnBind();
+    mesh.inputLayoutUnbind();
 }
 
-// void Renderer::clear() {
-//     CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-// }
+void Renderer::clear() {
+    CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+}
+
+void Renderer::clearColor(glm::vec4 color) {
+    CHECK_GL_ERROR(glClearColor(color.x, color.y, color.z, color.a));
+}

@@ -3,8 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-static GLShader glshader;
-
 static std::string readFile(const std::string &path) {
     std::stringstream result;
     std::ifstream file;
@@ -19,7 +17,7 @@ static std::string readFile(const std::string &path) {
     return result.str();
 }
 
-static unsigned int compileShader(unsigned int type, const char *source) {
+unsigned int Shader::compileShader(unsigned int type, const char *source) {
     unsigned int shader = glCreateShader(type);
     CHECK_GL_ERROR(glShaderSource(shader, 1, &source, NULL));
     CHECK_GL_ERROR(glCompileShader(shader));
@@ -36,34 +34,34 @@ static unsigned int compileShader(unsigned int type, const char *source) {
     return shader;
 }
 
-static unsigned int createProgram() {
-    CHECK_GL_ERROR(glshader.programId = glCreateProgram());
-    CHECK_GL_ERROR(glAttachShader(glshader.programId, glshader.vertexShader));
-    CHECK_GL_ERROR(glAttachShader(glshader.programId, glshader.fragmentShader));
-    CHECK_GL_ERROR(glLinkProgram(glshader.programId));
+unsigned int Shader::createProgram() {
+    CHECK_GL_ERROR(programId = glCreateProgram());
+    CHECK_GL_ERROR(glAttachShader(programId, vertexShader));
+    CHECK_GL_ERROR(glAttachShader(programId, fragmentShader));
+    CHECK_GL_ERROR(glLinkProgram(programId));
 
     int success;
     char infoLog[512];
-    CHECK_GL_ERROR(glGetProgramiv(glshader.programId, GL_LINK_STATUS, &success));
+    CHECK_GL_ERROR(glGetProgramiv(programId, GL_LINK_STATUS, &success));
     if (!success) {
-        CHECK_GL_ERROR(glGetProgramInfoLog(glshader.programId, 512, NULL, infoLog));
+        CHECK_GL_ERROR(glGetProgramInfoLog(programId, 512, NULL, infoLog));
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
         return 0;
     }
 
-    CHECK_GL_ERROR(glDeleteShader(glshader.fragmentShader));
-    CHECK_GL_ERROR(glDeleteShader(glshader.vertexShader));
+    CHECK_GL_ERROR(glDeleteShader(fragmentShader));
+    CHECK_GL_ERROR(glDeleteShader(vertexShader));
     return 1;
 }
 
 Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource) : Asset(name, SHADER) {
-    glshader.vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
-    glshader.fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
+    vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
+    fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
     createProgram();
 }
 
 void Shader::bind() {
-    CHECK_GL_ERROR(glUseProgram(glshader.programId));
+    CHECK_GL_ERROR(glUseProgram(programId));
 }
 
 void Shader::setWireframe() {
@@ -91,7 +89,16 @@ void Shader::setMatrix(const std::string &name, const glm::mat4 &matrix) {
     CHECK_GL_ERROR(glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }
 
-int Shader::getLocation(const std::string &name) const {
-    CHECK_GL_ERROR(int location = glGetUniformLocation(glshader.programId, name.c_str()));
+int Shader::getLocation(const std::string &name) {
+    if (uniformLocationCache.find(name) != uniformLocationCache.end()) {
+        return uniformLocationCache[name];
+    }
+    
+    CHECK_GL_ERROR(int location = glGetUniformLocation(programId, name.c_str()));
+    if (location == -1) {
+        std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
+    }
+
+    uniformLocationCache[name] = location;
     return location;
 }

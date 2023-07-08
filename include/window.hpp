@@ -12,12 +12,8 @@ public:
     void *instance() const;
     
     void pollEvents();
-    void clearColor(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f});
-    void clear();
     void swap();
-
     void destroy();
-
 private:
     void *window {nullptr};
 };

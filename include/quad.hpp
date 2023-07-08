@@ -13,9 +13,10 @@ public:
 
     Mesh &getMesh();
 private:
+    unsigned int vertexBufferIndex {0};
     std::vector<Vertex> vertices;
     Mesh *mesh;
 
-    std::vector<Vertex> generateVertices(glm::vec3 position, glm::vec3 size, float textureId = 0);
+    void generateVertices(glm::vec3 position, glm::vec3 size, float textureId = 0);
     std::vector<unsigned int> generateIndices();
 };

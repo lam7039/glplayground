@@ -54,7 +54,7 @@ void Mesh::inputLayoutBind() {
     CHECK_GL_ERROR(glBindVertexArray(inputLayoutObject));
 }
 
-void Mesh::inputLayoutUnBind() {
+void Mesh::inputLayoutUnbind() {
     CHECK_GL_ERROR(glBindVertexArray(0));
 }
 

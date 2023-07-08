@@ -4,22 +4,6 @@
 
 #include "mesh.hpp"
 
-// struct Vertex {
-//     glm::vec3 position;
-//     glm::vec4 color;
-//     glm::vec2 texCoords;
-//     float textureId;
-// };
-
-// class VertexArray {
-// public:
-//     void init();
-//     void bind();
-//     void draw();
-//     void quit();
-// };
-
-
 // class Renderer {
 // public:
 //     void init();
@@ -50,7 +34,9 @@ public:
 
     void loadMeshData(const Entity &entity);
     void draw(Mesh &mesh);
-    // void clear();
+    
+    void clearColor(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f});
+    void clear();
 private:
 
 };

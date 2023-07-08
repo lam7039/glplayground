@@ -1,11 +1,13 @@
 #include "quad.hpp"
 
 Quad::Quad() {
-    mesh = new Mesh(generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f), generateIndices());
+    generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f);
+    mesh = new Mesh(vertices, generateIndices());
 }
 
 Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
-    mesh = new Mesh(generateVertices(position, size, textureId), generateIndices());
+    generateVertices(position, size, textureId);
+    mesh = new Mesh(vertices, generateIndices());
 }
 
 Quad::~Quad() {
@@ -31,7 +33,7 @@ Mesh &Quad::getMesh() {
     return *mesh;
 }
 
-std::vector<Vertex> Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
+void Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
     vertices.push_back({
         position,
         glm::vec4 {1.0f},
@@ -56,7 +58,6 @@ std::vector<Vertex> Quad::generateVertices(glm::vec3 position, glm::vec3 size, f
         glm::vec2 {0.0f, 1.0f},
         textureId
     });
-    return vertices;
 }
 
 std::vector<unsigned int> Quad::generateIndices() {

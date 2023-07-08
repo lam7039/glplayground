@@ -40,7 +40,14 @@ public:
 
 private:
     unsigned int programId {0};
-    int getLocation(const std::string &name) const;
+    unsigned int vertexShader {0};
+    unsigned int fragmentShader {0};
+    std::unordered_map<std::string, int> uniformLocationCache;
+
+    unsigned int compileShader(unsigned int type, const char *source);
+    unsigned int createProgram();
+
+    int getLocation(const std::string &name);
 };
 
 class Texture : public Asset {
