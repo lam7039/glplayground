@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vertex.hpp"
+#include "mesh.hpp"
 
 class Quad {
 public:
@@ -9,13 +9,15 @@ public:
     //TODO: don't set textureId in Quad
     Quad(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
 
-    void draw(glm::vec3 &position, glm::vec3 &size, float textureId);
+    void transform(glm::vec3 &position, glm::vec3 &size, float textureId);
     void destroy();
+
+    Mesh &getMesh();
 private:
-    //TODO: move vertices to VertexArray
+    //TODO: move vertices to Mesh
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    VertexArray vertexArray;
+    Mesh *mesh;
 
     void setTexCoords(float x, float y, float width, float height, float textureId);
     std::vector<unsigned int> generateIndices();

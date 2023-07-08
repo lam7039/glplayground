@@ -1,5 +1,6 @@
 #include "assets.hpp"
 #include "window.hpp"
+#include "renderer.hpp"
 #include "quad.hpp"
 #include "imgui.hpp"
 
@@ -16,6 +17,8 @@ int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
     
     Window window("glplayground");
+    Renderer renderer;
+
     ImGuiWrapper imgui;
 
     AssetLoader assetloader(std::filesystem::current_path());
@@ -48,13 +51,17 @@ int main(int argc, char **argv) {
         imgui.attach(window.instance());
 
         while (window.running()) {
-            window.clear();
+            background.transform(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
+            mario.transform(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
+            
+            renderer.clear();
             assetloader.bind();
 
             imgui.new_frame();
 
-            background.draw(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
-            mario.draw(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
+            renderer.draw(background.getMesh());
+            renderer.draw(mario.getMesh());
+
             imgui.render(positionBackgroundTexture, positionMarioTexture);
 
             window.swap();

@@ -31,7 +31,6 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
 
     CHECK_GL_ERROR(glViewport(position.x, position.y, size.x, size.y));
     this->clearColor();
-    this->clear();
     this->swap();
 }
 
@@ -55,10 +54,6 @@ void Window::pollEvents() {
 
 void Window::clearColor(glm::vec4 color) {
     CHECK_GL_ERROR(glClearColor(color.x, color.y, color.z, color.a));
-}
-
-void Window::clear() {
-    CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT));
 }
 
 void Window::swap() {

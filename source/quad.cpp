@@ -7,15 +7,27 @@ Quad::Quad() {
 Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
     indices = generateIndices();
     setTexCoords(position.x, position.y, size.x, size.y, textureId);
+    mesh = new Mesh(vertices, indices);
 }
 
 Quad::~Quad() {
     destroy();
 }
 
+void Quad::transform(glm::vec3 &position, glm::vec3 &size, float textureId) {
+    setTexCoords(position.x, position.y, size.x, size.y, textureId);
+    mesh->bind(vertices);
+    vertices.clear();
+}
+
 void Quad::destroy() {
     vertices.clear();
-    vertexArray.clear();
+    mesh->destroy();
+    delete mesh;
+}
+
+Mesh &Quad::getMesh() {
+    return *mesh;
 }
 
 void Quad::setTexCoords(float x, float y, float width, float height, float textureId) {
@@ -43,14 +55,7 @@ void Quad::setTexCoords(float x, float y, float width, float height, float textu
         glm::vec2 {0.0f, 1.0f},
         textureId
     });
-    vertexArray.init(vertices, indices);
-}
-
-void Quad::draw(glm::vec3 &position, glm::vec3 &size, float textureId) {
-    setTexCoords(position.x, position.y, size.x, size.y, textureId);
-    vertexArray.bind(vertices);
-    vertexArray.draw();
-    vertices.clear();
+    mesh = new Mesh(vertices, indices);
 }
 
 std::vector<unsigned int> Quad::generateIndices() {

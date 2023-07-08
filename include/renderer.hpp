@@ -1,7 +1,8 @@
 #pragma once
 
 #include "entity.hpp"
-#include "vertex.hpp"
+
+#include "mesh.hpp"
 
 // struct Vertex {
 //     glm::vec3 position;
@@ -45,9 +46,11 @@
 
 class Renderer {
 public:
-    void init();
+    Renderer();
+    
     void loadMeshData(const Entity &entity);
-    void render();
+    void draw(Mesh &mesh);
+    void clear();
 private:
 
 };

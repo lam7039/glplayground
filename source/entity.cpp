@@ -5,7 +5,7 @@ GameObject::GameObject() {
 }
 
 void GameObject::draw() {
-    quad.draw(position, size, textureId);
+    quad.transform(position, size, textureId);
 }
 
 void GameObject::setPosition(float x, float y, float z) {
@@ -17,5 +17,5 @@ glm::vec3 GameObject::getPosition() {
 }
 
 void InterfaceObject::draw() {
-    quad.draw(position, size, textureId);
+    quad.transform(position, size, textureId);
 }
