@@ -11,7 +11,7 @@ public:
     void newFrame();
     void endFrame();
 
-    void set(glm::vec3 &positionBackgroundTexture, glm::vec3 &positionMarioTexture);
+    void set(glm::vec3 &positionTextureBackground, glm::vec3 &positionTextureMario, glm::vec3 &sizeTextureBackground, glm::vec3 &sizeTextureMario);
     void render();
     // void label(const std::string &text);
 };

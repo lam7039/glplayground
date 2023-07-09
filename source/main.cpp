@@ -31,8 +31,10 @@ int main(int argc, char **argv) {
     Texture *marioTexture = assetloader.loadTexture("mario", "/assets/mario.png");
     assetloader.bind();
 
-    //TODO: figure out what the heck samplers are actually
+    //TODO: figure out where to put it (shader/texture/asset)
     // Shader *shader = assetloader.find<Shader>("main");
+    // int maxTextureImageUnits;
+    // glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureImageUnits);
     int samplers[2]; //should be limit of GL_MAX_TEXTURE_IMAGE_UNITS
     for (int i = 0; i < 2; i++) {
         samplers[i] = i;
@@ -42,20 +44,20 @@ int main(int argc, char **argv) {
     glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
     shader->setMatrix("mvp_matrix", projection);
 
-    glm::vec3 positionBackgroundTexture = {50.0f, 250.0f, 0.0f};
-    glm::vec3 positionMarioTexture = {500.0f, 250.0f, 0.0f};
+    glm::vec3 positionTextureBackground = {50.0f, 250.0f, 0.0f};
+    glm::vec3 positionTextureMario = {500.0f, 250.0f, 0.0f};
 
-    glm::vec3 sizeBackgroundTexture = {200.0f, 150.0f, 0.0f};
-    glm::vec3 sizeMarioTexture = {150.0f, 200.0f, 0.0f};
+    glm::vec3 sizeTextureBackground = {200.0f, 150.0f, 0.0f};
+    glm::vec3 sizeTextureMario = {150.0f, 200.0f, 0.0f};
 
-    Quad background(positionBackgroundTexture, sizeBackgroundTexture, backgroundTexture->getTextureId());
-    Quad mario(positionMarioTexture, sizeMarioTexture, marioTexture->getTextureId());
+    Quad background(positionTextureBackground, sizeTextureBackground, backgroundTexture->getTextureId());
+    Quad mario(positionTextureMario, sizeTextureMario, marioTexture->getTextureId());
 
     imgui.attach(window.instance());
 
     while (window.running()) {
-        background.transform(positionBackgroundTexture, sizeBackgroundTexture);
-        mario.transform(positionMarioTexture, sizeMarioTexture);
+        background.transform(positionTextureBackground, sizeTextureBackground);
+        mario.transform(positionTextureMario, sizeTextureMario);
 
         renderer.clear();
         assetloader.bind();
@@ -63,7 +65,7 @@ int main(int argc, char **argv) {
         renderer.drawMesh(background.getMesh());
         renderer.drawMesh(mario.getMesh());
 
-        imgui.set(positionBackgroundTexture, positionMarioTexture);
+        imgui.set(positionTextureBackground, positionTextureMario, sizeTextureBackground, sizeTextureMario);
         imgui.render();
 
         window.swap();

@@ -73,7 +73,6 @@ public:
     Shader *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
     std::unordered_map<std::string, Asset*> *getAll();
 
-
     void bind();
     void quit();
     
