@@ -3,6 +3,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+// #include <glm/gtc/type_ptr.hpp>
 
 void ImGuiWrapper::attach(void *window) {
     IMGUI_CHECKVERSION();
@@ -78,16 +79,18 @@ void ImGuiWrapper::set(glm::vec3 &positionTextureBackground, glm::vec3 &position
     ImGui::Begin("Hello ImGui!");
 
     ImGui::Text("Background Texture");
+    // ImGui::SliderFloat2("Position##backgroundPosition", glm::value_ptr(positionTextureBackground), 0.0f, 1280.0f);
+    // ImGui::SliderFloat2("Position##backgroundSize", glm::value_ptr(sizeTextureBackground), 0.0f, 1280.0f);
     ImGui::SliderFloat("Position X##backgroundPositionX", &positionTextureBackground.x, 0.0f, 1280.0f - 200.0f);
     ImGui::SliderFloat("Position Y##backgroundPositionY", &positionTextureBackground.y, 0.0f, 720.0f - 150.0f);
-    // ImGui::SliderFloat2("Position##backgroundPosition", [&positionTextureBackground.x, &positionTextureBackground.y]);
-
     ImGui::SliderFloat("Size X##backgroundSizeX", &sizeTextureBackground.x, 0.0f, 1280.0f);
     ImGui::SliderFloat("Size Y##backgroundSizeY", &sizeTextureBackground.y, 0.0f, 720.0f);
 
     ImGui::Separator();
 
     ImGui::Text("Mario Texture");
+    // ImGui::SliderFloat2("Position##marioPosition", glm::value_ptr(positionTextureMario), 0.0f, 1280.0f);
+    // ImGui::SliderFloat2("Position##marioSize", glm::value_ptr(sizeTextureMario), 0.0f, 1280.0f);
     ImGui::SliderFloat("Position X##marioPositionX", &positionTextureMario.x, 0.0f, 1280.0f - 150.0f);
     ImGui::SliderFloat("Position Y##marioPositionY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
     ImGui::SliderFloat("Size X##marioSizeX", &sizeTextureMario.x, 0.0f, 1280.0f);
