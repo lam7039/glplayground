@@ -29,8 +29,8 @@ void Quad::destroy() {
     delete mesh;
 }
 
-Mesh &Quad::getMesh() {
-    return *mesh;
+Mesh *Quad::getMesh() {
+    return mesh;
 }
 
 void Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {

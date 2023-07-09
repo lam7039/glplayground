@@ -60,8 +60,8 @@ int main(int argc, char **argv) {
         renderer.clear();
         assetloader.bind();
 
-        renderer.draw(background.getMesh());
-        renderer.draw(mario.getMesh());
+        renderer.drawMesh(background.getMesh());
+        renderer.drawMesh(mario.getMesh());
 
         imgui.set(positionBackgroundTexture, positionMarioTexture);
         imgui.render();

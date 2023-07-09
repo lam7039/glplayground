@@ -11,7 +11,7 @@ public:
     void transform(glm::vec3 &position, glm::vec3 &size);
     void destroy();
 
-    Mesh &getMesh();
+    Mesh *getMesh();
 private:
     unsigned int vertexBufferIndex {0};
     std::vector<Vertex> vertices;

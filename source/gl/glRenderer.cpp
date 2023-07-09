@@ -9,10 +9,16 @@ Renderer::Renderer() {
     // CHECK_GL_ERROR(glEnable(GL_SCISSOR_TEST));
 }
 
-void Renderer::draw(Mesh &mesh) {
-    mesh.inputLayoutBind();
-    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr));
-    mesh.inputLayoutUnbind();
+void Renderer::drawMesh(Mesh *mesh) {
+    mesh->inputLayoutBind();
+    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh->getIndexCount(), GL_UNSIGNED_INT, nullptr));
+    mesh->inputLayoutUnbind();
+}
+
+void Renderer::draw(Model &model) {
+    for (Mesh *mesh : model.getMeshes()) {
+        drawMesh(mesh);
+    }
 }
 
 void Renderer::clear() {
