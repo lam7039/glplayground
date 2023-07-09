@@ -77,27 +77,21 @@ void ImGuiWrapper::set(glm::vec3 &positionTextureBackground, glm::vec3 &position
 
     ImGui::Begin("Hello ImGui!");
 
-    ImGui::Text("Background Texture Position");
-    ImGui::SliderFloat("BPX", &positionTextureBackground.x, 0.0f, 1280.0f - 200.0f);
-    ImGui::SliderFloat("BPY", &positionTextureBackground.y, 0.0f, 720.0f - 150.0f);
+    ImGui::Text("Background Texture");
+    ImGui::SliderFloat("Position X##backgroundPositionX", &positionTextureBackground.x, 0.0f, 1280.0f - 200.0f);
+    ImGui::SliderFloat("Position Y##backgroundPositionY", &positionTextureBackground.y, 0.0f, 720.0f - 150.0f);
+    // ImGui::SliderFloat2("Position##backgroundPosition", [&positionTextureBackground.x, &positionTextureBackground.y]);
+
+    ImGui::SliderFloat("Size X##backgroundSizeX", &sizeTextureBackground.x, 0.0f, 1280.0f);
+    ImGui::SliderFloat("Size Y##backgroundSizeY", &sizeTextureBackground.y, 0.0f, 720.0f);
 
     ImGui::Separator();
 
-    ImGui::Text("Background Texture Size");
-    ImGui::SliderFloat("BSX", &sizeTextureBackground.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat("BSY", &sizeTextureBackground.y, 0.0f, 720.0f);
-
-    ImGui::Separator();
-
-    ImGui::Text("Mario Texture Position");
-    ImGui::SliderFloat("MPX", &positionTextureMario.x, 0.0f, 1280.0f - 150.0f);
-    ImGui::SliderFloat("MPY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
-
-    ImGui::Separator();
-
-    ImGui::Text("Mario Texture Size");
-    ImGui::SliderFloat("MSX", &sizeTextureMario.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat("MSY", &sizeTextureMario.y, 0.0f, 720.0f);
+    ImGui::Text("Mario Texture");
+    ImGui::SliderFloat("Position X##marioPositionX", &positionTextureMario.x, 0.0f, 1280.0f - 150.0f);
+    ImGui::SliderFloat("Position Y##marioPositionY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
+    ImGui::SliderFloat("Size X##marioSizeX", &sizeTextureMario.x, 0.0f, 1280.0f);
+    ImGui::SliderFloat("Size Y##marioSizeY", &sizeTextureMario.y, 0.0f, 720.0f);
     
     ImGui::End();
 
