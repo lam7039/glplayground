@@ -2,11 +2,11 @@
 
 #include "mesh.hpp"
 
-class Quad {
+class Rectangle {
 public:
-    Quad();
-    Quad(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
-    // ~Quad();
+    Rectangle();
+    Rectangle(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
+    // ~Rectangle();
 
     void transform(glm::vec3 &position, glm::vec3 &size);
     void destroy();

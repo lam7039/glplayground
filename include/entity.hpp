@@ -1,6 +1,6 @@
 #pragma once
 
-#include "quad.hpp"
+#include "rectangle.hpp"
 
 class Entity {
 public:
@@ -12,7 +12,7 @@ protected:
     unsigned int textureId;
     glm::vec3 position;
     glm::vec3 size;
-    Quad *quad;
+    Rectangle *rectangle;
 };
 
 class GameObject : public Entity {

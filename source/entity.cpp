@@ -2,11 +2,11 @@
 
 GameObject::GameObject() {
     position = {0.0f, 0.0f, 0.0f};
-    // quad = new Quad(position, {1.0f}, textureId);
+    // rectangle = new Quad(position, {1.0f}, textureId);
 }
 
 void GameObject::draw() {
-    // quad.transform(position, size);
+    // rectangle.transform(position, size);
 }
 
 void GameObject::setPosition(float x, float y, float z) {
@@ -18,5 +18,5 @@ glm::vec3 GameObject::getPosition() {
 }
 
 void InterfaceObject::draw() {
-    // quad.transform(position, size);
+    // rectangle.transform(position, size);
 }

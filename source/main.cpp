@@ -1,7 +1,7 @@
 #include "assets.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
-#include "quad.hpp"
+#include "rectangle.hpp"
 #include "imgui.hpp"
 
 #include <filesystem>
@@ -50,8 +50,8 @@ int main(int argc, char **argv) {
     glm::vec3 sizeTextureBackground = {200.0f, 150.0f, 0.0f};
     glm::vec3 sizeTextureMario = {150.0f, 200.0f, 0.0f};
 
-    Quad background(positionTextureBackground, sizeTextureBackground, backgroundTexture->getTextureId());
-    Quad mario(positionTextureMario, sizeTextureMario, marioTexture->getTextureId());
+    Rectangle background(positionTextureBackground, sizeTextureBackground, backgroundTexture->getTextureId());
+    Rectangle mario(positionTextureMario, sizeTextureMario, marioTexture->getTextureId());
 
     imgui.attach(window.instance());
 

@@ -1,20 +1,20 @@
-#include "quad.hpp"
+#include "rectangle.hpp"
 
-Quad::Quad() {
+Rectangle::Rectangle() {
     generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f);
     mesh = new Mesh(vertices, generateIndices());
 }
 
-Quad::Quad(glm::vec3 &position, glm::vec3 &size, float textureId) {
+Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, float textureId) {
     generateVertices(position, size, textureId);
     mesh = new Mesh(vertices, generateIndices());
 }
 
-// Quad::~Quad() {
+// Rectangle::~Rectangle() {
 //     destroy();
 // }
 
-void Quad::transform(glm::vec3 &position, glm::vec3 &size) {
+void Rectangle::transform(glm::vec3 &position, glm::vec3 &size) {
     vertices[0].position = {position.x, position.y, 0.0f};
     vertices[1].position = {position.x + size.x, position.y, 0.0f};
     vertices[2].position = {position.x + size.x, position.y + size.y, 0.0f};
@@ -23,17 +23,17 @@ void Quad::transform(glm::vec3 &position, glm::vec3 &size) {
     vertices.clear();
 }
 
-void Quad::destroy() {
+void Rectangle::destroy() {
     vertices.clear();
     mesh->destroy();
     delete mesh;
 }
 
-Mesh *Quad::getMesh() {
+Mesh *Rectangle::getMesh() {
     return mesh;
 }
 
-void Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
+void Rectangle::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
     vertices.push_back({
         position,
         glm::vec4 {1.0f},
@@ -60,7 +60,7 @@ void Quad::generateVertices(glm::vec3 position, glm::vec3 size, float textureId)
     });
 }
 
-std::vector<unsigned int> Quad::generateIndices() {
+std::vector<unsigned int> Rectangle::generateIndices() {
     std::vector<unsigned int> indices(24);
     unsigned int offset = 0;
     for (unsigned int i = 0; i < 24; i += 6) {
