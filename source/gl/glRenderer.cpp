@@ -16,8 +16,8 @@ void Renderer::drawMesh(Mesh *mesh) {
 }
 
 void Renderer::draw(Model &model) {
-    for (Mesh *mesh : model.getMeshes()) {
-        drawMesh(mesh);
+    for (auto &mesh : model.getMeshes()) {
+        drawMesh(mesh.get());
     }
 }
 

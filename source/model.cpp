@@ -3,16 +3,16 @@
 Model::Model(const std::string &name) : name(name) {}
 
 Model::~Model() {
-    for (Mesh *mesh : meshes) {
+    for (auto &mesh : meshes) {
         mesh->destroy();
-        delete mesh;
     }
+    meshes.clear();
 }
 
-void Model::addMesh(Mesh *mesh) {
-    meshes.push_back(mesh);
+void Model::addMesh(Mesh &mesh) {
+    meshes.push_back(std::make_unique<Mesh>(mesh));
 }
 
-const std::vector<Mesh*> &Model::getMeshes() const {
+const std::vector<std::unique_ptr<Mesh>> &Model::getMeshes() const {
     return meshes;
 }
