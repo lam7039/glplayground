@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mesh.hpp"
+#include <memory>
 
 class Rectangle {
 public:
@@ -11,11 +12,11 @@ public:
     void transform(glm::vec3 &position, glm::vec3 &size);
     void destroy();
 
-    Mesh *getMesh();
+    std::unique_ptr<Mesh> &getMesh();
 private:
     unsigned int vertexBufferIndex {0};
     std::vector<Vertex> vertices;
-    Mesh *mesh;
+    std::unique_ptr<Mesh> mesh;
 
     void generateVertices(glm::vec3 position, glm::vec3 size, float textureId = 0);
     std::vector<unsigned int> generateIndices();

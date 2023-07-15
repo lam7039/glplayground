@@ -2,12 +2,12 @@
 
 Rectangle::Rectangle() {
     generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f);
-    mesh = new Mesh(vertices, generateIndices());
+    mesh = std::make_unique<Mesh>(vertices, generateIndices());
 }
 
 Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, float textureId) {
     generateVertices(position, size, textureId);
-    mesh = new Mesh(vertices, generateIndices());
+    mesh = std::make_unique<Mesh>(vertices, generateIndices());
 }
 
 // Rectangle::~Rectangle() {
@@ -26,10 +26,10 @@ void Rectangle::transform(glm::vec3 &position, glm::vec3 &size) {
 void Rectangle::destroy() {
     vertices.clear();
     mesh->destroy();
-    delete mesh;
+    mesh.reset();
 }
 
-Mesh *Rectangle::getMesh() {
+std::unique_ptr<Mesh> &Rectangle::getMesh() {
     return mesh;
 }
 
