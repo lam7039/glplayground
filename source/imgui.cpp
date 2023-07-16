@@ -5,7 +5,7 @@
 #include <imgui/imgui_impl_opengl3.h>
 // #include <glm/gtc/type_ptr.hpp>
 
-void ImGuiWrapper::attach(void *window) {
+void ImGuiWrapper::attach(GLFWwindow *window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO(); (void)io;
@@ -22,7 +22,7 @@ void ImGuiWrapper::attach(void *window) {
     // }
 
     ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)window, true);
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 450");
 }
 

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <string>
-#include "glm/glm.hpp"
+#include "window.hpp"
 
 class ImGuiWrapper {
 public:
-    void attach(void *window);
+    void attach(GLFWwindow *window);
     void detach();
 
     void newFrame();

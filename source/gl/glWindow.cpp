@@ -1,6 +1,5 @@
-#define GLFW_INCLUDE_NONE
+
 #include "window.hpp"
-#include "glfw/glfw3.h"
 #include "gl.hpp"
 
 Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
@@ -9,9 +8,9 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
         return;
     }
 
-    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+    window.reset(glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr));
 
-    glfwMakeContextCurrent((GLFWwindow*)window);
+    glfwMakeContextCurrent(window.get());
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
@@ -28,16 +27,16 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
 
 glm::vec2 Window::size() const {
     int width, height;
-    glfwGetFramebufferSize((GLFWwindow*)window, &width, &height);
+    glfwGetFramebufferSize(window.get(), &width, &height);
     return glm::vec2 {width, height};
 }
 
 bool Window::running() {
-    return !glfwWindowShouldClose((GLFWwindow*)window);
+    return !glfwWindowShouldClose(window.get());
 }
 
-void *Window::instance() const {
-    return window;
+GLFWwindow *Window::instance() const {
+    return window.get();
 }
 
 void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
@@ -47,15 +46,15 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
 }
 
 void Window::pollEvents() {
-    glfwSetKeyCallback((GLFWwindow*)window, keyCallback);
+    glfwSetKeyCallback(window.get(), keyCallback);
     glfwPollEvents();
 }
 
 void Window::swap() {
-    glfwSwapBuffers((GLFWwindow*)window);
+    glfwSwapBuffers(window.get());
 }
 
 void Window::destroy() {
-    glfwDestroyWindow((GLFWwindow*)window);
+    window.release();
     glfwTerminate();
 }

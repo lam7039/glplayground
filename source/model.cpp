@@ -5,6 +5,7 @@ Model::Model(const std::string &name) : name(name) {}
 Model::~Model() {
     for (auto &mesh : meshes) {
         mesh->destroy();
+        // mesh.release();
     }
     meshes.clear();
 }
