@@ -1,5 +1,4 @@
 #include "assets.hpp"
-#include "window.hpp"
 #include "renderer.hpp"
 #include "rectangle.hpp"
 #include "imgui.hpp"

@@ -8,8 +8,8 @@
 
 class Window {
     struct GLFWwindowDeleter {
-        void operator()(GLFWwindow *window) {
-            glfwDestroyWindow(window);
+        void operator()(void *window) {
+            glfwDestroyWindow((GLFWwindow*)window);
         }
     };
 public:
@@ -17,11 +17,11 @@ public:
     
     glm::vec2 size() const;
     bool running();
-    GLFWwindow *instance() const;
+    void *instance() const;
     
     void pollEvents();
     void swap();
     void destroy();
 private:
-    std::unique_ptr<GLFWwindow, GLFWwindowDeleter> window;
+    std::unique_ptr<void, GLFWwindowDeleter> window;
 };

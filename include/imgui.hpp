@@ -4,7 +4,7 @@
 
 class ImGuiWrapper {
 public:
-    void attach(GLFWwindow *window);
+    void attach(void *window);
     void detach();
 
     void newFrame();
