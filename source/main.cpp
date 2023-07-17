@@ -2,6 +2,7 @@
 #include "renderer.hpp"
 #include "rectangle.hpp"
 #include "imgui.hpp"
+#include "window.hpp"
 
 #include <filesystem>
 

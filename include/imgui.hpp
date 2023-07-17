@@ -1,10 +1,12 @@
 #pragma once
 
-#include "window.hpp"
+#include <glm/glm.hpp>
+
+struct GLFWwindow;
 
 class ImGuiWrapper {
 public:
-    void attach(void *window);
+    void attach(GLFWwindow *window);
     void detach();
 
     void newFrame();

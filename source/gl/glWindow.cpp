@@ -1,6 +1,12 @@
 
+#define GLFW_INCLUDE_NONE
 #include "window.hpp"
 #include "gl.hpp"
+#include <glfw/glfw3.h>
+
+void Window::GLFWwindowDeleter::operator()(GLFWwindow *window) {
+    glfwDestroyWindow(window);
+}
 
 Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     if (!glfwInit()) {
@@ -35,7 +41,7 @@ bool Window::running() {
     return !glfwWindowShouldClose((GLFWwindow*)window.get());
 }
 
-void *Window::instance() const {
+GLFWwindow *Window::instance() const {
     return window.get();
 }
 
