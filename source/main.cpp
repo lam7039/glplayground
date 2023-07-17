@@ -4,10 +4,10 @@
 #include "imgui.hpp"
 #include "window.hpp"
 
-#include <filesystem>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <filesystem>
 
 //TODO: OpenAL, assimp
 //TODO: create Entity -> Object and EntityManager classes

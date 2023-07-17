@@ -61,6 +61,6 @@ void Window::swap() {
 }
 
 void Window::destroy() {
-    window.release();
+    window.reset();
     glfwTerminate();
 }
