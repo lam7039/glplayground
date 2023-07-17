@@ -6,6 +6,9 @@
 #include <string>
 #include <memory>
 
+//TODO: use forward declaration and move <glfw/glfw.h> to source file
+// typedef struct GLFWwindow GLFWwindow;
+
 class Window {
     struct GLFWwindowDeleter {
         void operator()(GLFWwindow *window) {
