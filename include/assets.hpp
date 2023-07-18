@@ -72,11 +72,13 @@ public:
     Texture *loadTexture(const std::string &name, const std::string &path);
     Shader *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
     std::unordered_map<std::string, Asset*> *getAll();
+    //TODO: use Open Asset Import Library (assimp) to load all assets (maybe keep stbi_image for fast image loading)
 
     void bind();
     void quit();
     
 private:
     std::string workspace;
+    //TODO: std::unordered_map<std::string, std::unique_ptr<Asset>> assets;
     std::unordered_map<std::string, Asset*> assets;
 };

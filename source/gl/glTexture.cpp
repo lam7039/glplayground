@@ -8,7 +8,7 @@ Texture::Texture(const std::string &name, const std::string &path, bool mipmap) 
     
     int width, height, nrChannels;
     unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-
+    
     CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &textureId));
     CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, textureId));
 

@@ -9,7 +9,7 @@
 
 #include <filesystem>
 
-//TODO: OpenAL, assimp
+//TODO: OpenAL
 //TODO: create Entity -> Object and EntityManager classes
 //TODO: put position/size/textureID in Entity and use Entity list from EntityManager in imgui class 
 
