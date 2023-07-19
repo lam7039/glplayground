@@ -7,6 +7,9 @@ Renderer::Renderer() {
     CHECK_GL_ERROR(glEnable(GL_BLEND));
     CHECK_GL_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     // CHECK_GL_ERROR(glEnable(GL_SCISSOR_TEST));
+
+    clearColor();
+    clear();
 }
 
 void Renderer::drawMesh(const std::unique_ptr<Mesh> &mesh) {

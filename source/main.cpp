@@ -18,9 +18,6 @@ int main(int argc, char **argv) {
     
     Window window("glplayground");
     Renderer renderer;
-
-    renderer.clearColor();
-    renderer.clear();
     window.swap();
 
     ImGuiWrapper imgui;
