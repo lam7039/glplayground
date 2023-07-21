@@ -29,6 +29,8 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
               << "GLSL version:         " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     CHECK_GL_ERROR(glViewport(position.x, position.y, size.x, size.y));
+
+    // glfwWindowHint(GLFW_DECORATED, false); // No titlebar / resize stuff
 }
 
 glm::vec2 Window::size() const {

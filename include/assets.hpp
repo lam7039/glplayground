@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include <iostream>
 
 #include <glm/glm.hpp>
 
@@ -67,19 +68,32 @@ private:
 class AssetLoader {
 public:
     AssetLoader(const std::string &workspace);
+    
+    template <typename T>
+    void load(const std::string &name, const std::string &path) {
+        assets[name] = std::make_shared<T>(name, workspace + path, true);
+        std::printf("%s - Asset loaded\n", name.c_str());
+    }
 
     template <typename T>
-    T *find(const std::string &name);
+    void load(const std::string &name, const std::string &vertex, const std::string &fragment) {
+        assets[name] = std::make_shared<T>(name, workspace + vertex, workspace + fragment);
+        std::printf("%s - Shader loaded\n", name.c_str());
+    }
 
-    Texture *loadTexture(const std::string &name, const std::string &path);
-    Shader *loadShader(const std::string &name, const std::string &vertexPath, const std::string &fragmentPath);
-    std::unordered_map<std::string, std::unique_ptr<Asset>> &getAll();
+    template <typename T>
+    std::shared_ptr<T> find(const std::string &name) {
+        return std::static_pointer_cast<T>(assets[name]);
+    }
+
+    std::unordered_map<std::string, std::shared_ptr<Asset>> &getAll();
     //TODO: use Open Asset Import Library (assimp) to load all assets (maybe keep stbi_image for fast image loading)
 
+    void remove(const std::string &name);
     void bind();
     void quit();
     
 private:
     std::string workspace;
-    std::unordered_map<std::string, std::unique_ptr<Asset>> assets;
+    std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
 };

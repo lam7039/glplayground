@@ -23,13 +23,18 @@ int main(int argc, char **argv) {
     ImGuiWrapper imgui;
 
     AssetLoader assetloader(std::filesystem::current_path());
-    Shader *shader = assetloader.loadShader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    Texture *backgroundTexture = assetloader.loadTexture("background", "/assets/image.jpg");
-    Texture *marioTexture = assetloader.loadTexture("mario", "/assets/mario.png");
-    assetloader.bind();
 
+    assetloader.load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    assetloader.load<Texture>("background", "/assets/image.jpg");
+    assetloader.load<Texture>("mario", "/assets/mario.png");
+
+    std::shared_ptr<Shader> shader = assetloader.find<Shader>("main");
+    std::shared_ptr<Texture> backgroundTexture = assetloader.find<Texture>("background");
+    std::shared_ptr<Texture> marioTexture = assetloader.find<Texture>("mario");
+
+    assetloader.bind();
+    
     //TODO: figure out where to put it (shader/texture/asset)
-    // Shader *shader = assetloader.find<Shader>("main");
     // int maxTextureImageUnits;
     // glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureImageUnits);
     int samplers[2]; //should be limit of GL_MAX_TEXTURE_IMAGE_UNITS
