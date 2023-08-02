@@ -9,39 +9,31 @@
 
 #include <filesystem>
 
-//TODO: OpenAL
 //TODO: create Entity -> Object and EntityManager classes
 //TODO: put position/size/textureID in Entity and use Entity list from EntityManager in imgui class 
 
 int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
-    
+
     Window window("glplayground");
     Renderer renderer;
     window.swap();
 
     ImGuiWrapper imgui;
 
-    AssetLoader assetloader(std::filesystem::current_path());
+    assetLoader = std::make_unique<AssetLoader>();
+    assetLoader->load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    assetLoader->load<Texture>("background", "/assets/image.jpg");
+    assetLoader->load<Texture>("mario", "/assets/mario.png");
 
-    assetloader.load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    assetloader.load<Texture>("background", "/assets/image.jpg");
-    assetloader.load<Texture>("mario", "/assets/mario.png");
+    std::shared_ptr<Shader> shader = assetLoader->find<Shader>("main");
+    // std::shared_ptr<Texture> backgroundTexture = assetLoader->find<Texture>("background");
+    // std::shared_ptr<Texture> marioTexture = assetLoader->find<Texture>("mario");
 
-    std::shared_ptr<Shader> shader = assetloader.find<Shader>("main");
-    std::shared_ptr<Texture> backgroundTexture = assetloader.find<Texture>("background");
-    std::shared_ptr<Texture> marioTexture = assetloader.find<Texture>("mario");
-
-    assetloader.bind();
+    shader->bind();
+    // assetLoader->bind();
     
-    //TODO: figure out where to put it (shader/texture/asset)
-    // int maxTextureImageUnits;
-    // glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureImageUnits);
-    int samplers[2]; //should be limit of GL_MAX_TEXTURE_IMAGE_UNITS
-    for (int i = 0; i < 2; i++) {
-        samplers[i] = i;
-    }
-    shader->setImage("ourTextures", samplers);
+    shader->setImage("ourTexture", 0);
 
     glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
     shader->setMatrix("mvp_matrix", projection);
@@ -52,8 +44,8 @@ int main(int argc, char **argv) {
     glm::vec3 sizeTextureBackground = {200.0f, 150.0f, 0.0f};
     glm::vec3 sizeTextureMario = {150.0f, 200.0f, 0.0f};
 
-    Rectangle background(positionTextureBackground, sizeTextureBackground, backgroundTexture->getTextureId());
-    Rectangle mario(positionTextureMario, sizeTextureMario, marioTexture->getTextureId());
+    Rectangle background(positionTextureBackground, sizeTextureBackground, "background");
+    Rectangle mario(positionTextureMario, sizeTextureMario, "mario");
 
     imgui.attach(window.instance());
 
@@ -62,9 +54,11 @@ int main(int argc, char **argv) {
         mario.transform(positionTextureMario, sizeTextureMario);
 
         renderer.clear();
-        assetloader.bind();
+        // assetloader.bind();
 
+        // backgroundTexture->bind();
         renderer.drawMesh(background.getMesh());
+        // marioTexture->bind();
         renderer.drawMesh(mario.getMesh());
 
         imgui.set(positionTextureBackground, positionTextureMario, sizeTextureBackground, sizeTextureMario);
@@ -75,7 +69,7 @@ int main(int argc, char **argv) {
     }
 
     imgui.detach();
-    assetloader.quit();
+    assetLoader->quit();
 
     mario.destroy();
     background.destroy();

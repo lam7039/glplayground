@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
-#include <iostream>
 
 #include <glm/glm.hpp>
 
@@ -16,15 +15,20 @@ enum AssetType {
 
 class Asset {
 public:
-    const std::string &name;
     AssetType type = AssetType::IMAGE;
-
-    virtual void bind();
-    virtual void bind(int index);
     Asset(const std::string &name, AssetType type);
 
-    // virtual void create(const std::string &name, AssetType type);
-    // virtual void destroy();
+    virtual void bind() = 0;
+    virtual void destroy() = 0;
+
+    unsigned int getId() const;
+    unsigned int getReferenceCount() const;
+
+    void addReference();
+    void removeReference();
+protected:
+    unsigned int id {0};
+    unsigned int referenceCount {0};
 };
 
 class Shader : public Asset {
@@ -32,16 +36,17 @@ public:
     Shader(const std::string &name, const std::string &vertexSource = "/shaders/vertex.glsl", const std::string &fragmentSource = "/shaders/fragment.glsl");
     
     void bind() override;
+    void destroy() override;
     void setWireframe();
 
     void setBool(const std::string &name, bool value);
     void setInt(const std::string &name, int value);
     void setFloat(const std::string &name, float value);
     void setImage(const std::string &name, int *samplers);
+    void setImage(const std::string &name, int sampler);
     void setMatrix(const std::string &name, const glm::mat4 &matrix);
 
 private:
-    unsigned int programId {0};
     unsigned int vertexShader {0};
     unsigned int fragmentShader {0};
     std::unordered_map<std::string, int> uniformLocationCache;
@@ -56,29 +61,34 @@ class Texture : public Asset {
 public:
     Texture(const std::string &name, const std::string &path, bool mipmap = false);
 
-    void bind(int index) override;
-    void destroy();
-
-    unsigned int getTextureId() const;
-    
+    void bind() override;
+    void bind(int index);
+    void destroy() override;
 private:
-    unsigned int textureId {0};
+    unsigned int slot {0};
 };
+
+// class Audio : public Asset {
+// public:
+//     Audio(const std::string &name);
+// };
 
 class AssetLoader {
 public:
-    AssetLoader(const std::string &workspace);
+    AssetLoader();
     
     template <typename T>
     void load(const std::string &name, const std::string &path) {
         assets[name] = std::make_shared<T>(name, workspace + path, true);
-        std::printf("%s - Asset loaded\n", name.c_str());
+
+        if (assets[name]->type == AssetType::IMAGE) {
+            textureCount++;
+        }
     }
 
     template <typename T>
     void load(const std::string &name, const std::string &vertex, const std::string &fragment) {
         assets[name] = std::make_shared<T>(name, workspace + vertex, workspace + fragment);
-        std::printf("%s - Shader loaded\n", name.c_str());
     }
 
     template <typename T>
@@ -96,4 +106,9 @@ public:
 private:
     std::string workspace;
     std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+    
+    //TODO: check how many times an asset is being used
+    unsigned int textureCount {0};
 };
+
+static std::unique_ptr<AssetLoader> assetLoader = nullptr;

@@ -2,18 +2,18 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 struct Vertex {
     glm::vec3 position {0.0f};
     glm::vec4 color {1.0f};
     glm::vec2 texCoords;
-    float textureId {0.0f};
 };
 
 class Mesh {
 public:
     //TODO: somehow use a vertexBufferId intead of passing the entire list
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::string &texture);
 
     void bind(std::vector<Vertex> &vertices);
     void inputLayoutBind();
@@ -21,7 +21,9 @@ public:
     void destroy();
     
     unsigned int getIndexCount() const;
+    const std::string &getTexture() const;
 private:
+    const std::string &texture; 
     std::vector<Vertex> vertexData;
     std::vector<unsigned int> indexData;
 

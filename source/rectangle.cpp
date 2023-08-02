@@ -1,13 +1,13 @@
 #include "rectangle.hpp"
 
 Rectangle::Rectangle() {
-    generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f}, 0.0f);
-    mesh = std::make_unique<Mesh>(vertices, generateIndices());
+    generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f});
+    mesh = std::make_unique<Mesh>(vertices, generateIndices(), "background");
 }
 
-Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, float textureId) {
-    generateVertices(position, size, textureId);
-    mesh = std::make_unique<Mesh>(vertices, generateIndices());
+Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, const std::string &texture) {
+    generateVertices(position, size);
+    mesh = std::make_unique<Mesh>(vertices, generateIndices(), texture);
 }
 
 // Rectangle::~Rectangle() {
@@ -33,30 +33,26 @@ std::unique_ptr<Mesh> &Rectangle::getMesh() {
     return mesh;
 }
 
-void Rectangle::generateVertices(glm::vec3 position, glm::vec3 size, float textureId) {
+void Rectangle::generateVertices(glm::vec3 position, glm::vec3 size) {
     vertices.push_back({
         position,
         glm::vec4 {1.0f},
-        glm::vec2 {0.0f, 0.0f},
-        textureId
+        glm::vec2 {0.0f, 0.0f}
     });
     vertices.push_back({
         glm::vec3 {position.x + size.x, position.y, 0.0f},
         glm::vec4 {1.0f},
-        glm::vec2 {1.0f, 0.0f},
-        textureId
+        glm::vec2 {1.0f, 0.0f}
     });
     vertices.push_back({
         position + size,
         glm::vec4 {1.0f},
-        glm::vec2 {1.0f, 1.0f},
-        textureId
+        glm::vec2 {1.0f, 1.0f}
     });
     vertices.push_back({
         glm::vec3 {position.x, position.y + size.y, 0.0f},
         glm::vec4 {1.0f},
-        glm::vec2 {0.0f, 1.0f},
-        textureId
+        glm::vec2 {0.0f, 1.0f}
     });
 }
 

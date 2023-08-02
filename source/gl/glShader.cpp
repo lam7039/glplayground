@@ -35,16 +35,16 @@ unsigned int Shader::compileShader(unsigned int type, const char *source) {
 }
 
 unsigned int Shader::createProgram() {
-    CHECK_GL_ERROR(programId = glCreateProgram());
-    CHECK_GL_ERROR(glAttachShader(programId, vertexShader));
-    CHECK_GL_ERROR(glAttachShader(programId, fragmentShader));
-    CHECK_GL_ERROR(glLinkProgram(programId));
+    CHECK_GL_ERROR(id = glCreateProgram());
+    CHECK_GL_ERROR(glAttachShader(id, vertexShader));
+    CHECK_GL_ERROR(glAttachShader(id, fragmentShader));
+    CHECK_GL_ERROR(glLinkProgram(id));
 
     int success;
     char infoLog[512];
-    CHECK_GL_ERROR(glGetProgramiv(programId, GL_LINK_STATUS, &success));
+    CHECK_GL_ERROR(glGetProgramiv(id, GL_LINK_STATUS, &success));
     if (!success) {
-        CHECK_GL_ERROR(glGetProgramInfoLog(programId, 512, NULL, infoLog));
+        CHECK_GL_ERROR(glGetProgramInfoLog(id, 512, NULL, infoLog));
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
         return 0;
     }
@@ -61,7 +61,7 @@ Shader::Shader(const std::string &name, const std::string &vertexSource, const s
 }
 
 void Shader::bind() {
-    CHECK_GL_ERROR(glUseProgram(programId));
+    CHECK_GL_ERROR(glUseProgram(id));
 }
 
 void Shader::setWireframe() {
@@ -85,6 +85,10 @@ void Shader::setImage(const std::string &name, int *samplers) {
     CHECK_GL_ERROR(glUniform1iv(getLocation(name), count, samplers));
 }
 
+void Shader::setImage(const std::string &name, int sampler) {
+    setInt(name, sampler);
+}
+
 void Shader::setMatrix(const std::string &name, const glm::mat4 &matrix) {
     CHECK_GL_ERROR(glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }
@@ -94,11 +98,15 @@ int Shader::getLocation(const std::string &name) {
         return uniformLocationCache[name];
     }
     
-    CHECK_GL_ERROR(int location = glGetUniformLocation(programId, name.c_str()));
+    CHECK_GL_ERROR(int location = glGetUniformLocation(id, name.c_str()));
     if (location == -1) {
         std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
     }
 
     uniformLocationCache[name] = location;
     return location;
+}
+
+void Shader::destroy() {
+    // glDeleteProgram(id);
 }

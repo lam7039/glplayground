@@ -6,7 +6,7 @@
 class Rectangle {
 public:
     Rectangle();
-    Rectangle(glm::vec3 &position, glm::vec3 &size, float textureId = 0);
+    Rectangle(glm::vec3 &position, glm::vec3 &size, const std::string &texture);
     // ~Rectangle();
 
     void transform(glm::vec3 &position, glm::vec3 &size);
@@ -18,6 +18,6 @@ private:
     std::vector<Vertex> vertices;
     std::unique_ptr<Mesh> mesh;
 
-    void generateVertices(glm::vec3 position, glm::vec3 size, float textureId = 0);
+    void generateVertices(glm::vec3 position, glm::vec3 size);
     std::vector<unsigned int> generateIndices();
 };

@@ -1,6 +1,7 @@
 #include "gl.hpp"
 #include "assets.hpp"
 
+// #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
 Texture::Texture(const std::string &name, const std::string &path, bool mipmap) : Asset(name, IMAGE) {
@@ -9,8 +10,9 @@ Texture::Texture(const std::string &name, const std::string &path, bool mipmap) 
     int width, height, nrChannels;
     unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     
-    CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &textureId));
-    CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, textureId));
+    CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));
+    //TODO: is glBindTexture necessary since glCreateTextures autommatically binds the texture?
+    CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, id));
 
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
@@ -30,14 +32,25 @@ Texture::Texture(const std::string &name, const std::string &path, bool mipmap) 
     stbi_image_free(pixels);
 }
 
+void Texture::bind() {
+    CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, id));
+    // CHECK_GL_ERROR(glBindTextureUnit(0, id));
+
+    // int max_texture_image_units;
+    // glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_texture_image_units);
+    
+    // for (int i = 0; i < max_texture_image_units; i++) {
+    //     if (glIsEnabled(GL_TEXTURE_2D)) {
+    //         CHECK_GL_ERROR(glBindTextureUnit(max_texture_image_units, id));
+    //     }
+    // }
+
+}
+
 void Texture::bind(int index) {
-    CHECK_GL_ERROR(glBindTextureUnit(index, textureId));
+    CHECK_GL_ERROR(glBindTextureUnit(index, id));
 }
 
 void Texture::destroy() {
-    CHECK_GL_ERROR(glDeleteTextures(1, &textureId));
-}
-
-unsigned int Texture::getTextureId() const {
-    return textureId;
+    CHECK_GL_ERROR(glDeleteTextures(1, &id));
 }
