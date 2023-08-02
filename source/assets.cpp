@@ -63,3 +63,10 @@ void AssetLoader::quit() {
     textureCount = 0;
     assets.clear();
 }
+
+
+static std::shared_ptr<AssetLoader> assetLoader = std::make_shared<AssetLoader>();
+
+std::shared_ptr<AssetLoader> getAssetLoader() {
+    return assetLoader;
+}

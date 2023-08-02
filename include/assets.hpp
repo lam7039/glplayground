@@ -111,4 +111,4 @@ private:
     unsigned int textureCount {0};
 };
 
-static std::unique_ptr<AssetLoader> assetLoader = nullptr;
+std::shared_ptr<AssetLoader> getAssetLoader();

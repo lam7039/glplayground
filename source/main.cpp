@@ -21,12 +21,11 @@ int main(int argc, char **argv) {
 
     ImGuiWrapper imgui;
 
-    assetLoader = std::make_unique<AssetLoader>();
-    assetLoader->load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    assetLoader->load<Texture>("background", "/assets/image.jpg");
-    assetLoader->load<Texture>("mario", "/assets/mario.png");
+    getAssetLoader()->load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    getAssetLoader()->load<Texture>("background", "/assets/image.jpg");
+    getAssetLoader()->load<Texture>("mario", "/assets/mario.png");
 
-    std::shared_ptr<Shader> shader = assetLoader->find<Shader>("main");
+    std::shared_ptr<Shader> shader = getAssetLoader()->find<Shader>("main");
     // std::shared_ptr<Texture> backgroundTexture = assetLoader->find<Texture>("background");
     // std::shared_ptr<Texture> marioTexture = assetLoader->find<Texture>("mario");
 
@@ -69,7 +68,7 @@ int main(int argc, char **argv) {
     }
 
     imgui.detach();
-    assetLoader->quit();
+    getAssetLoader()->quit();
 
     mario.destroy();
     background.destroy();
