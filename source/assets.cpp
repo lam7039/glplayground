@@ -24,7 +24,6 @@ void Asset::removeReference() {
 
 AssetLoader::AssetLoader() : workspace(std::filesystem::current_path()) {
     std::printf("Current workspace: %s\n", workspace.c_str());
-    assets = std::unordered_map<std::string, std::shared_ptr<Asset>>();
 }
 
 std::unordered_map<std::string, std::shared_ptr<Asset>> &AssetLoader::getAll() {
