@@ -5,7 +5,7 @@ Rectangle::Rectangle() {
     mesh = std::make_unique<Mesh>(vertices, generateIndices(), "background");
 }
 
-Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, const std::string &texture) {
+Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, std::string texture) {
     generateVertices(position, size);
     mesh = std::make_unique<Mesh>(vertices, generateIndices(), texture);
 }

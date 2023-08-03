@@ -13,7 +13,7 @@ struct Vertex {
 class Mesh {
 public:
     //TODO: somehow use a vertexBufferId intead of passing the entire list
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::string &texture);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture);
 
     void bind(std::vector<Vertex> &vertices);
     void inputLayoutBind();
@@ -21,9 +21,9 @@ public:
     void destroy();
     
     unsigned int getIndexCount() const;
-    const std::string &getTexture() const;
+    std::string getTexture();
 private:
-    const std::string &texture; 
+    std::string texture; 
     std::vector<Vertex> vertexData;
     std::vector<unsigned int> indexData;
 

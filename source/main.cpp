@@ -26,12 +26,7 @@ int main(int argc, char **argv) {
     getAssetLoader()->load<Texture>("mario", "/assets/mario.png");
 
     std::shared_ptr<Shader> shader = getAssetLoader()->find<Shader>("main");
-    // std::shared_ptr<Texture> backgroundTexture = assetLoader->find<Texture>("background");
-    // std::shared_ptr<Texture> marioTexture = assetLoader->find<Texture>("mario");
-
     shader->bind();
-    // assetLoader->bind();
-    
     shader->setImage("ourTexture", 0);
 
     glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
@@ -53,11 +48,8 @@ int main(int argc, char **argv) {
         mario.transform(positionTextureMario, sizeTextureMario);
 
         renderer.clear();
-        // assetloader.bind();
 
-        // backgroundTexture->bind();
         renderer.drawMesh(background.getMesh());
-        // marioTexture->bind();
         renderer.drawMesh(mario.getMesh());
 
         imgui.set(positionTextureBackground, positionTextureMario, sizeTextureBackground, sizeTextureMario);

@@ -22,7 +22,7 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
     CHECK_GL_ERROR(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<const void*>(offset)));
 }
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::string &texture) : vertexData(vertices), indexData(indices), texture(texture) {
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture) : vertexData(vertices), indexData(indices), texture(texture) {
     CHECK_GL_ERROR(glCreateVertexArrays(1, &inputLayoutObject));
     inputLayoutBind();
 
@@ -45,7 +45,7 @@ unsigned int Mesh::getIndexCount() const {
     return static_cast<unsigned int>(indexData.size() * 6);
 }
 
-const std::string &Mesh::getTexture() const {
+std::string Mesh::getTexture() {
     return texture;
 }
 
