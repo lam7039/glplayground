@@ -14,7 +14,7 @@ Renderer::Renderer() {
 }
 
 void Renderer::drawMesh(const std::unique_ptr<Mesh> &mesh) {
-    getAssetLoader()->find<Texture>(mesh->getTexture())->bind();
+    get_asset<Texture>(mesh->getTexture())->bind();
     mesh->inputLayoutBind();
     CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh->getIndexCount(), GL_UNSIGNED_INT, nullptr));
     mesh->inputLayoutUnbind();

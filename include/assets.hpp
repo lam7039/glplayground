@@ -68,47 +68,26 @@ private:
     unsigned int slot {0};
 };
 
-// class Audio : public Asset {
-// public:
-//     Audio(const std::string &name);
-// };
+const std::string &get_workspace();
 
-class AssetLoader {
-public:
-    AssetLoader();
-    
-    template <typename T>
-    void load(const std::string &name, const std::string &path) {
-        assets[name] = std::make_shared<T>(name, workspace + path, true);
+std::shared_ptr<Asset> get_asset(const std::string &name);
 
-        if (assets[name]->type == AssetType::IMAGE) {
-            textureCount++;
-        }
-    }
+template <typename T>
+std::shared_ptr<T> get_asset(const std::string &name) {
+    return std::static_pointer_cast<T>(get_asset(name));
+}
 
-    template <typename T>
-    void load(const std::string &name, const std::string &vertex, const std::string &fragment) {
-        assets[name] = std::make_shared<T>(name, workspace + vertex, workspace + fragment);
-    }
+void load_asset(const std::string &name, std::shared_ptr<Asset> asset);
 
-    template <typename T>
-    std::shared_ptr<T> find(const std::string &name) {
-        return std::static_pointer_cast<T>(assets[name]);
-    }
+template <typename T>
+void load_asset(const std::string &name, const std::string &path) {
+    load_asset(name, std::make_shared<T>(name, get_workspace() + path));
+}
 
-    std::unordered_map<std::string, std::shared_ptr<Asset>> &getAll();
-    //TODO: use Open Asset Import Library (assimp) to load all assets (maybe keep stbi_image for fast image loading)
+template <typename T>
+void load_asset(const std::string &name, const std::string &vertex, const std::string &fragment) {
+    load_asset(name, std::make_shared<T>(name, get_workspace() + vertex, get_workspace() + fragment));
+}
 
-    void remove(const std::string &name);
-    void bind();
-    void quit();
-    
-private:
-    std::string workspace;
-    std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
-    
-    //TODO: check how many times an asset is being used
-    unsigned int textureCount {0};
-};
-
-std::shared_ptr<AssetLoader> getAssetLoader();
+void remove_asset(const std::string &name);
+void clear_assets();

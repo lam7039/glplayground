@@ -1,5 +1,4 @@
 #include "assets.hpp"
-#include <iostream>
 #include <filesystem>
 
 Asset::Asset(const std::string &name, AssetType type) : type(type) {}
@@ -22,51 +21,32 @@ void Asset::removeReference() {
     referenceCount--;
 }
 
-AssetLoader::AssetLoader() : workspace(std::filesystem::current_path()) {
-    std::printf("Current workspace: %s\n", workspace.c_str());
+//TODO: implement reference counting, aka how many times an object has been loaded, so it doesn't unload an asset if other objects still use it in the scene
+//TODO: implement a preventUnload boolean for preventing unloading of a commonly used asset
+
+static std::string workspace = std::filesystem::current_path();
+static std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+
+std::shared_ptr<Asset> get_asset(const std::string &name) {
+    return assets[name];
 }
 
-std::unordered_map<std::string, std::shared_ptr<Asset>> &AssetLoader::getAll() {
-    return assets;
+void load_asset(const std::string &name, std::shared_ptr<Asset> asset) {
+    assets[name] = asset;
 }
 
-void AssetLoader::remove(const std::string &name) {
-    //TODO: implement reference counting, aka how many times an object has been loaded, so it doesn't unload an asset if other objects still use it in the scene
-    //TODO: implement a preventUnload boolean for preventing unloading of a commonly used asset
-    // if (assets[name]->getReferenceCount() > 0) {
-    //     return;
-    // }
-
-    if (assets[name]->type == AssetType::IMAGE) {
-        textureCount--;
-    }
+void remove_asset(const std::string &name) {
     assets[name]->destroy();
     assets.erase(name);
 }
 
-void AssetLoader::bind() {
-    // int i = 0;
-    for (auto& [name, asset] : assets) {
-        // if (assets[name]->type == AssetType::IMAGE) {
-        //     asset->bind(i);
-        //     i++;
-        //     continue;
-        // }
-        // asset->bind();
-    }
-}
-
-void AssetLoader::quit() {
+void clear_assets() {
     for (auto& [name, asset] : assets) {
         asset->destroy();
     }
-    textureCount = 0;
     assets.clear();
 }
 
-
-static std::shared_ptr<AssetLoader> assetLoader = std::make_shared<AssetLoader>();
-
-std::shared_ptr<AssetLoader> getAssetLoader() {
-    return assetLoader;
+const std::string &get_workspace() {
+    return workspace;
 }

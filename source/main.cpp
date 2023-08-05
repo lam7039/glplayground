@@ -8,12 +8,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <filesystem>
+#include <iostream>
 
 //TODO: create Entity -> Object and EntityManager classes
 //TODO: put position/size/textureID in Entity and use Entity list from EntityManager in imgui class 
 
 int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
+    std::printf("Current workspace: %s\n", get_workspace().c_str());
 
     Window window("glplayground");
     Renderer renderer;
@@ -21,11 +23,11 @@ int main(int argc, char **argv) {
 
     ImGuiWrapper imgui;
 
-    getAssetLoader()->load<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    getAssetLoader()->load<Texture>("background", "/assets/image.jpg");
-    getAssetLoader()->load<Texture>("mario", "/assets/mario.png");
+    load_asset<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    load_asset<Texture>("background", "/assets/image.jpg");
+    load_asset<Texture>("mario", "/assets/mario.png");
 
-    std::shared_ptr<Shader> shader = getAssetLoader()->find<Shader>("main");
+    std::shared_ptr<Shader> shader = get_asset<Shader>("main");
     shader->bind();
     shader->setImage("ourTexture", 0);
 
@@ -60,7 +62,7 @@ int main(int argc, char **argv) {
     }
 
     imgui.detach();
-    getAssetLoader()->quit();
+    clear_assets();
 
     mario.destroy();
     background.destroy();
