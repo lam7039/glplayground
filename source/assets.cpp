@@ -24,7 +24,7 @@ void Asset::removeReference() {
 //TODO: implement reference counting, aka how many times an object has been loaded, so it doesn't unload an asset if other objects still use it in the scene
 //TODO: implement a preventUnload boolean for preventing unloading of a commonly used asset
 
-static std::string workspace = std::filesystem::current_path();
+static const std::string workspace = std::filesystem::current_path();
 static std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
 
 std::shared_ptr<Asset> get_asset(const std::string &name) {

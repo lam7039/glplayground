@@ -1,10 +1,10 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <unordered_map>
 #include <string>
 #include <memory>
-
-#include <glm/glm.hpp>
 
 enum AssetType {
     IMAGE,
