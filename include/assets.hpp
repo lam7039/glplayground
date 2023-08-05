@@ -81,7 +81,7 @@ void load_asset(const std::string &name, std::shared_ptr<Asset> asset);
 
 template <typename T>
 void load_asset(const std::string &name, const std::string &path) {
-    load_asset(name, std::make_shared<T>(name, get_workspace() + path));
+    load_asset(name, std::make_shared<T>(name, get_workspace() + path, true));
 }
 
 template <typename T>
