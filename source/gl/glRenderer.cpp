@@ -1,6 +1,7 @@
 #include "renderer.hpp"
 #include "gl.hpp"
-#include "assets.hpp"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 Renderer::Renderer() {
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
@@ -11,6 +12,15 @@ Renderer::Renderer() {
 
     clearColor();
     clear();
+}
+
+void Renderer::init(glm::vec2 windowSize) {
+    shader = get_asset<Shader>("main");
+    shader->bind();
+    shader->setImage("ourTexture", 0);
+
+    glm::mat4 projection = glm::ortho(0.0f, windowSize.x, 0.0f, windowSize.y, -1.0f, 1.0f);
+    shader->setMatrix("mvp_matrix", projection);
 }
 
 void Renderer::drawMesh(const std::unique_ptr<Mesh> &mesh) {

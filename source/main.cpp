@@ -5,7 +5,6 @@
 #include "window.hpp"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <filesystem>
 #include <iostream>
@@ -20,19 +19,15 @@ int main(int argc, char **argv) {
     Window window("glplayground");
     Renderer renderer;
     window.swap();
-
     ImGuiWrapper imgui;
 
     load_asset<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
     load_asset<Texture>("background", "/assets/image.jpg");
     load_asset<Texture>("mario", "/assets/mario.png");
 
-    std::shared_ptr<Shader> shader = get_asset<Shader>("main");
-    shader->bind();
-    shader->setImage("ourTexture", 0);
+    //TODO: create Camera class
 
-    glm::mat4 projection = glm::ortho(0.0f, window.size().x, 0.0f, window.size().y, -1.0f, 1.0f);
-    shader->setMatrix("mvp_matrix", projection);
+    renderer.init(window.size());
 
     glm::vec3 positionTextureBackground = {50.0f, 250.0f, 0.0f};
     glm::vec3 positionTextureMario = {500.0f, 250.0f, 0.0f};
