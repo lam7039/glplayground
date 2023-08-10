@@ -4,7 +4,7 @@ Dispatcher::Dispatcher() {
     
 }
 
-Entity *Dispatcher::dispatch(Entity *entity) {
-    entities.push_back(entity);
-    return entity;
-}
+// Entity *Dispatcher::dispatch(Entity *entity) {
+    // entities.push_back(entity);
+    // return entity;
+// }

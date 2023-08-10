@@ -12,7 +12,7 @@ public:
 
     void loadMeshData(const Entity &entity);
 
-    void init(glm::vec2 windowSize);
+    void init();
     void drawMesh(const std::unique_ptr<Mesh> &mesh);
     void draw(Model &model);
     

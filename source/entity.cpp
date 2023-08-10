@@ -13,6 +13,10 @@ void GameObject::setPosition(float x, float y, float z) {
     position = {x, y, z};
 }
 
+void GameObject::setSize(float x, float y, float z) {
+    size = {x, y, z};
+}
+
 glm::vec3 GameObject::getPosition() {
     return position;
 }

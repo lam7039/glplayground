@@ -3,6 +3,7 @@
 #include "rectangle.hpp"
 #include "imgui.hpp"
 #include "window.hpp"
+#include "camera.hpp"
 
 #include <glm/glm.hpp>
 
@@ -25,9 +26,9 @@ int main(int argc, char **argv) {
     load_asset<Texture>("background", "/assets/image.jpg");
     load_asset<Texture>("mario", "/assets/mario.png");
 
-    //TODO: create Camera class
-
-    renderer.init(window.size());
+    Camera camera(window.size());
+    renderer.init();
+    camera.init();
 
     glm::vec3 positionTextureBackground = {50.0f, 250.0f, 0.0f};
     glm::vec3 positionTextureMario = {500.0f, 250.0f, 0.0f};
@@ -43,6 +44,7 @@ int main(int argc, char **argv) {
     while (window.running()) {
         background.transform(positionTextureBackground, sizeTextureBackground);
         mario.transform(positionTextureMario, sizeTextureMario);
+        camera.update();
 
         renderer.clear();
 

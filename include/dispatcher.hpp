@@ -6,7 +6,7 @@ class Dispatcher {
 public:
     Dispatcher();
 
-    Entity *dispatch(Entity *entity);
+    // Entity *dispatch(Entity *entity);
 private:
-    std::vector<Entity*> entities;
+    // std::vector<Entity*> entities;
 };
