@@ -3,14 +3,13 @@
 
 class Camera : public Entity {
 public:
-    Camera(glm::vec2 windowSize);
+    Camera(glm::vec2 viewport);
 
     void init();
     void update();
+    void destroy();
     void setPosition(float x, float y, float z);
     void setSize(float x, float y, float z);
-    
-    glm::vec3 getPosition();
 
 private:
     std::shared_ptr<Shader> shader;

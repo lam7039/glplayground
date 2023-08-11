@@ -5,6 +5,8 @@
 #include "window.hpp"
 #include "camera.hpp"
 
+#include "entity.hpp"
+
 #include <glm/glm.hpp>
 
 #include <filesystem>
@@ -30,20 +32,13 @@ int main(int argc, char **argv) {
     renderer.init();
     camera.init();
 
-    glm::vec3 positionTextureBackground = {50.0f, 250.0f, 0.0f};
-    glm::vec3 positionTextureMario = {500.0f, 250.0f, 0.0f};
-
-    glm::vec3 sizeTextureBackground = {200.0f, 150.0f, 0.0f};
-    glm::vec3 sizeTextureMario = {150.0f, 200.0f, 0.0f};
-
-    Rectangle background(positionTextureBackground, sizeTextureBackground, "background");
-    Rectangle mario(positionTextureMario, sizeTextureMario, "mario");
+    VisibleObject background({50.0f, 250.0f, 0.0f}, {200.0f, 150.0f, 0.0f}, "background");
+    VisibleObject mario({500.0f, 250.0f, 0.0f}, {150.0f, 200.0f, 0.0f}, "mario");
 
     imgui.attach(window.instance());
 
     while (window.running()) {
-        background.transform(positionTextureBackground, sizeTextureBackground);
-        mario.transform(positionTextureMario, sizeTextureMario);
+        
         camera.update();
 
         renderer.clear();
@@ -51,7 +46,7 @@ int main(int argc, char **argv) {
         renderer.drawMesh(background.getMesh());
         renderer.drawMesh(mario.getMesh());
 
-        imgui.set(positionTextureBackground, positionTextureMario, sizeTextureBackground, sizeTextureMario);
+        imgui.set(background.getPosition(), mario.getPosition(), background.getSize(), mario.getSize());
         imgui.render();
 
         window.swap();

@@ -1,26 +1,45 @@
 #include "entity.hpp"
 
-GameObject::GameObject() {
-    position = {0.0f, 0.0f, 0.0f};
-    // rectangle = new Quad(position, {1.0f}, textureId);
+void Entity::transform(glm::vec3 &position, glm::vec3 &size) {
+    this->position = position;
+    this->size = size;
 }
 
-void GameObject::draw() {
-    // rectangle.transform(position, size);
-}
-
-void GameObject::setPosition(float x, float y, float z) {
+void Entity::setPosition(float x, float y, float z) {
     position = {x, y, z};
 }
 
-void GameObject::setSize(float x, float y, float z) {
+void Entity::setSize(float x, float y, float z) {
     size = {x, y, z};
 }
 
-glm::vec3 GameObject::getPosition() {
+glm::vec3 &Entity::getPosition() {
     return position;
 }
 
-void InterfaceObject::draw() {
-    // rectangle.transform(position, size);
+glm::vec3 &Entity::getSize() {
+    return size;
+}
+
+VisibleObject::VisibleObject() {}
+
+VisibleObject::VisibleObject(glm::vec3 position, glm::vec3 size, const std::string &asset) : rectangle(position, size, asset) {
+    transform(position, size);
+    rectangle.transform(position, size);
+}
+
+void VisibleObject::init() {
+
+}
+
+void VisibleObject::update() {
+
+}
+
+void VisibleObject::destroy() {
+    rectangle.destroy();
+}
+
+std::unique_ptr<Mesh> &VisibleObject::getMesh() {
+    return rectangle.getMesh();
 }
