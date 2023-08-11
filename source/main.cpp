@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         renderer.drawMesh(background.getMesh());
         renderer.drawMesh(mario.getMesh());
 
-        imgui.set(background.getPosition(), mario.getPosition(), background.getSize(), mario.getSize());
+        imgui.set(background.getPosition(), mario.getPosition(), camera.getPosition(), background.getSize(), mario.getSize(), camera.getSize());
         imgui.render();
 
         window.swap();

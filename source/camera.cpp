@@ -14,11 +14,13 @@ void Camera::init() {
 }
 
 void Camera::update() {
+    setPosition(position.x, position.y, position.z);
+    setSize(size.x, size.y, size.z);
     shader->setMatrix("mvp_matrix", projection);
 }
 
 void Camera::destroy() {
-    
+
 }
 
 void Camera::setPosition(float x, float y, float z) {

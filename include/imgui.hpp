@@ -12,7 +12,7 @@ public:
     void newFrame();
     void endFrame();
 
-    void set(glm::vec3 &positionTextureBackground, glm::vec3 &positionTextureMario, glm::vec3 &sizeTextureBackground, glm::vec3 &sizeTextureMario);
+    void set(glm::vec3 &positionTextureBackground, glm::vec3 &positionTextureMario, glm::vec3 &positionViewportCamera, glm::vec3 &sizeTextureBackground, glm::vec3 &sizeTextureMario, glm::vec3 &sizeViewportCamera);
     void render();
     // void label(const std::string &text);
 };

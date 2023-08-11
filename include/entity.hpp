@@ -27,12 +27,11 @@ public:
     DrawableEntity();
     DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset);
 
-    void init();
-    void update();
-    void destroy();
+    void init() override;
+    void update() override;
+    void destroy() override;
     std::unique_ptr<Mesh> &getMesh();
 
 private:
     Rectangle rectangle;
 };
-

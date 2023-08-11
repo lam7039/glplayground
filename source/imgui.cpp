@@ -44,7 +44,15 @@ void ImGuiWrapper::endFrame() {
     ImGui::EndFrame();
 }
 
-void ImGuiWrapper::set(glm::vec3 &positionTextureBackground, glm::vec3 &positionTextureMario, glm::vec3 &sizeTextureBackground, glm::vec3 &sizeTextureMario) {
+void ImGuiWrapper::set(
+    glm::vec3 &positionTextureBackground, 
+    glm::vec3 &positionTextureMario, 
+    glm::vec3 &positionViewportCamera, 
+    
+    glm::vec3 &sizeTextureBackground, 
+    glm::vec3 &sizeTextureMario,
+    glm::vec3 &sizeViewportCamera
+) {
     newFrame();
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
@@ -96,6 +104,14 @@ void ImGuiWrapper::set(glm::vec3 &positionTextureBackground, glm::vec3 &position
     ImGui::SliderFloat("Position Y##marioPositionY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
     ImGui::SliderFloat("Size X##marioSizeX", &sizeTextureMario.x, 0.0f, 1280.0f);
     ImGui::SliderFloat("Size Y##marioSizeY", &sizeTextureMario.y, 0.0f, 720.0f);
+
+    ImGui::Separator();
+
+    ImGui::Text("Camera Viewport");
+    ImGui::SliderFloat("Position X##cameraPositionX", &positionViewportCamera.x, 0.0f, 1280.0f - 150.0f);
+    ImGui::SliderFloat("Position Y##cameraPositionY", &positionViewportCamera.y, 0.0f, 720.0f - 200.0f);
+    ImGui::SliderFloat("Size X##cameraSizeX", &sizeViewportCamera.x, 0.0f, 1280.0f);
+    ImGui::SliderFloat("Size Y##cameraSizeY", &sizeViewportCamera.y, 0.0f, 720.0f);
     
     ImGui::End();
 
