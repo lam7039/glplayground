@@ -32,17 +32,17 @@ int main(int argc, char **argv) {
     renderer.init();
     camera.init();
 
-    VisibleObject background({50.0f, 250.0f, 0.0f}, {200.0f, 150.0f, 0.0f}, "background");
-    VisibleObject mario({500.0f, 250.0f, 0.0f}, {150.0f, 200.0f, 0.0f}, "mario");
+    DrawableEntity background({50.0f, 250.0f, 0.0f}, {200.0f, 150.0f, 0.0f}, "background");
+    DrawableEntity mario({500.0f, 250.0f, 0.0f}, {150.0f, 200.0f, 0.0f}, "mario");
 
     imgui.attach(window.instance());
 
     while (window.running()) {
-        
+        background.update();
+        mario.update();
         camera.update();
 
         renderer.clear();
-
         renderer.drawMesh(background.getMesh());
         renderer.drawMesh(mario.getMesh());
 

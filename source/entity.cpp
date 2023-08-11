@@ -21,25 +21,25 @@ glm::vec3 &Entity::getSize() {
     return size;
 }
 
-VisibleObject::VisibleObject() {}
+DrawableEntity::DrawableEntity() {}
 
-VisibleObject::VisibleObject(glm::vec3 position, glm::vec3 size, const std::string &asset) : rectangle(position, size, asset) {
+DrawableEntity::DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset) : rectangle(position, size, asset) {
     transform(position, size);
     rectangle.transform(position, size);
 }
 
-void VisibleObject::init() {
+void DrawableEntity::init() {
 
 }
 
-void VisibleObject::update() {
-
+void DrawableEntity::update() {
+    rectangle.transform(position, size);
 }
 
-void VisibleObject::destroy() {
+void DrawableEntity::destroy() {
     rectangle.destroy();
 }
 
-std::unique_ptr<Mesh> &VisibleObject::getMesh() {
+std::unique_ptr<Mesh> &DrawableEntity::getMesh() {
     return rectangle.getMesh();
 }
