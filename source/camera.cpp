@@ -2,7 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(glm::vec2 viewport) {
+Camera::Camera(glm::vec2 viewport, const std::string &identifier) : Entity(identifier) {
     setPosition(0.0f, 0.0f, 0.0f);
     setSize(viewport.x, viewport.y, 1.0f);
 }

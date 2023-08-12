@@ -7,6 +7,7 @@
 
 class Entity {
 public:
+    Entity(const std::string &identifier);
     virtual void init() = 0;
     virtual void update() = 0;
     virtual void destroy() = 0;
@@ -17,10 +18,12 @@ public:
 
     glm::vec3 &getPosition();
     glm::vec3 &getSize();
+    std::string &getIdentifier();
 
 protected:
     glm::vec3 position {0.0f, 0.0f, 0.0f};
     glm::vec3 size {1.0f, 1.0f, 1.0f};
+    std::string identifier;
 };
 
 class DrawableEntity : public Entity {
@@ -38,12 +41,14 @@ private:
 
 class EntityManager {
 public:
-    void add(std::shared_ptr<Entity> entity, bool isDrawable = false);
+    void add(std::shared_ptr<Entity> entity, bool drawable = false);
     void init();
     void update();
     void draw();
     void destroy();
 
+    std::vector<std::shared_ptr<Entity>> &getEntities() const;
+    std::vector<std::shared_ptr<DrawableEntity>> &getDrawables() const;
 private:
     Renderer renderer;
 };

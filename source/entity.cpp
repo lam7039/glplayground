@@ -1,5 +1,7 @@
 #include "entity.hpp"
 
+Entity::Entity(const std::string &identifier) : identifier(identifier) {}
+
 void Entity::transform(glm::vec3 &position, glm::vec3 &size) {
     this->position = position;
     this->size = size;
@@ -21,7 +23,11 @@ glm::vec3 &Entity::getSize() {
     return size;
 }
 
-DrawableEntity::DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset) : rectangle(position, size, asset) {
+std::string &Entity::getIdentifier() {
+    return identifier;
+}
+
+DrawableEntity::DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset) : Entity(asset), rectangle(position, size, asset) {
     transform(position, size);
 }
 
@@ -44,10 +50,9 @@ std::unique_ptr<Mesh> &DrawableEntity::getMesh() {
 static std::vector<std::shared_ptr<Entity>> entities;
 static std::vector<std::shared_ptr<DrawableEntity>> drawables;
 
-void EntityManager::add(std::shared_ptr<Entity> entity, bool isDrawable) {
-    if (isDrawable) {
-        auto drawable = std::static_pointer_cast<DrawableEntity>(entity);
-        drawables.push_back(drawable);
+void EntityManager::add(std::shared_ptr<Entity> entity, bool drawable) {
+    if (drawable) {
+        drawables.push_back(std::static_pointer_cast<DrawableEntity>(entity));
         return;
     }
     entities.push_back(entity);
@@ -86,4 +91,12 @@ void EntityManager::destroy() {
     for (auto drawable : drawables) {
         drawable->destroy();
     }
+}
+
+std::vector<std::shared_ptr<Entity>> &EntityManager::getEntities() const {
+    return entities;
+}
+
+std::vector<std::shared_ptr<DrawableEntity>> &EntityManager::getDrawables() const {
+    return drawables;
 }

@@ -21,25 +21,25 @@ int main(int argc, char **argv) {
     load_asset<Texture>("mario", "/assets/mario.png");
 
     EntityManager entityManager;
-    entityManager.add(std::make_shared<Camera>(window.size()));
+    entityManager.add(std::make_shared<Camera>(window.size(), "mainCamera"));
     entityManager.add(std::make_shared<DrawableEntity>(glm::vec3 {50.0f, 250.0f, 0.0f}, glm::vec3 {200.0f, 150.0f, 0.0f}, "background"), true);
     entityManager.add(std::make_shared<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 0.0f}, "mario"), true);
     entityManager.init();
 
-    // imgui.attach(window.instance());
+    imgui.attach(window.instance());
 
     while (window.running()) {
         entityManager.update();
         entityManager.draw();
 
-        // imgui.set(background.getPosition(), mario.getPosition(), camera.getPosition(), background.getSize(), mario.getSize(), camera.getSize());
-        // imgui.render();
+        imgui.set(entityManager.getDrawables());
+        imgui.render();
 
         window.swap();
         window.pollEvents();
     }
 
-    // imgui.detach();
+    imgui.detach();
     clear_assets();
     
     entityManager.destroy();

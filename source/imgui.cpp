@@ -44,74 +44,52 @@ void ImGuiWrapper::endFrame() {
     ImGui::EndFrame();
 }
 
-void ImGuiWrapper::set(
-    glm::vec3 &positionTextureBackground, 
-    glm::vec3 &positionTextureMario, 
-    glm::vec3 &positionViewportCamera, 
-    
-    glm::vec3 &sizeTextureBackground, 
-    glm::vec3 &sizeTextureMario,
-    glm::vec3 &sizeViewportCamera
-) {
+void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
+    auto identifier = entity->getIdentifier();
+    ImGui::Text((identifier + " Texture").c_str());
+    ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, 1280.0f - entity->getSize().x);
+    ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, 720.0f - entity->getSize().y);
+    ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &entity->getSize().x, 0.0f, 1280.0f);
+    ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &entity->getSize().y, 0.0f, 720.0f);
+    ImGui::Separator();
+}
+
+void ImGuiWrapper::set(std::vector<std::shared_ptr<DrawableEntity>> entities) {
     newFrame();
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-    // ImGui::Begin("My First Tool");
-    // if (ImGui::BeginMenuBar()) {
-    //     if (ImGui::BeginMenu("File")){
-    //         if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-    //         if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
-    //         if (ImGui::MenuItem("Close", "Ctrl+W"))  { /* Do stuff */ }
-    //         ImGui::EndMenu();
-    //     }
-    //     ImGui::EndMenuBar();
-    // }
-    // ImGui::End();
-
-    // ImGui::Begin("Hello ImGui!");
-    // for (auto& [name, object] : objects) {
-    //     switch (object->type) {
-    //         case AssetType::IMAGE:
-    //             ImGui::Text((name + " Position").c_str());
-    //             ImGui::SliderFloat((name + " X").c_str(), &object->position.x, 0.0f, 1280.0f - 200.0f);
-    //             ImGui::SliderFloat((name + " Y").c_str(), &object->position.y, 0.0f, 720.0f - 150.0f);
-
-    //             ImGui::Text((name + " Size").c_str());
-    //             ImGui::SliderFloat((name + " X").c_str(), &object->size.x, 0.0f, 1280.0f - 200.0f);
-    //             ImGui::SliderFloat((name + " Y").c_str(), &object->size.y, 0.0f, 720.0f - 150.0f);
-    //         break;
-    //     }
-    // }
-    // ImGui::End();
-
     ImGui::Begin("Hello ImGui!");
 
-    ImGui::Text("Background Texture");
-    // ImGui::SliderFloat2("Position##backgroundPosition", glm::value_ptr(positionTextureBackground), 0.0f, 1280.0f);
-    // ImGui::SliderFloat2("Position##backgroundSize", glm::value_ptr(sizeTextureBackground), 0.0f, 1280.0f);
-    ImGui::SliderFloat("Position X##backgroundPositionX", &positionTextureBackground.x, 0.0f, 1280.0f - 200.0f);
-    ImGui::SliderFloat("Position Y##backgroundPositionY", &positionTextureBackground.y, 0.0f, 720.0f - 150.0f);
-    ImGui::SliderFloat("Size X##backgroundSizeX", &sizeTextureBackground.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat("Size Y##backgroundSizeY", &sizeTextureBackground.y, 0.0f, 720.0f);
+    for (auto entity : entities) {
+        transformBox(entity);
+    }
 
-    ImGui::Separator();
+    // ImGui::Text("Background Texture");
+    // // ImGui::SliderFloat2("Position##backgroundPosition", glm::value_ptr(positionTextureBackground), 0.0f, 1280.0f);
+    // // ImGui::SliderFloat2("Position##backgroundSize", glm::value_ptr(sizeTextureBackground), 0.0f, 1280.0f);
+    // ImGui::SliderFloat("Position X##backgroundPositionX", &positionTextureBackground.x, 0.0f, 1280.0f - 200.0f);
+    // ImGui::SliderFloat("Position Y##backgroundPositionY", &positionTextureBackground.y, 0.0f, 720.0f - 150.0f);
+    // ImGui::SliderFloat("Size X##backgroundSizeX", &sizeTextureBackground.x, 0.0f, 1280.0f);
+    // ImGui::SliderFloat("Size Y##backgroundSizeY", &sizeTextureBackground.y, 0.0f, 720.0f);
 
-    ImGui::Text("Mario Texture");
-    // ImGui::SliderFloat2("Position##marioPosition", glm::value_ptr(positionTextureMario), 0.0f, 1280.0f);
-    // ImGui::SliderFloat2("Position##marioSize", glm::value_ptr(sizeTextureMario), 0.0f, 1280.0f);
-    ImGui::SliderFloat("Position X##marioPositionX", &positionTextureMario.x, 0.0f, 1280.0f - 150.0f);
-    ImGui::SliderFloat("Position Y##marioPositionY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
-    ImGui::SliderFloat("Size X##marioSizeX", &sizeTextureMario.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat("Size Y##marioSizeY", &sizeTextureMario.y, 0.0f, 720.0f);
+    // ImGui::Separator();
 
-    ImGui::Separator();
+    // ImGui::Text("Mario Texture");
+    // // ImGui::SliderFloat2("Position##marioPosition", glm::value_ptr(positionTextureMario), 0.0f, 1280.0f);
+    // // ImGui::SliderFloat2("Position##marioSize", glm::value_ptr(sizeTextureMario), 0.0f, 1280.0f);
+    // ImGui::SliderFloat("Position X##marioPositionX", &positionTextureMario.x, 0.0f, 1280.0f - 150.0f);
+    // ImGui::SliderFloat("Position Y##marioPositionY", &positionTextureMario.y, 0.0f, 720.0f - 200.0f);
+    // ImGui::SliderFloat("Size X##marioSizeX", &sizeTextureMario.x, 0.0f, 1280.0f);
+    // ImGui::SliderFloat("Size Y##marioSizeY", &sizeTextureMario.y, 0.0f, 720.0f);
 
-    ImGui::Text("Camera Viewport");
-    ImGui::SliderFloat("Position X##cameraPositionX", &positionViewportCamera.x, 0.0f, 1280.0f - 150.0f);
-    ImGui::SliderFloat("Position Y##cameraPositionY", &positionViewportCamera.y, 0.0f, 720.0f - 200.0f);
-    ImGui::SliderFloat("Size X##cameraSizeX", &sizeViewportCamera.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat("Size Y##cameraSizeY", &sizeViewportCamera.y, 0.0f, 720.0f);
+    // ImGui::Separator();
+
+    // ImGui::Text("Camera Viewport");
+    // ImGui::SliderFloat("Position X##cameraPositionX", &positionViewportCamera.x, 0.0f, 1280.0f - 150.0f);
+    // ImGui::SliderFloat("Position Y##cameraPositionY", &positionViewportCamera.y, 0.0f, 720.0f - 200.0f);
+    // ImGui::SliderFloat("Size X##cameraSizeX", &sizeViewportCamera.x, 0.0f, 1280.0f);
+    // ImGui::SliderFloat("Size Y##cameraSizeY", &sizeViewportCamera.y, 0.0f, 720.0f);
     
     ImGui::End();
 
