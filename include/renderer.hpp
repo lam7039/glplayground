@@ -1,6 +1,5 @@
 #pragma once
 
-#include "entity.hpp"
 #include "model.hpp"
 #include "assets.hpp"
 
@@ -9,8 +8,6 @@
 class Renderer {
 public:
     Renderer();
-
-    void loadMeshData(const Entity &entity);
 
     void init();
     void drawMesh(const std::unique_ptr<Mesh> &mesh);

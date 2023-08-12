@@ -31,6 +31,7 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     CHECK_GL_ERROR(glViewport(position.x, position.y, size.x, size.y));
 
     // glfwWindowHint(GLFW_DECORATED, false); // No titlebar / resize stuff
+    swap();
 }
 
 glm::vec2 Window::size() const {

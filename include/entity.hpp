@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rectangle.hpp"
+#include "renderer.hpp"
 
 #include <glm/glm.hpp>
 
@@ -24,7 +25,6 @@ protected:
 
 class DrawableEntity : public Entity {
 public:
-    DrawableEntity();
     DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset);
 
     void init() override;
@@ -34,4 +34,16 @@ public:
 
 private:
     Rectangle rectangle;
+};
+
+class EntityManager {
+public:
+    void add(std::shared_ptr<Entity> entity, bool isDrawable = false);
+    void init();
+    void update();
+    void draw();
+    void destroy();
+
+private:
+    Renderer renderer;
 };
