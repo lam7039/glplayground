@@ -7,7 +7,7 @@
 
 class Entity {
 public:
-    Entity(const std::string &identifier);
+    Entity();
     virtual void init() = 0;
     virtual void update() = 0;
     virtual void destroy() = 0;
@@ -18,12 +18,12 @@ public:
 
     glm::vec3 &getPosition();
     glm::vec3 &getSize();
-    std::string &getIdentifier();
+    unsigned int &getIdentifier();
 
 protected:
     glm::vec3 position {0.0f, 0.0f, 0.0f};
     glm::vec3 size {1.0f, 1.0f, 1.0f};
-    std::string identifier;
+    unsigned int identifier;
 };
 
 class DrawableEntity : public Entity {

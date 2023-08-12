@@ -3,7 +3,7 @@
 
 class Camera : public Entity {
 public:
-    Camera(glm::vec2 viewport, const std::string &identifier);
+    Camera(glm::vec2 viewport);
 
     void init();
     void update();

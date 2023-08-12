@@ -47,8 +47,8 @@ void ImGuiWrapper::endFrame() {
 }
 
 void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
-    auto identifier = entity->getIdentifier();
-    ImGui::Text((identifier + " Texture").c_str());
+    auto identifier = std::to_string(entity->getIdentifier());
+    ImGui::Text(("Entity ID: " + identifier).c_str());
     ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
     ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, viewport.y - entity->getSize().y);
     ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &entity->getSize().x, 0.0f, viewport.x);

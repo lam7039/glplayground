@@ -1,6 +1,11 @@
 #include "entity.hpp"
 
-Entity::Entity(const std::string &identifier) : identifier(identifier) {}
+static unsigned int nextId = 0;
+
+Entity::Entity() {
+    identifier = nextId;
+    nextId++;
+}
 
 void Entity::transform(glm::vec3 &position, glm::vec3 &size) {
     this->position = position;
@@ -23,11 +28,11 @@ glm::vec3 &Entity::getSize() {
     return size;
 }
 
-std::string &Entity::getIdentifier() {
+unsigned int &Entity::getIdentifier() {
     return identifier;
 }
 
-DrawableEntity::DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset) : Entity(asset), rectangle(position, size, asset) {
+DrawableEntity::DrawableEntity(glm::vec3 position, glm::vec3 size, const std::string &asset) : rectangle(position, size, asset) {
     transform(position, size);
 }
 
