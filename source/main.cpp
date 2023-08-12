@@ -1,17 +1,13 @@
-#include "assets.hpp"
-#include "renderer.hpp"
-#include "rectangle.hpp"
-#include "imgui.hpp"
 #include "window.hpp"
-#include "camera.hpp"
-
+#include "imgui.hpp"
+#include "assets.hpp"
 #include "entity.hpp"
+#include "camera.hpp"
 
 #include <glm/glm.hpp>
 
 #include <filesystem>
 #include <iostream>
-#include <vector>
 
 int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
@@ -28,7 +24,6 @@ int main(int argc, char **argv) {
     entityManager.add(std::make_shared<Camera>(window.size()));
     entityManager.add(std::make_shared<DrawableEntity>(glm::vec3 {50.0f, 250.0f, 0.0f}, glm::vec3 {200.0f, 150.0f, 0.0f}, "background"), true);
     entityManager.add(std::make_shared<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 0.0f}, "mario"), true);
-
     entityManager.init();
 
     // imgui.attach(window.instance());
