@@ -8,6 +8,8 @@ struct GLFWwindow;
 
 class ImGuiWrapper {
 public:
+    ImGuiWrapper(glm::vec2 viewport);
+
     void attach(GLFWwindow *window);
     void detach();
 
@@ -19,4 +21,7 @@ public:
 
     void render();
     // void label(const std::string &text);
+
+private:
+    glm::vec2 viewport;
 };

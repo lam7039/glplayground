@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     std::printf("Current workspace: %s\n", get_workspace().c_str());
 
     Window window("glplayground");
-    ImGuiWrapper imgui;
+    ImGuiWrapper imgui(window.size());
 
     load_asset<Shader>("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
     load_asset<Texture>("background", "/assets/image.jpg");
