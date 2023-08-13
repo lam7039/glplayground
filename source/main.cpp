@@ -21,8 +21,8 @@ int main(int argc, char **argv) {
     load_asset<Texture>("mario", "/assets/mario.png");
 
     add_entity(std::make_shared<Camera>(window.size()));
-    add_entity(std::make_shared<DrawableEntity>(glm::vec3 {50.0f, 250.0f, 0.0f}, glm::vec3 {200.0f, 150.0f, 0.0f}, "background"), true);
-    add_entity(std::make_shared<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 0.0f}, "mario"), true);
+    add_entity<DrawableEntity>(glm::vec3 {50.0f, 250.0f, 0.0f}, glm::vec3 {200.0f, 150.0f, 0.0f}, "background");
+    add_entity<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 0.0f}, "mario");
     init_entities();
 
     imgui.attach(window.instance());
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
 
     imgui.detach();
     clear_assets();
-    
+
     destroy_entities();
     window.destroy();
     

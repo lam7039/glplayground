@@ -39,6 +39,12 @@ private:
 };
 
 void add_entity(std::shared_ptr<Entity> entity, bool drawable = false);
+
+template <typename T>
+void add_entity(glm::vec3 position, glm::vec3 size, std::string asset = "") {
+    add_entity(std::make_shared<T>(position, size, asset), !std::empty(asset));
+}
+
 void init_entities();
 void update_entities();
 void render_drawables();

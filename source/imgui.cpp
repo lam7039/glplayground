@@ -35,7 +35,6 @@ void ImGuiWrapper::detach() {
     ImGui::DestroyContext();
 }
 
-
 void ImGuiWrapper::newFrame() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -61,7 +60,7 @@ void ImGuiWrapper::set(std::vector<std::shared_ptr<DrawableEntity>> entities) {
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-    ImGui::Begin("Hello ImGui!");
+    ImGui::Begin("Entities");
 
     for (auto entity : entities) {
         transformBox(entity);
