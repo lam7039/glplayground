@@ -1,7 +1,6 @@
 #pragma once
 
 #include "rectangle.hpp"
-#include "renderer.hpp"
 
 #include <glm/glm.hpp>
 
@@ -39,16 +38,9 @@ private:
     Rectangle rectangle;
 };
 
-class EntityManager {
-public:
-    void add(std::shared_ptr<Entity> entity, bool drawable = false);
-    void init();
-    void update();
-    void draw();
-    void destroy();
-
-    std::vector<std::shared_ptr<Entity>> &getEntities() const;
-    std::vector<std::shared_ptr<DrawableEntity>> &getDrawables() const;
-private:
-    Renderer renderer;
-};
+void add_entity(std::shared_ptr<Entity> entity, bool drawable = false);
+void init_entities();
+void update_entities();
+void render_drawables();
+void destroy_entities();
+std::vector<std::shared_ptr<DrawableEntity>> &get_drawables();

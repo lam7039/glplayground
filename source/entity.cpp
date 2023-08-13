@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include "renderer.hpp"
 
 static unsigned int nextId = 0;
 
@@ -52,10 +53,11 @@ std::unique_ptr<Mesh> &DrawableEntity::getMesh() {
     return rectangle.getMesh();
 }
 
+static Renderer renderer;
 static std::vector<std::shared_ptr<Entity>> entities;
 static std::vector<std::shared_ptr<DrawableEntity>> drawables;
 
-void EntityManager::add(std::shared_ptr<Entity> entity, bool drawable) {
+void add_entity(std::shared_ptr<Entity> entity, bool drawable) {
     if (drawable) {
         drawables.push_back(std::static_pointer_cast<DrawableEntity>(entity));
         return;
@@ -63,7 +65,7 @@ void EntityManager::add(std::shared_ptr<Entity> entity, bool drawable) {
     entities.push_back(entity);
 }
 
-void EntityManager::init() {
+void init_entities() {
     renderer.init();
     for (auto drawable : drawables) {
         drawable->init();
@@ -73,7 +75,7 @@ void EntityManager::init() {
     }
 }
 
-void EntityManager::update() {
+void update_entities() {
     for (auto drawable : drawables) {
         drawable->update();
     }
@@ -82,26 +84,24 @@ void EntityManager::update() {
     }
 }
 
-void EntityManager::draw() {
+void render_drawables() {
     renderer.clear();
     for (auto drawable : drawables) {
         renderer.drawMesh(drawable->getMesh());
     }
 }
 
-void EntityManager::destroy() {
+void destroy_entities() {
     for (auto entity : entities) {
         entity->destroy();
     }
+    entities.clear();
     for (auto drawable : drawables) {
         drawable->destroy();
     }
+    drawables.clear();
 }
 
-std::vector<std::shared_ptr<Entity>> &EntityManager::getEntities() const {
-    return entities;
-}
-
-std::vector<std::shared_ptr<DrawableEntity>> &EntityManager::getDrawables() const {
+std::vector<std::shared_ptr<DrawableEntity>> &get_drawables() {
     return drawables;
 }

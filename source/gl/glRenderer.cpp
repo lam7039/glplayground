@@ -1,7 +1,7 @@
 #include "renderer.hpp"
 #include "gl.hpp"
 
-Renderer::Renderer() {
+void Renderer::init() {
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
     // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));
     CHECK_GL_ERROR(glEnable(GL_BLEND));
@@ -10,9 +10,7 @@ Renderer::Renderer() {
 
     clearColor();
     clear();
-}
 
-void Renderer::init() {
     shader = get_asset<Shader>("main");
     shader->bind();
     shader->setImage("ourTexture", 0);

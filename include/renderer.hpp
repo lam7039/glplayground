@@ -7,8 +7,6 @@
 
 class Renderer {
 public:
-    Renderer();
-
     void init();
     void drawMesh(const std::unique_ptr<Mesh> &mesh);
     void draw(Model &model);
