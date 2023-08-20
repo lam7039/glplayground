@@ -90,4 +90,4 @@ void load_asset(const std::string &name, const std::string &vertex, const std::s
 }
 
 void remove_asset(const std::string &name);
-void clear_assets();
+void destroy_assets();

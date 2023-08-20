@@ -1,4 +1,3 @@
-
 #define GLFW_INCLUDE_NONE
 #include "window.hpp"
 #include "gl.hpp"

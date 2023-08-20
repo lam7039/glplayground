@@ -40,7 +40,7 @@ void remove_asset(const std::string &name) {
     assets.erase(name);
 }
 
-void clear_assets() {
+void destroy_assets() {
     for (auto& [name, asset] : assets) {
         asset->destroy();
     }
