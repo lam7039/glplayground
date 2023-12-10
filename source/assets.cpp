@@ -35,6 +35,14 @@ void load_asset(const std::string &name, std::shared_ptr<Asset> asset) {
     assets[name] = asset;
 }
 
+void load_shader(const std::string &name, const std::string &vertex, const std::string &fragment) {
+    load_asset(name, std::make_shared<Shader>(name, get_workspace() + vertex, get_workspace() + fragment));
+}
+
+void load_texture(const std::string &name, const std::string &path) {
+    load_asset(name, std::make_shared<Texture>(name, get_workspace() + path, true));
+}
+
 void remove_asset(const std::string &name) {
     assets[name]->destroy();
     assets.erase(name);

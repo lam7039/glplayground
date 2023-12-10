@@ -78,16 +78,8 @@ std::shared_ptr<T> get_asset(const std::string &name) {
 }
 
 void load_asset(const std::string &name, std::shared_ptr<Asset> asset);
-
-template <typename T>
-void load_texture(const std::string &name, const std::string &path) {
-    load_asset(name, std::make_shared<T>(name, get_workspace() + path, true));
-}
-
-template <typename T>
-void load_shader(const std::string &name, const std::string &vertex, const std::string &fragment) {
-    load_asset(name, std::make_shared<T>(name, get_workspace() + vertex, get_workspace() + fragment));
-}
+void load_shader(const std::string &name, const std::string &vertex, const std::string &fragment);
+void load_texture(const std::string &name, const std::string &path);
 
 void remove_asset(const std::string &name);
 void destroy_assets();
