@@ -20,6 +20,7 @@ public:
     
     void pollEvents();
     void swap();
+    void close();
     void destroy();
 private:
     std::unique_ptr<GLFWwindow, GLFWwindowDeleter> window;

@@ -51,6 +51,9 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
     if (key == GLFW_KEY_E && action == GLFW_PRESS) {
         std::cout << "Test keypress" << std::endl;
     }
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
 }
 
 void Window::pollEvents() {
@@ -60,6 +63,10 @@ void Window::pollEvents() {
 
 void Window::swap() {
     glfwSwapBuffers(window.get());
+}
+
+void Window::close() {
+    glfwSetWindowShouldClose(window.get(), GLFW_TRUE);
 }
 
 void Window::destroy() {

@@ -6,6 +6,8 @@
 #include <imgui/imgui_impl_opengl3.h>
 // #include <glm/gtc/type_ptr.hpp>
 
+// #include <format>
+
 ImGuiWrapper::ImGuiWrapper(glm::vec2 viewport) : viewport(viewport) {}
 
 void ImGuiWrapper::attach(GLFWwindow *window) {
@@ -47,6 +49,8 @@ void ImGuiWrapper::endFrame() {
 
 void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
     auto identifier = std::to_string(entity->getIdentifier());
+    // auto literal = std::format("Entity ID: ", identifier);
+
     ImGui::Text(("Entity ID: " + identifier).c_str());
     ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
     ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, viewport.y - entity->getSize().y);
