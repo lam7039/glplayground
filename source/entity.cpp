@@ -67,20 +67,20 @@ void add_entity(std::shared_ptr<Entity> entity, bool drawable) {
 
 void init_entities() {
     renderer.init();
-    for (auto drawable : drawables) {
-        drawable->init();
-    }
     for (auto entity : entities) {
         entity->init();
+    }
+    for (auto drawable : drawables) {
+        drawable->init();
     }
 }
 
 void update_entities() {
-    for (auto drawable : drawables) {
-        drawable->update();
-    }
     for (auto entity : entities) {
         entity->update();
+    }
+    for (auto drawable : drawables) {
+        drawable->update();
     }
 }
 
