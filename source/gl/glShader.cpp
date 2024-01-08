@@ -54,7 +54,7 @@ unsigned int Shader::createProgram() {
     return 1;
 }
 
-Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource) : Asset(name, SHADER) {
+Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource) : Asset(name, AssetType::SHADER) {
     vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
     fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
     createProgram();

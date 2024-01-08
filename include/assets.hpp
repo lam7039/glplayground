@@ -15,7 +15,7 @@ enum AssetType {
 
 class Asset {
 public:
-    AssetType type = AssetType::IMAGE;
+    AssetType type;
     Asset(const std::string &name, AssetType type);
 
     virtual void bind() = 0;

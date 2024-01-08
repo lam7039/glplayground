@@ -54,6 +54,7 @@ void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
     ImGui::Text(("Entity ID: " + identifier).c_str());
     ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
     ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, viewport.y - entity->getSize().y);
+    ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &entity->getPosition().z, -100.0f, 100.0f);
     ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &entity->getSize().x, 0.0f, viewport.x);
     ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &entity->getSize().y, 0.0f, viewport.y);
     ImGui::Separator();

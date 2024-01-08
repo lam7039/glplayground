@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
     load_texture("background", "/assets/image.jpg");
     load_texture("mario", "/assets/mario.png");
 
+    //TODO: create entities with a file
     add_entity(std::make_shared<Camera>(window.size()));
     add_entity<DrawableEntity>(glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec3 {window.size().x, window.size().y, 1.0f}, "background");
     add_entity<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 1.0f}, "mario");

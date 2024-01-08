@@ -14,6 +14,7 @@ void Renderer::init() {
     shader = get_asset<Shader>("main");
     shader->bind();
     shader->setImage("ourTexture", 0);
+    // shader->setWireframe();
 }
 
 void Renderer::drawMesh(const std::unique_ptr<Mesh> &mesh) {
