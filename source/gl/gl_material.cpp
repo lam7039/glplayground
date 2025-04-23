@@ -1,5 +1,5 @@
-#include "gl.hpp"
-#include "Material.hpp"
+#include "gl/gl.hpp"
+#include "material.hpp"
 
 Material::Material(unsigned int shaderId) : shaderId(shaderId) {}
 

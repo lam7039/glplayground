@@ -32,13 +32,13 @@ struct GLBuffer {
 };
 
 struct GLShader {
-    unsigned int programId {0};
-    unsigned int vertexShader {0};
-    unsigned int fragmentShader {0};
+    unsigned int program_id {0};
+    unsigned int vertex_shader {0};
+    unsigned int fragment_shader {0};
 };
 
 // struct GLVertexArray {
-//     unsigned int vertexArrayObject {0};
-//     unsigned int vertexBufferObject {0};
-//     unsigned int elementBufferObject {0};
+//     unsigned int vertex_array_object {0};
+//     unsigned int vertex_buffer_object {0};
+//     unsigned int element_buffer_object {0};
 // };

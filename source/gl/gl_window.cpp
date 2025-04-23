@@ -1,6 +1,6 @@
 #define GLFW_INCLUDE_NONE
 #include "window.hpp"
-#include "gl.hpp"
+#include "gl/gl.hpp"
 #include <glfw/glfw3.h>
 
 void Window::GLFWwindowDeleter::operator()(GLFWwindow *window) {
@@ -47,7 +47,7 @@ GLFWwindow *Window::instance() const {
     return window.get();
 }
 
-void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_E && action == GLFW_PRESS) {
         std::cout << "Test keypress" << std::endl;
     }
@@ -56,8 +56,8 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
     }
 }
 
-void Window::pollEvents() {
-    glfwSetKeyCallback(window.get(), keyCallback);
+void Window::poll_events() {
+    glfwSetKeyCallback(window.get(), key_callback);
     glfwPollEvents();
 }
 

@@ -1,46 +1,43 @@
 #include "window.hpp"
-#include "imgui.hpp"
-#include "assets.hpp"
-#include "entity.hpp"
-#include "camera.hpp"
+// #include "imgui.hpp"
+#include "game.hpp"
+#include "renderer.hpp"
+#include "gl/gl_renderer.hpp"
 
 #include <filesystem>
-#include <iostream>
+
+//TODO: code builds with no errors, but doesn't run
 
 int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
-    std::printf("Current workspace: %s\n", get_workspace().c_str());
 
     Window window("glplayground");
-    ImGuiWrapper imgui(window.size());
+    // ImGuiWrapper imgui(window.size());
 
-    load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    load_texture("background", "/assets/image.jpg");
-    load_texture("mario", "/assets/mario.png");
+    Renderer renderer;
+    renderer.init(std::make_unique<GLRenderer>());
 
-    //TODO: create entities with a file
-    add_entity(std::make_shared<Camera>(window.size()));
-    add_entity<DrawableEntity>(glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec3 {window.size().x, window.size().y, 1.0f}, "background");
-    add_entity<DrawableEntity>(glm::vec3 {500.0f, 250.0f, 0.0f}, glm::vec3 {150.0f, 200.0f, 1.0f}, "mario");
-    init_entities();
+    Game game;
+    game.init(window.size().x, window.size().y);
 
-    imgui.attach(window.instance());
+    // imgui.attach(window.instance());
 
     while (window.running()) {
-        update_entities();
-        render_drawables();
+        game.update();
+        game.render(renderer);
 
-        imgui.set(get_drawables());
-        imgui.render();
+        // imgui.render();
+
+        renderer.clear();
 
         window.swap();
-        window.pollEvents();
+        window.poll_events();
     }
 
-    imgui.detach();
+    // imgui.detach();
 
-    destroy_entities();
-    destroy_assets();
+    renderer.destroy();
+    game.quit();
 
     window.destroy();
     return 0;

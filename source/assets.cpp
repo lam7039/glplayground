@@ -25,37 +25,41 @@ void Asset::removeReference() {
 //TODO: implement a preventUnload boolean for preventing unloading of a commonly used asset
 //TODO: use unique_ptr instead of shared_ptr for resource management
 
-static const std::string workspace = std::filesystem::current_path();
-static std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+namespace Global {
 
-std::shared_ptr<Asset> get_asset(const std::string &name) {
-    return assets[name];
-}
+    static const std::string workspace = std::filesystem::current_path();
+    static std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
 
-void load_asset(const std::string &name, std::shared_ptr<Asset> asset) {
-    assets[name] = asset;
-}
-
-void load_shader(const std::string &name, const std::string &vertex, const std::string &fragment) {
-    load_asset(name, std::make_shared<Shader>(name, get_workspace() + vertex, get_workspace() + fragment));
-}
-
-void load_texture(const std::string &name, const std::string &path) {
-    load_asset(name, std::make_shared<Texture>(name, get_workspace() + path, true));
-}
-
-void remove_asset(const std::string &name) {
-    assets[name]->destroy();
-    assets.erase(name);
-}
-
-void destroy_assets() {
-    for (auto& [name, asset] : assets) {
-        asset->destroy();
+    std::shared_ptr<Asset> get_asset(const std::string &name) {
+        return assets[name];
     }
-    assets.clear();
-}
 
-const std::string &get_workspace() {
-    return workspace;
+    void load_asset(const std::string &name, std::shared_ptr<Asset> asset) {
+        assets[name] = asset;
+    }
+
+    void load_shader(const std::string &name, const std::string &vertex, const std::string &fragment) {
+        load_asset(name, std::make_shared<Shader>(name, workspace + vertex, workspace + fragment));
+    }
+
+    void load_texture(const std::string &name, const std::string &path) {
+        load_asset(name, std::make_shared<Texture>(name, workspace + path, true));
+    }
+
+    void remove_asset(const std::string &name) {
+        assets[name]->destroy();
+        assets.erase(name);
+    }
+
+    void destroy_assets() {
+        for (auto& [name, asset] : assets) {
+            asset->destroy();
+        }
+        assets.clear();
+    }
+
+    const std::string &get_workspace() {
+        return workspace;
+    }
+
 }

@@ -10,8 +10,8 @@ public:
     ~Model();
 
     void addMesh(Mesh &mesh);
-    const std::vector<std::unique_ptr<Mesh>> &getMeshes() const;
+    const std::vector<std::shared_ptr<Mesh>>& get_meshes() const;
 private:
     std::string name;
-    std::vector<std::unique_ptr<Mesh>> meshes;
+    std::vector<std::shared_ptr<Mesh>> meshes;
 };

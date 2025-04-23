@@ -16,20 +16,20 @@ public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture);
 
     void bind(std::vector<Vertex> &vertices);
-    void inputLayoutBind();
-    void inputLayoutUnbind();
+    void input_layout_bind();
+    void input_layout_unbind();
     void destroy();
     
-    unsigned int getIndexCount() const;
-    std::string getTexture();
+    unsigned int get_index_count() const;
+    std::string get_texture();
 private:
     std::string texture; 
-    std::vector<Vertex> vertexData;
-    std::vector<unsigned int> indexData;
+    std::vector<Vertex> vertex_data;
+    std::vector<unsigned int> index_data;
 
-    unsigned int inputLayoutObject {0};
-    unsigned int vertexBufferObject {0};
-    unsigned int elementBufferObject {0};
+    unsigned int input_layout_object {0};
+    unsigned int vertex_buffer_object {0};
+    unsigned int element_buffer_object {0};
     
-    unsigned int getVertexDataSize() const;
+    unsigned int get_vertex_data_size() const;
 };

@@ -6,18 +6,18 @@
 class Rectangle {
 public:
     Rectangle();
-    Rectangle(glm::vec3 &position, glm::vec3 &size, std::string texture);
+    Rectangle(glm::vec3& position, glm::vec3& size, std::string texture);
     // ~Rectangle();
 
-    void transform(glm::vec3 &position, glm::vec3 &size);
+    void transform(glm::vec3& position, glm::vec3& size);
     void destroy();
 
-    std::unique_ptr<Mesh> &getMesh();
+    const std::shared_ptr<Mesh>& get_mesh() const;
 private:
-    unsigned int vertexBufferIndex {0};
+    unsigned int vertex_buffer_index {0};
     std::vector<Vertex> vertices;
-    std::unique_ptr<Mesh> mesh;
+    std::shared_ptr<Mesh> mesh;
 
-    void generateVertices(glm::vec3 position, glm::vec3 size);
-    std::vector<unsigned int> generateIndices();
+    void generate_vertices(glm::vec3 position, glm::vec3 size);
+    std::vector<unsigned int> generate_indices();
 };

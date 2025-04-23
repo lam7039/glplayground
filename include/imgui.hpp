@@ -13,11 +13,11 @@ public:
     void attach(GLFWwindow *window);
     void detach();
 
-    void newFrame();
-    void endFrame();
+    void new_frame();
+    void end_frame();
 
-    void set(std::vector<std::shared_ptr<DrawableEntity>> entities);
-    void transformBox(std::shared_ptr<DrawableEntity> entity);
+    void set(std::vector<std::shared_ptr<Entity>> entities);
+    void transform_box(std::shared_ptr<Entity> entity);
 
     void render();
     // void label(const std::string &text);

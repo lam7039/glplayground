@@ -1,20 +1,20 @@
 #include "rectangle.hpp"
 
 Rectangle::Rectangle() {
-    generateVertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f});
-    mesh = std::make_unique<Mesh>(vertices, generateIndices(), "background");
+    generate_vertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f});
+    mesh = std::make_shared<Mesh>(vertices, generate_indices(), "background");
 }
 
-Rectangle::Rectangle(glm::vec3 &position, glm::vec3 &size, std::string texture) {
-    generateVertices(position, size);
-    mesh = std::make_unique<Mesh>(vertices, generateIndices(), texture);
+Rectangle::Rectangle(glm::vec3& position, glm::vec3& size, std::string texture) {
+    generate_vertices(position, size);
+    mesh = std::make_shared<Mesh>(vertices, generate_indices(), texture);
 }
 
 // Rectangle::~Rectangle() {
 //     destroy();
 // }
 
-void Rectangle::transform(glm::vec3 &position, glm::vec3 &size) {
+void Rectangle::transform(glm::vec3& position, glm::vec3& size) {
     vertices[0].position = {position.x, position.y, 0.0f};
     vertices[1].position = {position.x + size.x, position.y, 0.0f};
     vertices[2].position = {position.x + size.x, position.y + size.y, 0.0f};
@@ -29,11 +29,11 @@ void Rectangle::destroy() {
     mesh.reset();
 }
 
-std::unique_ptr<Mesh> &Rectangle::getMesh() {
+const std::shared_ptr<Mesh>& Rectangle::get_mesh() const {
     return mesh;
 }
 
-void Rectangle::generateVertices(glm::vec3 position, glm::vec3 size) {
+void Rectangle::generate_vertices(glm::vec3 position, glm::vec3 size) {
     vertices.push_back({
         position,
         glm::vec4 {1.0f},
@@ -56,7 +56,7 @@ void Rectangle::generateVertices(glm::vec3 position, glm::vec3 size) {
     });
 }
 
-std::vector<unsigned int> Rectangle::generateIndices() {
+std::vector<unsigned int> Rectangle::generate_indices() {
     std::vector<unsigned int> indices(24);
     unsigned int offset = 0;
     for (unsigned int i = 0; i < 24; i += 6) {

@@ -37,21 +37,19 @@ void ImGuiWrapper::detach() {
     ImGui::DestroyContext();
 }
 
-void ImGuiWrapper::newFrame() {
+void ImGuiWrapper::new_frame() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void ImGuiWrapper::endFrame() {
+void ImGuiWrapper::end_frame() {
     ImGui::EndFrame();
 }
 
-void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
-    auto identifier = std::to_string(entity->getIdentifier());
-    // auto literal = std::format("Entity ID: ", identifier);
-
-    ImGui::Text(("Entity ID: " + identifier).c_str());
+void ImGuiWrapper::transform_box(std::shared_ptr<Entity> entity) {
+    auto identifier = std::to_string(entity->getId());
+    ImGui::Text("Entity ID: %s", identifier.c_str());
     ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
     ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, viewport.y - entity->getSize().y);
     ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &entity->getPosition().z, -100.0f, 100.0f);
@@ -60,20 +58,20 @@ void ImGuiWrapper::transformBox(std::shared_ptr<DrawableEntity> entity) {
     ImGui::Separator();
 }
 
-void ImGuiWrapper::set(std::vector<std::shared_ptr<DrawableEntity>> entities) {
-    newFrame();
+void ImGuiWrapper::set(std::vector<std::shared_ptr<Entity>> entities) {
+    new_frame();
 
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
     ImGui::Begin("Entities");
 
     for (auto entity : entities) {
-        transformBox(entity);
+        transform_box(entity);
     }
     
     ImGui::End();
 
-    endFrame();
+    end_frame();
 }
 
 void ImGuiWrapper::render() {

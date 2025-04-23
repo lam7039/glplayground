@@ -1,4 +1,4 @@
-#include "gl.hpp"
+#include "gl/gl.hpp"
 #include "assets.hpp"
 #include <fstream>
 #include <sstream>
@@ -17,7 +17,7 @@ static std::string readFile(const std::string &path) {
     return result.str();
 }
 
-unsigned int Shader::compileShader(unsigned int type, const char *source) {
+unsigned int Shader::compile_shader(unsigned int type, const char *source) {
     unsigned int shader = glCreateShader(type);
     CHECK_GL_ERROR(glShaderSource(shader, 1, &source, NULL));
     CHECK_GL_ERROR(glCompileShader(shader));
@@ -34,10 +34,10 @@ unsigned int Shader::compileShader(unsigned int type, const char *source) {
     return shader;
 }
 
-unsigned int Shader::createProgram() {
+unsigned int Shader::create_program() {
     CHECK_GL_ERROR(id = glCreateProgram());
-    CHECK_GL_ERROR(glAttachShader(id, vertexShader));
-    CHECK_GL_ERROR(glAttachShader(id, fragmentShader));
+    CHECK_GL_ERROR(glAttachShader(id, vertex_shader));
+    CHECK_GL_ERROR(glAttachShader(id, fragment_shader));
     CHECK_GL_ERROR(glLinkProgram(id));
 
     int success;
@@ -49,53 +49,53 @@ unsigned int Shader::createProgram() {
         return 0;
     }
 
-    CHECK_GL_ERROR(glDeleteShader(fragmentShader));
-    CHECK_GL_ERROR(glDeleteShader(vertexShader));
+    CHECK_GL_ERROR(glDeleteShader(fragment_shader));
+    CHECK_GL_ERROR(glDeleteShader(vertex_shader));
     return 1;
 }
 
-Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource) : Asset(name, AssetType::SHADER) {
-    vertexShader = compileShader(GL_VERTEX_SHADER, readFile(vertexSource).c_str());
-    fragmentShader = compileShader(GL_FRAGMENT_SHADER, readFile(fragmentSource).c_str());
-    createProgram();
+Shader::Shader(const std::string &name, const std::string &vertex_source, const std::string &fragment_source) : Asset(name, AssetType::SHADER) {
+    vertex_shader = compile_shader(GL_VERTEX_SHADER, readFile(vertex_source).c_str());
+    fragment_shader = compile_shader(GL_FRAGMENT_SHADER, readFile(fragment_source).c_str());
+    create_program();
 }
 
 void Shader::bind() {
     CHECK_GL_ERROR(glUseProgram(id));
 }
 
-void Shader::setWireframe() {
+void Shader::set_wireframe() {
     CHECK_GL_ERROR(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 }
 
-void Shader::setBool(const std::string &name, bool value) {
-    CHECK_GL_ERROR(glUniform1i(getLocation(name), value));
+void Shader::set_bool(const std::string &name, bool value) {
+    CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::setInt(const std::string &name, int value) {
-    CHECK_GL_ERROR(glUniform1i(getLocation(name), value));
+void Shader::set_int(const std::string &name, int value) {
+    CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::setFloat(const std::string &name, float value) {
-    CHECK_GL_ERROR(glUniform1f(getLocation(name), value));
+void Shader::set_float(const std::string &name, float value) {
+    CHECK_GL_ERROR(glUniform1f(get_location(name), value));
 }
 
-void Shader::setImage(const std::string &name, int *samplers) {
+void Shader::set_image(const std::string &name, int *samplers) {
     int count = sizeof(samplers) / sizeof(int);
-    CHECK_GL_ERROR(glUniform1iv(getLocation(name), count, samplers));
+    CHECK_GL_ERROR(glUniform1iv(get_location(name), count, samplers));
 }
 
-void Shader::setImage(const std::string &name, int sampler) {
-    setInt(name, sampler);
+void Shader::set_image(const std::string &name, int sampler) {
+    set_int(name, sampler);
 }
 
-void Shader::setMatrix(const std::string &name, const glm::mat4 &matrix) {
-    CHECK_GL_ERROR(glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, &matrix[0][0]));
+void Shader::set_matrix(const std::string &name, const glm::mat4 &matrix) {
+    CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, &matrix[0][0]));
 }
 
-int Shader::getLocation(const std::string &name) {
-    if (uniformLocationCache.find(name) != uniformLocationCache.end()) {
-        return uniformLocationCache[name];
+int Shader::get_location(const std::string &name) {
+    if (uniform_location_cache.find(name) != uniform_location_cache.end()) {
+        return uniform_location_cache[name];
     }
     
     CHECK_GL_ERROR(int location = glGetUniformLocation(id, name.c_str()));
@@ -103,7 +103,7 @@ int Shader::getLocation(const std::string &name) {
         std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
     }
 
-    uniformLocationCache[name] = location;
+    uniform_location_cache[name] = location;
     return location;
 }
 

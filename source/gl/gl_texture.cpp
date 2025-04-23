@@ -1,4 +1,4 @@
-#include "gl.hpp"
+#include "gl/gl.hpp"
 #include "assets.hpp"
 
 // #define STB_IMAGE_IMPLEMENTATION
