@@ -2,10 +2,6 @@
 #include "gl/gl.hpp"
 #include "assets.hpp"
 
-
-//TODO: figure out where to put shader
-static std::shared_ptr<Shader> shader;
-
 void GLRenderer::init() {
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
     // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));
@@ -16,7 +12,7 @@ void GLRenderer::init() {
     clear_color();
     clear();
 
-    shader = Global::get_asset<Shader>("main");
+    std::shared_ptr<Shader> shader = Global::get_asset<Shader>("main");
     shader->bind();
     shader->set_image("ourTexture", 0);
     // shader->set_wireframe();
