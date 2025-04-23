@@ -2,6 +2,10 @@
 #include "gl/gl.hpp"
 #include "assets.hpp"
 
+
+//TODO: figure out where to put shader
+static std::shared_ptr<Shader> shader;
+
 void GLRenderer::init() {
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
     // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));

@@ -24,8 +24,3 @@ private:
     EntityMapAlias entities;
     DrawableMapAlias drawables;
 };
-
-EntityManager& get_entity_manager() {
-    static EntityManager instance;
-    return instance;
-}

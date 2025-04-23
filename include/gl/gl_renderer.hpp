@@ -2,7 +2,7 @@
 
 #include "renderer.hpp"
 
-class GLRenderer : public IGraphicsApi {
+class GLRenderer : public GraphicsApiInterface {
 public:
     void init() override;
     void draw_mesh(const std::shared_ptr<Mesh>& mesh) override;

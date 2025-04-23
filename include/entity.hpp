@@ -5,14 +5,15 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 
-class IEntity {
+class EntityInterface {
 public:
     virtual void init() = 0;
     virtual void update() = 0;
     virtual void destroy() = 0;
+    virtual ~EntityInterface() = default;
 };
 
-class Entity : public IEntity {
+class Entity : public EntityInterface {
 public:
     void init() override = 0;
     void update() override = 0;

@@ -8,6 +8,7 @@ public:
     void init();
     void update();
     void destroy();
+    
     void set_position(float x, float y, float z);
     void set_size(float x, float y, float z);
     

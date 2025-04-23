@@ -2,7 +2,7 @@
 
 #include "renderer.hpp"
 
-class VKRenderer : IGraphicsApi {
+class VKRenderer : GraphicsApiInterface {
 public:
     void init() override;
     void draw_mesh(const std::shared_ptr<Mesh>& mesh) override;

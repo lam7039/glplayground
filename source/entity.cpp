@@ -29,18 +29,6 @@ glm::vec3 &Entity::getSize() {
     return size;
 }
 
-// void Entity::init() {
-//     // rectangle.transform(position, size);
-// }
-
-// void Entity::update() {
-//     // rectangle.transform(position, size);
-// }
-
-// void Entity::destroy() {
-//     // rectangle.destroy();
-// }
-
 // Mesh &Entity::getMesh() {
 //     return *rectangle.getMesh();
 // }

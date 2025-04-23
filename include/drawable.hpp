@@ -6,13 +6,14 @@
 #include <memory>
 #include <unordered_map>
 
-class IDrawable {
+class DrawableInterface {
 public:
     //TODO: draw method is useless bedcause I draw all entities in renderer? perhaps keep it for now to see if there's something in the future I can do with it
     virtual void draw() = 0;
+    virtual ~DrawableInterface() = default;
 };
 
-class Drawable : public IDrawable {
+class Drawable : public DrawableInterface {
 public:
     void draw() override = 0;
 

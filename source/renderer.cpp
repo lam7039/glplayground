@@ -1,6 +1,6 @@
 #include "renderer.hpp"
 
-void Renderer::init(std::unique_ptr<IGraphicsApi> backend) {
+void Renderer::init(std::unique_ptr<GraphicsApiInterface> backend) {
     api = std::move(backend);
     api->init();
 }
