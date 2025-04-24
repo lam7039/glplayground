@@ -5,12 +5,13 @@
 #include "asset_manager.hpp"
 
 void Game::init(float width, float height) {
-    std::printf("Current workspace: %s\n", get_asset_manager().get_workspace().c_str());
+    AssetManager& asset_manager = get_asset_manager();
+    std::printf("Current workspace: %s\n", asset_manager.get_workspace().c_str());
 
     //TODO: should I load assets in main? perhaps limit loading to assets to load from a scene (as in a assets_to_load method from a Scene class) 
-    get_asset_manager().load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    get_asset_manager().load_texture("background", "/assets/image.jpg");
-    get_asset_manager().load_texture("mario", "/assets/mario.png");
+    asset_manager.load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    asset_manager.load_texture("background", "/assets/image.jpg");
+    asset_manager.load_texture("mario", "/assets/mario.png");
 
     //TODO: create entities with a file
     entity_manager = std::make_unique<EntityManager>();

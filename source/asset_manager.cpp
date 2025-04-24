@@ -1,22 +1,22 @@
 #include "asset_manager.hpp"
 
-std::shared_ptr<Asset> AssetManager::get_asset(const std::string &name) {
+std::shared_ptr<Asset> AssetManager::get_asset(const std::string& name) {
     return assets[name];
 }
 
-void AssetManager::load_asset(const std::string &name, std::shared_ptr<Asset> asset) {
+void AssetManager::load_asset(const std::string& name, std::shared_ptr<Asset> asset) {
     assets[name] = asset;
 }
 
-void AssetManager::load_shader(const std::string &name, const std::string &vertex, const std::string &fragment) {
+void AssetManager::load_shader(const std::string& name, const std::string& vertex, const std::string& fragment) {
     load_asset(name, std::make_shared<Shader>(name, workspace + vertex, workspace + fragment));
 }
 
-void AssetManager::load_texture(const std::string &name, const std::string &path) {
+void AssetManager::load_texture(const std::string& name, const std::string& path) {
     load_asset(name, std::make_shared<Texture>(name, workspace + path, true));
 }
 
-void AssetManager::remove_asset(const std::string &name) {
+void AssetManager::remove_asset(const std::string& name) {
     assets[name]->destroy();
     assets.erase(name);
 }
