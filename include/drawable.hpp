@@ -15,8 +15,6 @@ public:
 
 class Drawable : public DrawableInterface {
 public:
-    void draw() override = 0;
-
     // void set_mesh(Mesh *mesh); //TODO: implement this if necessary
     const std::shared_ptr<Mesh>& get_mesh() const;
 protected:

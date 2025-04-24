@@ -15,10 +15,6 @@ public:
 
 class Entity : public EntityInterface {
 public:
-    void init() override = 0;
-    void update() override = 0;
-    void destroy() override = 0;
-
     void set_id(unsigned int identifier);
     void transform(glm::vec3 &position, glm::vec3 &size);
     void set_position(float x, float y, float z);

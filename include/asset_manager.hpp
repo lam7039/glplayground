@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <filesystem>
 
 //TODO: just copied the header functions of assets.hpp into here, nothing is used or implemented yet
 class AssetManager {
@@ -26,10 +27,8 @@ public:
     void remove_asset(const std::string &name);
     void destroy_assets();
 private:
-    static std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+    std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+    const std::string workspace = std::filesystem::current_path();
 };
 
-AssetManager& get_asset_manager() {
-    static AssetManager instance;
-    return instance;
-}
+AssetManager& get_asset_manager();

@@ -1,4 +1,5 @@
 #include "camera.hpp"
+#include "asset_manager.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -9,7 +10,7 @@ Camera::Camera(glm::vec2 viewport) {
 
 void Camera::init() {
     // projection = glm::ortho(position.x, position.x + size.x, position.y, position.y + size.y, -1.0f, 1.0f);
-    shader = Global::get_asset<Shader>("main");
+    shader = get_asset_manager().get_asset<Shader>("main");
     update();
 }
 

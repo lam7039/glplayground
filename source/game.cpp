@@ -1,16 +1,16 @@
 #include "game.hpp"
-#include "assets.hpp"
 #include "camera.hpp"
 #include "entities/player.hpp"
 #include "entities/background.hpp"
+#include "asset_manager.hpp"
 
 void Game::init(float width, float height) {
-    std::printf("Current workspace: %s\n", Global::get_workspace().c_str());
+    std::printf("Current workspace: %s\n", get_asset_manager().get_workspace().c_str());
 
-    //TODO: load assets in main, perhaps limit loading to assets to load from a scene (as in a assets_to_load method from a Scene class) 
-    Global::load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    Global::load_texture("background", "/assets/image.jpg");
-    Global::load_texture("mario", "/assets/mario.png");
+    //TODO: should I load assets in main? perhaps limit loading to assets to load from a scene (as in a assets_to_load method from a Scene class) 
+    get_asset_manager().load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
+    get_asset_manager().load_texture("background", "/assets/image.jpg");
+    get_asset_manager().load_texture("mario", "/assets/mario.png");
 
     //TODO: create entities with a file
     entity_manager = std::make_unique<EntityManager>();
@@ -23,7 +23,7 @@ void Game::init(float width, float height) {
 
 void Game::quit() {
     entity_manager->destroy_entities();
-    Global::destroy_assets();
+    get_asset_manager().destroy_assets();
 }
 
 void Game::update() {
