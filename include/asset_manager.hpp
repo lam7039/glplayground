@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <filesystem>
 
-//TODO: just copied the header functions of assets.hpp into here, nothing is used or implemented yet
 class AssetManager {
 public:
 

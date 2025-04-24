@@ -6,7 +6,7 @@
 
 #include <filesystem>
 
-//TODO: fix segmentation fault, probably somewhere in assets.(hpp/cpp), the only place left that needs a refactor
+//TODO: fix segmentation fault
 
 int main(int argc, char **argv) {
     std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
