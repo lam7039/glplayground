@@ -2,7 +2,6 @@
 
 #include "model.hpp"
 #include "drawable.hpp"
-#include "assets.hpp"
 
 #include <glm/glm.hpp>
 

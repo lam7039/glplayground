@@ -1,16 +1,16 @@
 #pragma once
 
-#include "assets.hpp"
+#include "shader.hpp"
+#include "texture.hpp"
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <filesystem>
 
 class AssetManager {
 public:
     std::shared_ptr<Asset> get_asset(const std::string& name);
-
+    std::shared_ptr<Shader> get_shader(const std::string& name);
+    std::shared_ptr<Texture> get_texture(const std::string& name);
+    
     template <typename T>
     std::shared_ptr<T> get_asset(const std::string& name) {
         return std::static_pointer_cast<T>(get_asset(name));

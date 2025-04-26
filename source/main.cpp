@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     renderer.init(std::make_unique<GLRenderer>());
 
     Game game;
-    game.init(window.size().x, window.size().y);
+    game.init(window.size());
 
     // imgui.attach(window.instance());
 
@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
         game.update();
         game.render(renderer);
 
+        // imgui.set(entities);
         // imgui.render();
 
         renderer.clear();

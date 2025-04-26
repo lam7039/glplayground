@@ -1,18 +1,20 @@
 #include "gl/gl.hpp"
-#include "assets.hpp"
+#include "texture.hpp"
 
-// #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
-Texture::Texture(const std::string &name, const std::string &path, bool mipmap) : Asset(name, AssetType::IMAGE) {
+Texture::Texture(const std::string &path, bool mipmap) {
+    type = AssetType::IMAGE;
     stbi_set_flip_vertically_on_load(1);
     
     int width, height, nrChannels;
     unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     
+    if (!pixels) {
+        std::cout << "Failed to load texture at path: " << path << std::endl;
+    }
+    
     CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));
-    //TODO: is glBindTexture necessary since glCreateTextures autommatically binds the texture?
-    CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, id));
 
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));

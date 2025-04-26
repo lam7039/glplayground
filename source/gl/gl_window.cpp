@@ -18,6 +18,7 @@ Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
     glfwMakeContextCurrent(window.get());
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
+        destroy();
         return;
     }
     glfwSwapInterval(1);

@@ -1,8 +1,7 @@
 #include "entities/background.hpp"
 
-Background::Background(int width, int height) {
-    this->width = width;
-    this->height = height;
+Background::Background(int width, int height) : width(width), height(height) {
+    
 }
 
 void Background::init() {

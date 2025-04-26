@@ -1,6 +1,6 @@
 #pragma once
 
-#include "assets.hpp"
+#include "shader.hpp"
 
 class Material {
 public:

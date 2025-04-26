@@ -17,7 +17,7 @@ public:
     void end_frame();
 
     void set(std::vector<std::shared_ptr<Entity>> entities);
-    void transform_box(std::shared_ptr<Entity> entity);
+    void transform_box(std::shared_ptr<Entity>& entity);
 
     void render();
     // void label(const std::string &text);

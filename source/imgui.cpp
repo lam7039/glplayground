@@ -47,7 +47,7 @@ void ImGuiWrapper::end_frame() {
     ImGui::EndFrame();
 }
 
-void ImGuiWrapper::transform_box(std::shared_ptr<Entity> entity) {
+void ImGuiWrapper::transform_box(std::shared_ptr<Entity>& entity) {
     auto identifier = std::to_string(entity->getId());
     ImGui::Text("Entity ID: %s", identifier.c_str());
     ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
@@ -65,7 +65,7 @@ void ImGuiWrapper::set(std::vector<std::shared_ptr<Entity>> entities) {
 
     ImGui::Begin("Entities");
 
-    for (auto entity : entities) {
+    for (auto& entity : entities) {
         transform_box(entity);
     }
     

@@ -1,13 +1,13 @@
 #include "entity.hpp"
-#include "assets.hpp"
+#include "shader.hpp"
 
 class Camera : public Entity {
 public:
     Camera(glm::vec2 viewport);
 
-    void init();
-    void update();
-    void destroy();
+    void init() override final;
+    void update() override final;
+    void destroy() override final;
     
     void set_position(float x, float y, float z);
     void set_size(float x, float y, float z);

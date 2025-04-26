@@ -1,5 +1,5 @@
 #include "gl/gl.hpp"
-#include "assets.hpp"
+#include "shader.hpp"
 #include <fstream>
 #include <sstream>
 
@@ -54,7 +54,8 @@ unsigned int Shader::create_program() {
     return 1;
 }
 
-Shader::Shader(const std::string &name, const std::string &vertex_source, const std::string &fragment_source) : Asset(name, AssetType::SHADER) {
+Shader::Shader(const std::string &vertex_source, const std::string &fragment_source) {
+    type = AssetType::SHADER;
     vertex_shader = compile_shader(GL_VERTEX_SHADER, readFile(vertex_source).c_str());
     fragment_shader = compile_shader(GL_FRAGMENT_SHADER, readFile(fragment_source).c_str());
     create_program();
@@ -108,5 +109,5 @@ int Shader::get_location(const std::string &name) {
 }
 
 void Shader::destroy() {
-    // glDeleteProgram(id);
+    glDeleteProgram(id);
 }

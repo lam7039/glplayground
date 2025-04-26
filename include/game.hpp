@@ -5,7 +5,7 @@
 
 class Game {
 public:
-    void init(float width, float height);
+    void init(glm::vec2 viewport);
     void quit();
 
     void update();

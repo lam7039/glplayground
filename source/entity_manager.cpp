@@ -2,6 +2,7 @@
 
 void EntityManager::add_entity(std::shared_ptr<Entity> entity) {
     entity->set_id(id);
+    entity->init();
     entities[id] = entity;
 
     if (auto drawable = std::dynamic_pointer_cast<Drawable>(entity)) {
@@ -12,8 +13,8 @@ void EntityManager::add_entity(std::shared_ptr<Entity> entity) {
 }
 
 void EntityManager::remove_entity(unsigned int id) {
-    entities.erase(id);
     drawables.erase(id);
+    entities.erase(id);
 }
 
 void EntityManager::init_entities() {
