@@ -18,6 +18,7 @@ public:
     void update_entities();
     void destroy_entities();
     
+    void update_drawables();
     DrawableMapAlias get_drawables() const;
 private:
     unsigned int id {1};

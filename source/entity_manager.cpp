@@ -17,22 +17,26 @@ void EntityManager::remove_entity(unsigned int id) {
 }
 
 void EntityManager::init_entities() {
-    for (auto [id, entity] : entities) {
+    for (auto& [id, entity] : entities) {
         entity->init();
     }
 }
 
 void EntityManager::update_entities() {
-    for (auto [id, entity] : entities) {
+    for (auto& [id, entity] : entities) {
         entity->update();
     }
 }
 
 void EntityManager::destroy_entities() {
-    for (auto [id, entity] : entities) {
+    for (auto& [id, entity] : entities) {
         entity->destroy();
     }
     entities.clear();
+}
+
+void EntityManager::update_drawables() {
+    //TODO: clear drawables and load a new list of drawables every time a new scene is loading
 }
 
 //TODO: check if I should just pass something like std::vector<Entity*> instead of std::vector<std::shared_ptr<Entity>>

@@ -9,9 +9,6 @@
 
 class AssetManager {
 public:
-
-    const std::string& get_workspace();
-
     std::shared_ptr<Asset> get_asset(const std::string& name);
 
     template <typename T>
@@ -25,9 +22,11 @@ public:
 
     void remove_asset(const std::string& name);
     void destroy_assets();
+
+    const std::string& get_workspace();
 private:
     std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
     const std::string workspace = std::filesystem::current_path();
 };
 
-AssetManager& get_asset_manager();
+std::shared_ptr<AssetManager>& get_asset_manager();
