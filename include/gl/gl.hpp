@@ -26,19 +26,3 @@ static bool GLLogCall(const char *function, const char *file, int line) {
     }
     return true;
 }
-
-struct GLBuffer {
-    unsigned int id {0};
-};
-
-struct GLShader {
-    unsigned int program_id {0};
-    unsigned int vertex_shader {0};
-    unsigned int fragment_shader {0};
-};
-
-// struct GLVertexArray {
-//     unsigned int vertex_array_object {0};
-//     unsigned int vertex_buffer_object {0};
-//     unsigned int element_buffer_object {0};
-// };

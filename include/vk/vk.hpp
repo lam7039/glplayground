@@ -25,19 +25,3 @@ static bool VKLogCall(VkResult error, const char *function, const char *file, in
     }
     return true;
 }
-
-struct VKBuffer {
-    unsigned int id {0};
-};
-
-struct VKShader {
-    unsigned int program_id {0};
-    unsigned int vertex_shader {0};
-    unsigned int fragment_shader {0};
-};
-
-// struct VKVertexArray {
-//     unsigned int vertex_array_object {0};
-//     unsigned int vertex_buffer_object {0};
-//     unsigned int element_buffer_object {0};
-// };
