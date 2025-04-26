@@ -1,3 +1,5 @@
 .vscode
-debug/*
-assets/*
+debug
+build
+assets
+CMakeLists.txt
