@@ -21,16 +21,25 @@ void GLRenderer::init() {
     // shader->set_wireframe();
 }
 
-void GLRenderer::draw_mesh(const std::shared_ptr<Mesh>& mesh) {
-    asset_manager->get_texture(mesh->get_texture())->bind();
-    mesh->input_layout_bind();
-    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh->get_index_count(), GL_UNSIGNED_INT, nullptr));
-    mesh->input_layout_unbind();
+void GLRenderer::draw_mesh(const Mesh& mesh) {
+    asset_manager->get_texture(mesh.get_texture())->bind();
+    mesh.input_layout_bind();
+    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
+    mesh.input_layout_unbind();
 }
 
-void GLRenderer::draw(Model &model) {
+//TODO: replace rectangle with a Sprite class
+void GLRenderer::draw_sprite(const Rectangle& sprite) {
+    //TODO: this is copied from draw_mesh
+    // asset_manager->get_texture(sprite->get_texture())->bind();
+    // sprite->input_layout_bind();
+    // CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh->get_index_count(), GL_UNSIGNED_INT, nullptr));
+    // sprite->input_layout_unbind();
+}
+
+void GLRenderer::draw(const Model& model) {
     for (auto& mesh : model.get_meshes()) {
-        draw_mesh(mesh);
+        draw_mesh(*mesh);
     }
 }
 

@@ -4,11 +4,15 @@ void VKRenderer::init() {
     
 }
 
-void VKRenderer::draw_mesh(const std::shared_ptr<Mesh>& mesh) {
+void VKRenderer::draw_mesh(const Mesh& mesh) {
     
 }
 
-void VKRenderer::draw(Model &model) {
+void VKRenderer::draw_sprite(const Rectangle& sprite) {
+    
+}
+
+void VKRenderer::draw(const Model &model) {
     
 }
 

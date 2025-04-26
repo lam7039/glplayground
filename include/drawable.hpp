@@ -18,7 +18,7 @@ public:
     // void set_mesh(Mesh *mesh); //TODO: implement this if necessary
     const std::shared_ptr<Mesh>& get_mesh() const;
 protected:
-    Rectangle rectangle;
+    std::unique_ptr<Rectangle> rectangle;
     std::string asset;
 };
 

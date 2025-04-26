@@ -12,16 +12,16 @@ struct Vertex {
 
 class Mesh {
 public:
-    //TODO: somehow use a vertexBufferId intead of passing the entire list
+    //TODO: somehow use a vertex_buffer_id intead of passing the entire list
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture);
 
     void bind(std::vector<Vertex> &vertices);
-    void input_layout_bind();
-    void input_layout_unbind();
+    void input_layout_bind() const;
+    void input_layout_unbind() const;
     void destroy();
     
     unsigned int get_index_count() const;
-    std::string get_texture();
+    const std::string get_texture() const;
 private:
     std::string texture; 
     std::vector<Vertex> vertex_data;

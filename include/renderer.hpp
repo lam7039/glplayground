@@ -8,8 +8,9 @@
 class GraphicsApiInterface {
 public:
     virtual void init() = 0;
-    virtual void draw_mesh(const std::shared_ptr<Mesh>& mesh) = 0;
-    virtual void draw(Model &model) = 0;
+    virtual void draw_mesh(const Mesh& mesh) = 0;
+    virtual void draw_sprite(const Rectangle& sprite) = 0;
+    virtual void draw(const Model& model) = 0;
     
     virtual void clear_color(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f}) = 0;
     virtual void clear() = 0;

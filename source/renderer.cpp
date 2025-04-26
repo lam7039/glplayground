@@ -8,7 +8,7 @@ void Renderer::init(std::unique_ptr<GraphicsApiInterface> backend) {
 void Renderer::render(DrawableMapAlias drawables) {
     api->clear_color();
     for (auto& [id, drawable] : drawables) {
-        api->draw_mesh(drawable->get_mesh());
+        api->draw_mesh(*drawable->get_mesh());
     }
 }
 

@@ -22,6 +22,7 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
     CHECK_GL_ERROR(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<const void*>(offset)));
 }
 
+//TODO: texture should be in material
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture) : vertex_data(vertices), index_data(indices), texture(texture) {
     CHECK_GL_ERROR(glCreateVertexArrays(1, &input_layout_object));
     input_layout_bind();
@@ -45,7 +46,7 @@ unsigned int Mesh::get_index_count() const {
     return static_cast<unsigned int>(index_data.size() * 6);
 }
 
-std::string Mesh::get_texture() {
+const std::string Mesh::get_texture() const {
     return texture;
 }
 
@@ -54,11 +55,11 @@ void Mesh::bind(std::vector<Vertex> &vertices) {
     CHECK_GL_ERROR(glBufferSubData(GL_ARRAY_BUFFER, 0, get_vertex_data_size(), vertices.data()));
 }
 
-void Mesh::input_layout_bind() {
+void Mesh::input_layout_bind() const {
     CHECK_GL_ERROR(glBindVertexArray(input_layout_object));
 }
 
-void Mesh::input_layout_unbind() {
+void Mesh::input_layout_unbind() const {
     CHECK_GL_ERROR(glBindVertexArray(0));
 }
 
