@@ -19,7 +19,7 @@ public:
 class Renderer {
 public:
     void init(std::unique_ptr<GraphicsApiInterface> backend);
-    void render(DrawableMapAlias drawables);
+    void render(const DrawableMapAlias& drawables);
     void clear();
     void destroy();
 private:

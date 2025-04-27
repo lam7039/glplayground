@@ -5,7 +5,7 @@ void Renderer::init(std::unique_ptr<GraphicsApiInterface> backend) {
     api->init();
 }
 
-void Renderer::render(DrawableMapAlias drawables) {
+void Renderer::render(const DrawableMapAlias& drawables) {
     api->clear_color();
     for (auto& [id, drawable] : drawables) {
         api->draw_mesh(*drawable->get_mesh());

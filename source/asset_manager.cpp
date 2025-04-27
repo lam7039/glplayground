@@ -13,7 +13,7 @@ std::shared_ptr<Texture> AssetManager::get_texture(const std::string& name) {
 }
 
 void AssetManager::load_asset(const std::string& name, std::shared_ptr<Asset> asset) {
-    assets[name] = asset;
+    assets[name] = std::move(asset);
 }
 
 void AssetManager::load_shader(const std::string& name, const std::string& vertex, const std::string& fragment) {
@@ -36,7 +36,7 @@ void AssetManager::destroy_assets() {
     assets.clear();
 }
 
-const std::string& AssetManager::get_workspace() {
+const std::string& AssetManager::get_workspace() const {
     return workspace;
 }
 

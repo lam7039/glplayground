@@ -1,11 +1,11 @@
 #include "rectangle.hpp"
 
-Rectangle::Rectangle() {
+Rectangle::Rectangle(const std::string& texture) {
     generate_vertices({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 0.0f});
-    mesh = std::make_shared<Mesh>(vertices, generate_indices(), "background");
+    mesh = std::make_shared<Mesh>(vertices, generate_indices(), texture);
 }
 
-Rectangle::Rectangle(glm::vec3& position, glm::vec3& size, std::string texture) {
+Rectangle::Rectangle(glm::vec3& position, glm::vec3& size, const std::string& texture) {
     generate_vertices(position, size);
     mesh = std::make_shared<Mesh>(vertices, generate_indices(), texture);
 }

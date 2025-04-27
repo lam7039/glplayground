@@ -3,10 +3,11 @@
 #include "mesh.hpp"
 #include <memory>
 
+//TODO: create Sprite class to make distinction from Rectangle?
 class Rectangle {
 public:
-    Rectangle();
-    Rectangle(glm::vec3& position, glm::vec3& size, std::string texture);
+    Rectangle(const std::string& texture);
+    Rectangle(glm::vec3& position, glm::vec3& size, const std::string& texture);
     // ~Rectangle();
 
     void transform(glm::vec3& position, glm::vec3& size);

@@ -1,15 +1,15 @@
 #include "entity_manager.hpp"
+#include <iostream>
 
 void EntityManager::add_entity(std::shared_ptr<Entity> entity) {
-    entity->set_id(id);
-    entity->init();
-    entities[id] = entity;
+    entity->set_id(identifier);
+    entities[identifier] = std::move(entity);
 
-    if (auto drawable = std::dynamic_pointer_cast<Drawable>(entity)) {
-        drawables[id] = drawable;
+    if (auto drawable = std::dynamic_pointer_cast<Drawable>(entities[identifier])) {
+        drawables[identifier] = drawable;
     }
 
-    id++;
+    identifier++;
 }
 
 void EntityManager::remove_entity(unsigned int id) {
@@ -40,7 +40,7 @@ void EntityManager::update_drawables() {
     //TODO: clear drawables and load a new list of drawables every time a new scene is loading
 }
 
-//TODO: check if I should just pass something like std::vector<Entity*> instead of std::vector<std::shared_ptr<Entity>>
-DrawableMapAlias EntityManager::get_drawables() const {
+//TODO: check if I should just pass something like std::unordered_map<Entity> instead of std::unordered_map<std::shared_ptr<Entity>>
+const DrawableMapAlias& EntityManager::get_drawables() const {
     return drawables;
 }
