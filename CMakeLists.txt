@@ -19,5 +19,9 @@ list(APPEND SOURCES ${THIRD_PARTY_SOURCES})
 
 add_executable(glplayground ${SOURCES})
 
+set_target_properties(glplayground PROPERTIES
+    CMAKE_CXX_FLAGS_DEBUG "-g"
+)
+
 target_include_directories(glplayground PRIVATE ${INCLUDE_DIR} ${THIRD_PARTY_INCLUDE_DIR})
 target_link_libraries(glplayground PRIVATE glfw ${OPENGL_LIBRARIES})
