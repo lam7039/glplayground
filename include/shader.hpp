@@ -3,7 +3,6 @@
 #include "asset.hpp"
 
 #include <glm/glm.hpp>
-#include <unordered_map>
 #include <string>
 
 class Shader : public Asset {
@@ -25,7 +24,4 @@ public:
 private:
     const std::string vertex_source;
     const std::string fragment_source;
-
-    std::unordered_map<std::string, int> uniform_location_cache;
-    int get_location(const std::string& name);
 };

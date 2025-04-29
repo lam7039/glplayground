@@ -4,6 +4,7 @@
 #include "texture.hpp"
 
 #include <filesystem>
+#include <unordered_map>
 
 class AssetManager {
 public:
