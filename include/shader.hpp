@@ -26,12 +26,6 @@ private:
     const std::string vertex_source;
     const std::string fragment_source;
 
-    unsigned int vertex_shader {0};
-    unsigned int fragment_shader {0};
     std::unordered_map<std::string, int> uniform_location_cache;
-
-    unsigned int compile_shader(unsigned int type, const char* source);
-    unsigned int create_program();
-
     int get_location(const std::string& name);
 };

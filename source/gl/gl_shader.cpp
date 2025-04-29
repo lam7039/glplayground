@@ -3,6 +3,11 @@
 #include <fstream>
 #include <sstream>
 
+enum ShaderType {
+    Vertex = GL_VERTEX_SHADER,
+    Fragment = GL_FRAGMENT_SHADER
+};
+
 static std::string read_file(const std::string& path) {
     std::stringstream result;
     std::ifstream file;
@@ -17,41 +22,50 @@ static std::string read_file(const std::string& path) {
     return result.str();
 }
 
-unsigned int Shader::compile_shader(unsigned int type, const char* source) {
+static unsigned int compile_shader(ShaderType type, const char* source) {
     unsigned int shader = glCreateShader(type);
-    CHECK_GL_ERROR(glShaderSource(shader, 1, &source, NULL));
+    CHECK_GL_ERROR(glShaderSource(shader, 1, &source, nullptr));
     CHECK_GL_ERROR(glCompileShader(shader));
 
     int success;
-    char infoLog[512];
     CHECK_GL_ERROR(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
     if (!success) {
-        CHECK_GL_ERROR(glGetShaderInfoLog(shader, 512, NULL, infoLog));
-        std::string errorType = type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
-        std::cout << "ERROR::SHADER::" << errorType << "::COMPILATION_FAILED\n" << infoLog << std::endl;
+        int length;
+        CHECK_GL_ERROR(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length));
+
+        char info_log[length];
+        CHECK_GL_ERROR(glGetShaderInfoLog(shader, length, nullptr, info_log));
+
+        std::string errorType = type == ShaderType::Vertex ? "VERTEX" : "FRAGMENT";
+        std::cout << "ERROR::SHADER::" << errorType << "::COMPILATION_FAILED\n" << info_log << std::endl;
+
         return 0;
     }
+
     return shader;
 }
 
-unsigned int Shader::create_program() {
-    CHECK_GL_ERROR(id = glCreateProgram());
+static unsigned int create_program(unsigned int vertex_shader, unsigned int fragment_shader) {
+    CHECK_GL_ERROR(unsigned int id = glCreateProgram());
     CHECK_GL_ERROR(glAttachShader(id, vertex_shader));
     CHECK_GL_ERROR(glAttachShader(id, fragment_shader));
     CHECK_GL_ERROR(glLinkProgram(id));
 
     int success;
-    char infoLog[512];
     CHECK_GL_ERROR(glGetProgramiv(id, GL_LINK_STATUS, &success));
     if (!success) {
-        CHECK_GL_ERROR(glGetProgramInfoLog(id, 512, NULL, infoLog));
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+        int length;
+        CHECK_GL_ERROR(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length))
+
+        char info_log[length];
+        CHECK_GL_ERROR(glGetProgramInfoLog(id, length, nullptr, info_log));
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << info_log << std::endl;
         return 0;
     }
 
     CHECK_GL_ERROR(glDeleteShader(fragment_shader));
     CHECK_GL_ERROR(glDeleteShader(vertex_shader));
-    return 1;
+    return id;
 }
 
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
@@ -59,9 +73,9 @@ Shader::Shader(const std::string& vertex_source, const std::string& fragment_sou
 }
 
 void Shader::init() {
-    vertex_shader = compile_shader(GL_VERTEX_SHADER, read_file(vertex_source).c_str());
-    fragment_shader = compile_shader(GL_FRAGMENT_SHADER, read_file(fragment_source).c_str());
-    create_program();
+    auto vertex_shader = compile_shader(ShaderType::Vertex, read_file(vertex_source).c_str());
+    auto fragment_shader = compile_shader(ShaderType::Fragment, read_file(fragment_source).c_str());
+    id = create_program(vertex_shader, fragment_shader);
 }
 
 void Shader::bind() {
