@@ -7,6 +7,7 @@ enum AssetType {
     FONT
 };
 
+//TODO: instead of using a constructor init assets, use an init() file to load an asset, and call the init() within the AssetManager
 class AssetInterface {
 public:
     virtual void bind() = 0;
