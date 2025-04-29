@@ -6,8 +6,8 @@
 
 struct Vertex {
     glm::vec3 position {0.0f};
-    glm::vec4 color {1.0f};
-    glm::vec2 texCoords;
+    glm::uvec4 color {255};
+    glm::vec2 tex_coords;
 };
 
 class Mesh {

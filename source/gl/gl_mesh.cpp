@@ -11,15 +11,20 @@ enum DrawUsage {
     Static = GL_STATIC_DRAW
 };
 
+enum DataType {
+    Float = GL_FLOAT,
+    UnsignedInt = GL_UNSIGNED_INT
+};
+
 static void bind_object(DrawMode mode, unsigned int* buffer, unsigned int size, unsigned int* object, DrawUsage usage) {
     CHECK_GL_ERROR(glCreateBuffers(1, buffer));
     CHECK_GL_ERROR(glBindBuffer(mode, *buffer));
     CHECK_GL_ERROR(glBufferData(mode, size, object, usage));
 }
 
-static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigned int stride, unsigned int offset) {
+static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigned int stride, unsigned int offset, DataType type = DataType::Float, bool normalized = GL_FALSE) {
     CHECK_GL_ERROR(glEnableVertexAttribArray(index));
-    CHECK_GL_ERROR(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<const void*>(offset)));
+    CHECK_GL_ERROR(glVertexAttribPointer(index, size, type, normalized, stride, reinterpret_cast<const void*>(offset)));
 }
 
 //TODO: texture should be in material?
@@ -31,8 +36,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     bind_object(DrawMode::ElementArrayBuffer, &element_buffer_object, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
-    vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color));
-    vertex_attrib_pointer(2, 2, sizeof(Vertex), offsetof(Vertex, texCoords));
+    vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color), DataType::UnsignedInt, GL_TRUE);
+    vertex_attrib_pointer(2, 2, sizeof(Vertex), offsetof(Vertex, tex_coords));
 
     CHECK_GL_ERROR(glBindBuffer(DrawMode::ArrayBuffer, 0));
     input_layout_unbind();
