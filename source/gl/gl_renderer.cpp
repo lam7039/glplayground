@@ -1,9 +1,6 @@
 #include "gl/gl_renderer.hpp"
 #include "gl/gl.hpp"
 
-#include "shader.hpp"
-#include "texture.hpp"
-
 void GLRenderer::init() {
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
     // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));
@@ -15,10 +12,6 @@ void GLRenderer::init() {
     clear();
 
     asset_manager = get_asset_manager();
-    std::shared_ptr<Shader> shader = asset_manager->get_shader("main");
-    shader->bind();
-    shader->set_image("ourTexture", 0);
-    // shader->set_wireframe();
 }
 
 void GLRenderer::draw_mesh(const Mesh& mesh) {
@@ -41,6 +34,12 @@ void GLRenderer::draw(const Model& model) {
     for (auto& mesh : model.get_meshes()) {
         draw_mesh(*mesh);
     }
+}
+
+void GLRenderer::set_shader(Shader& shader) {
+    shader.bind();
+    shader.set_image("ourTexture", 0);
+    // shader.set_wireframe();
 }
 
 void GLRenderer::clear() {

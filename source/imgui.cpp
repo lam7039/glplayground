@@ -10,17 +10,17 @@
 
 ImGuiWrapper::ImGuiWrapper(glm::vec2 viewport) : viewport(viewport) {}
 
-void ImGuiWrapper::attach(GLFWwindow *window) {
+void ImGuiWrapper::attach(GLFWwindow* window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.IniFilename = "build/imgui.ini";
     io.LogFilename = "log/imgui_log.txt";
     // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-    // ImGuiStyle &style = ImGui::GetStyle();
+    // ImGuiStyle& style = ImGui::GetStyle();
     // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     //     style.WindowRounding = 0.0f;
     //     style.Colors[ImGuiCol_WindowBg].w = 1.0f;
@@ -78,7 +78,7 @@ void ImGuiWrapper::render() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	// ImGuiIO &io = ImGui::GetIO();
+	// ImGuiIO& io = ImGui::GetIO();
     // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     //     GLFWwindow* backup_current_context = glfwGetCurrentContext();
     //     ImGui::UpdatePlatformWindows();

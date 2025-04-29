@@ -3,11 +3,11 @@
 #include "gl/gl.hpp"
 #include <glfw/glfw3.h>
 
-void Window::GLFWwindowDeleter::operator()(GLFWwindow *window) {
+void Window::GLFWwindowDeleter::operator()(GLFWwindow* window) {
     glfwDestroyWindow(window);
 }
 
-Window::Window(const std::string &title, glm::vec2 size, glm::vec2 position) {
+Window::Window(const std::string& title, glm::vec2 size, glm::vec2 position) {
     if (!glfwInit()) {
         std::cout << "Failed to initialize GLFW" << std::endl;
         return;
@@ -45,11 +45,11 @@ bool Window::running() {
     return !glfwWindowShouldClose(window.get());
 }
 
-GLFWwindow *Window::instance() const {
+GLFWwindow* Window::instance() const {
     return window.get();
 }
 
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_E && action == GLFW_PRESS) {
         std::cout << "Test keypress" << std::endl;
     }

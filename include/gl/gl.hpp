@@ -18,7 +18,7 @@
         ASSERT(GLLogCall(#GL_CALL, __FILE__, __LINE__))
 #endif
 
-static bool GLLogCall(const char *function, const char *file, int line) {
+static bool GLLogCall(const char* function, const char* file, int line) {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
         std::printf("[OpenGL Error] (%d): %s %s %d\n", error, function, file, line);

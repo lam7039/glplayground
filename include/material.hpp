@@ -4,8 +4,10 @@
 
 class Material {
 public:
-    Material(unsigned int shaderId);
-    void bindSamplers();
+    Material(unsigned int shader_id);
+
+    void bind_samplers();
 private:
-    unsigned int shaderId {0};
+    unsigned int shader_id {0};
+    std::string texture;
 };

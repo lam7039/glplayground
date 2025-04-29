@@ -14,8 +14,9 @@ public:
     void load_asset(const std::string& name, std::shared_ptr<Asset> asset);
     void load_shader(const std::string& name, const std::string& vertex, const std::string& fragment);
     void load_texture(const std::string& name, const std::string& path);
-
     void remove_asset(const std::string& name);
+
+    void init_assets();
     void destroy_assets();
 
     const std::string& get_workspace() const;

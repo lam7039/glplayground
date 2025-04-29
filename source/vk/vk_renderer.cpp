@@ -12,8 +12,14 @@ void VKRenderer::draw_sprite(const Rectangle& sprite) {
     
 }
 
-void VKRenderer::draw(const Model &model) {
+void VKRenderer::draw(const Model& model) {
     
+}
+
+void VKRenderer::set_shader(Shader& shader) {
+    shader.bind();
+    shader.set_image("ourTexture", 0);
+    // shader.set_wireframe();
 }
 
 void VKRenderer::clear() {

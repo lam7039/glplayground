@@ -10,7 +10,7 @@ class ImGuiWrapper {
 public:
     ImGuiWrapper(glm::vec2 viewport);
 
-    void attach(GLFWwindow *window);
+    void attach(GLFWwindow* window);
     void detach();
 
     void new_frame();
@@ -20,7 +20,7 @@ public:
     void transform_box(std::shared_ptr<Entity>& entity);
 
     void render();
-    // void label(const std::string &text);
+    // void label(const std::string& text);
 
 private:
     glm::vec2 viewport;

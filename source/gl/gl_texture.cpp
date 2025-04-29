@@ -3,17 +3,18 @@
 
 #include "stb/stb_image.h"
 
-Texture::Texture(const std::string &path, bool mipmap) {
+Texture::Texture(const std::string& path, bool mipmap) : mipmap(mipmap) {
     type = AssetType::IMAGE;
     stbi_set_flip_vertically_on_load(1);
     
-    int width, height, nrChannels;
-    unsigned char *pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+    pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     
     if (!pixels) {
         std::cout << "Failed to load texture at path: " << path << std::endl;
     }
-    
+}
+
+void Texture::init() {
     CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));
 
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
@@ -27,6 +28,7 @@ Texture::Texture(const std::string &path, bool mipmap) {
     
     int mode = nrChannels == 4 ? GL_RGBA : GL_RGB;
     CHECK_GL_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels));
+
     if (mipmap) {
         CHECK_GL_ERROR(glGenerateMipmap(GL_TEXTURE_2D));
     }

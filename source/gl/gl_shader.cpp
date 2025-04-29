@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-static std::string readFile(const std::string &path) {
+static std::string read_file(const std::string& path) {
     std::stringstream result;
     std::ifstream file;
     file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -17,7 +17,7 @@ static std::string readFile(const std::string &path) {
     return result.str();
 }
 
-unsigned int Shader::compile_shader(unsigned int type, const char *source) {
+unsigned int Shader::compile_shader(unsigned int type, const char* source) {
     unsigned int shader = glCreateShader(type);
     CHECK_GL_ERROR(glShaderSource(shader, 1, &source, NULL));
     CHECK_GL_ERROR(glCompileShader(shader));
@@ -54,10 +54,13 @@ unsigned int Shader::create_program() {
     return 1;
 }
 
-Shader::Shader(const std::string &vertex_source, const std::string &fragment_source) {
+Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
     type = AssetType::SHADER;
-    vertex_shader = compile_shader(GL_VERTEX_SHADER, readFile(vertex_source).c_str());
-    fragment_shader = compile_shader(GL_FRAGMENT_SHADER, readFile(fragment_source).c_str());
+}
+
+void Shader::init() {
+    vertex_shader = compile_shader(GL_VERTEX_SHADER, read_file(vertex_source).c_str());
+    fragment_shader = compile_shader(GL_FRAGMENT_SHADER, read_file(fragment_source).c_str());
     create_program();
 }
 
@@ -69,32 +72,32 @@ void Shader::set_wireframe() {
     CHECK_GL_ERROR(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 }
 
-void Shader::set_bool(const std::string &name, bool value) {
+void Shader::set_bool(const std::string& name, bool value) {
     CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::set_int(const std::string &name, int value) {
+void Shader::set_int(const std::string& name, int value) {
     CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::set_float(const std::string &name, float value) {
+void Shader::set_float(const std::string& name, float value) {
     CHECK_GL_ERROR(glUniform1f(get_location(name), value));
 }
 
-void Shader::set_image(const std::string &name, int *samplers) {
+void Shader::set_image(const std::string& name, int* samplers) {
     int count = sizeof(samplers) / sizeof(int);
     CHECK_GL_ERROR(glUniform1iv(get_location(name), count, samplers));
 }
 
-void Shader::set_image(const std::string &name, int sampler) {
+void Shader::set_image(const std::string& name, int sampler) {
     set_int(name, sampler);
 }
 
-void Shader::set_matrix(const std::string &name, const glm::mat4 &matrix) {
+void Shader::set_matrix(const std::string& name, const glm::mat4& matrix) {
     CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, &matrix[0][0]));
 }
 
-int Shader::get_location(const std::string &name) {
+int Shader::get_location(const std::string& name) {
     if (uniform_location_cache.find(name) != uniform_location_cache.end()) {
         return uniform_location_cache[name];
     }

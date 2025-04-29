@@ -11,7 +11,7 @@ struct GLFWwindow;
 // public:
 //     virtual glm::vec2 size() const = 0;
 //     virtual bool running();
-//     virtual GLFWwindow *instance() const = 0;
+//     virtual GLFWwindow* instance() const = 0;
 
 //     virtual void pollEvents() = 0;
 //     virtual void swap() = 0;
@@ -21,14 +21,14 @@ struct GLFWwindow;
 
 class Window {
     struct GLFWwindowDeleter {
-        void operator()(GLFWwindow *window);
+        void operator()(GLFWwindow* window);
     };
 public:
-    Window(const std::string &title, glm::vec2 size = {1280, 720}, glm::vec2 position = {-1, -1});
+    Window(const std::string& title, glm::vec2 size = {1280, 720}, glm::vec2 position = {-1, -1});
     
     glm::vec2 size() const;
     bool running();
-    GLFWwindow *instance() const;
+    GLFWwindow* instance() const;
     
     void poll_events();
     void swap();

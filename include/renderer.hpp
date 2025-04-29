@@ -2,6 +2,7 @@
 
 #include "model.hpp"
 #include "drawable.hpp"
+#include "shader.hpp"
 
 #include <glm/glm.hpp>
 
@@ -12,13 +13,16 @@ public:
     virtual void draw_sprite(const Rectangle& sprite) = 0;
     virtual void draw(const Model& model) = 0;
     
+    virtual void set_shader(Shader& shader) = 0;
     virtual void clear_color(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f}) = 0;
     virtual void clear() = 0;
 };
 
 class Renderer {
 public:
-    void init(std::unique_ptr<GraphicsApiInterface> backend);
+    Renderer(std::unique_ptr<GraphicsApiInterface> backend); 
+    void init();
+    void set_shader(Shader& shader);
     void render(const DrawableMapAlias& drawables);
     void clear();
     void destroy();

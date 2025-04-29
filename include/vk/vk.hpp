@@ -18,7 +18,7 @@
         ASSERT(VKLogCall(error, #VK_CALL, __FILE__, __LINE__))
 #endif
 
-static bool VKLogCall(VkResult error, const char *function, const char *file, int line) {
+static bool VKLogCall(VkResult error, const char* function, const char* file, int line) {
     if (VK_SUCCESS != error) {
         std::printf("[Vulkan Error] (%d): %s %s %d\n", error, function, file, line);
         return false;

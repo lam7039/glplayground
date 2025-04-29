@@ -29,6 +29,12 @@ void AssetManager::remove_asset(const std::string& name) {
     assets.erase(name);
 }
 
+void AssetManager::init_assets() {
+    for (auto& [name, asset] : assets) {
+        asset->init();
+    }
+}
+
 void AssetManager::destroy_assets() {
     for (auto& [name, asset] : assets) {
         asset->destroy();

@@ -1,9 +1,9 @@
 #include "gl/gl.hpp"
 #include "material.hpp"
 
-Material::Material(unsigned int shaderId) : shaderId(shaderId) {}
+Material::Material(unsigned int shader_id) : shader_id(shader_id) {}
 
-void Material::bindSamplers() {
+void Material::bind_samplers() {
     // int samplerLocation = glGetUniformLocation(shaderId, "ourTextures");
     // glUseProgram shaderId;
     // glActiveTexture(GL_TEXTURE0);

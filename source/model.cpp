@@ -1,18 +1,22 @@
 #include "model.hpp"
 
-Model::Model(const std::string &name) : name(name) {}
+Model::Model(const std::string& path) : path(path) {
+
+}
 
 Model::~Model() {
-    for (auto &mesh : meshes) {
+    for (auto& mesh : meshes) {
         mesh->destroy();
     }
     meshes.clear();
 }
 
-void Model::addMesh(Mesh &mesh) {
+void Model::add_mesh(Mesh& mesh, Material& material) {
     meshes.push_back(std::make_unique<Mesh>(mesh));
 }
 
-const std::vector<std::shared_ptr<Mesh>> &Model::get_meshes() const {
+const std::vector<std::shared_ptr<Mesh>>& Model::get_meshes() const {
     return meshes;
 }
+
+//TODO: Model consists of a Mesh and a Material, a Material consists of Textures and other properties

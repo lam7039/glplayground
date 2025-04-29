@@ -22,3 +22,14 @@ private:
     void generate_vertices(glm::vec3 position, glm::vec3 size);
     std::vector<unsigned int> generate_indices();
 };
+
+class Sprite {
+public:
+
+private:
+    
+};
+
+
+//Rectangle as a geometric concept only (position, size, rotation, tranforms)
+//Sprite class as Drawable includes Rectangle

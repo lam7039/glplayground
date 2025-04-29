@@ -15,7 +15,9 @@ public:
 
 class Drawable : public DrawableInterface {
 public:
-    // void set_mesh(Mesh *mesh); //TODO: implement this if necessary
+    virtual void draw() = 0;
+    virtual ~Drawable() = default;
+    // void set_mesh(Mesh* mesh); //TODO: implement this if necessary
     const std::shared_ptr<Mesh>& get_mesh() const;
 protected:
     std::unique_ptr<Rectangle> rectangle;

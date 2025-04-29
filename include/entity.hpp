@@ -15,18 +15,27 @@ public:
 
 class Entity : public EntityInterface {
 public:
+    virtual void init() = 0;
+    virtual void update() = 0;
+    virtual void destroy() = 0;
+    virtual ~Entity() = default;
+
     void set_id(unsigned int identifier);
-    void transform(glm::vec3 &position, glm::vec3 &size);
+    void transform(glm::vec3& position, glm::vec3& size);
     void set_position(float x, float y, float z);
     void set_size(float x, float y, float z);
 
-    unsigned int &getId();
-    glm::vec3 &getPosition();
-    glm::vec3 &getSize();
-    // Mesh &getMesh();
+    unsigned int& getId();
+    glm::vec3& getPosition();
+    glm::vec3& getSize();
+    // Mesh& getMesh();
 
 protected:
-    // Rectangle rectangle;
+    //TODO: generic geometry to pass what you want in, something like Entity<Rectangle>() or Entity<Cube>();
+
+    // Geometry geometry_visual;
+    // Geometry geometry_logic;
+
     glm::vec3 position {0.0f, 0.0f, 0.0f};
     glm::vec3 size {1.0f, 1.0f, 1.0f};
 
