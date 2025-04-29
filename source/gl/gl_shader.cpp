@@ -102,6 +102,10 @@ void Shader::bind() {
     CHECK_GL_ERROR(glUseProgram(id));
 }
 
+void Shader::destroy() {
+    CHECK_GL_ERROR(glDeleteProgram(id));
+}
+
 void Shader::set_wireframe() {
     CHECK_GL_ERROR(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 }
@@ -129,8 +133,4 @@ void Shader::set_image(const std::string& name, int sampler) {
 
 void Shader::set_matrix(const std::string& name, const glm::mat4& matrix) {
     CHECK_GL_ERROR(glUniformMatrix4fv(get_location(id, name), 1, GL_FALSE, &matrix[0][0]));
-}
-
-void Shader::destroy() {
-    glDeleteProgram(id);
 }
