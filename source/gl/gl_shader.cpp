@@ -33,11 +33,11 @@ static unsigned int compile_shader(ShaderType type, const char* source) {
         int length;
         CHECK_GL_ERROR(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length));
 
-        char info_log[length];
-        CHECK_GL_ERROR(glGetShaderInfoLog(shader, length, nullptr, info_log));
+        char message[length];
+        CHECK_GL_ERROR(glGetShaderInfoLog(shader, length, &length, message));
 
-        std::string errorType = type == ShaderType::Vertex ? "VERTEX" : "FRAGMENT";
-        std::cout << "ERROR::SHADER::" << errorType << "::COMPILATION_FAILED\n" << info_log << std::endl;
+        std::string error_type = type == ShaderType::Vertex ? "VERTEX" : "FRAGMENT";
+        std::cout << "ERROR::SHADER::" << error_type << "::COMPILATION_FAILED\n" << message << std::endl;
 
         return 0;
     }
@@ -57,14 +57,16 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
         int length;
         CHECK_GL_ERROR(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length))
 
-        char info_log[length];
-        CHECK_GL_ERROR(glGetProgramInfoLog(id, length, nullptr, info_log));
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << info_log << std::endl;
+        char message[length];
+        CHECK_GL_ERROR(glGetProgramInfoLog(id, length, &length, message));
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << message << std::endl;
+
         return 0;
     }
 
     CHECK_GL_ERROR(glDeleteShader(fragment_shader));
     CHECK_GL_ERROR(glDeleteShader(vertex_shader));
+    
     return id;
 }
 
