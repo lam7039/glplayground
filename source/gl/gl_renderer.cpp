@@ -1,11 +1,17 @@
 #include "gl/gl_renderer.hpp"
 #include "gl/gl.hpp"
 
+#include <unordered_set>
+
+static std::unordered_set<std::string> logged_messages;
+
 static void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
-    std::cout << "[GL DEBUG] "
-              << "Type: " << type
-              << ", Severity: " << severity
-              << ", Message: " << message << std::endl;
+    if (logged_messages.insert(message).second) {
+        std::cout << "[GL DEBUG] "
+                  << "Type: " << type
+                  << ", Severity: " << severity
+                  << ", Message: " << message << std::endl;
+    }
 }
 
 void GLRenderer::init() {
