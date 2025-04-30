@@ -13,7 +13,8 @@ int main(int argc, char** argv) {
     Window window("glplayground");
     // ImGuiWrapper imgui(window.size());
 
-    Renderer renderer(std::make_unique<GLRenderer>());
+    Renderer renderer;
+    renderer.set_renderer(std::make_unique<GLRenderer>());
     renderer.init();
 
     Game game(renderer);

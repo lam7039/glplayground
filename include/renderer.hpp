@@ -20,12 +20,13 @@ public:
 
 class Renderer {
 public:
-    Renderer(std::unique_ptr<GraphicsApiInterface> backend); 
     void init();
-    void set_shader(Shader& shader);
     void render(const DrawableMapAlias& drawables);
-    void clear();
     void destroy();
+
+    void set_renderer(std::unique_ptr<GraphicsApiInterface> backend); 
+    void set_shader(Shader& shader);
+    void clear();
 private:
     std::unique_ptr<GraphicsApiInterface> api;
 

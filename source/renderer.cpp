@@ -1,15 +1,7 @@
 #include "renderer.hpp"
 
-Renderer::Renderer(std::unique_ptr<GraphicsApiInterface> backend) : api(std::move(backend)) {
-
-}
-
 void Renderer::init() {
     api->init();
-}
-
-void Renderer::set_shader(Shader& shader) {
-    api->set_shader(shader);
 }
 
 void Renderer::render(const DrawableMapAlias& drawables) {
@@ -19,10 +11,18 @@ void Renderer::render(const DrawableMapAlias& drawables) {
     }
 }
 
-void Renderer::clear() {
-    api->clear();
-}
-
 void Renderer::destroy() {
     api.reset();
+}
+
+void Renderer::set_renderer(std::unique_ptr<GraphicsApiInterface> backend) {
+    api = std::move(backend);
+}
+
+void Renderer::set_shader(Shader& shader) {
+    api->set_shader(shader);
+}
+
+void Renderer::clear() {
+    api->clear();
 }
