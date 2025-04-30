@@ -4,7 +4,6 @@
 #include "texture.hpp"
 
 #include <filesystem>
-#include <unordered_map>
 
 class AssetManager {
 public:
@@ -26,4 +25,4 @@ private:
     const std::string workspace = std::filesystem::current_path();
 };
 
-std::shared_ptr<AssetManager>& get_asset_manager();
+const std::shared_ptr<AssetManager>& get_asset_manager();

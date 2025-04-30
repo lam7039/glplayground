@@ -1,7 +1,6 @@
 #include "gl/gl.hpp"
 #include "shader.hpp"
 
-#include <unordered_map>
 #include <fstream>
 #include <sstream>
 
@@ -10,7 +9,6 @@ enum ShaderType {
     Fragment = GL_FRAGMENT_SHADER
 };
 
-static std::unordered_map<std::string, int> uniform_location_cache;
 
 static std::string read_file(const std::string& path) {
     std::stringstream result;
@@ -27,7 +25,7 @@ static std::string read_file(const std::string& path) {
 }
 
 static unsigned int compile_shader(ShaderType type, const char* source) {
-    unsigned int shader = glCreateShader(type);
+    CHECK_GL_ERROR(unsigned int shader = glCreateShader(type));
     CHECK_GL_ERROR(glShaderSource(shader, 1, &source, nullptr));
     CHECK_GL_ERROR(glCompileShader(shader));
 
@@ -74,20 +72,6 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
     return id;
 }
 
-static int get_location(unsigned int id, const std::string& name) {
-    if (uniform_location_cache.find(name) != uniform_location_cache.end()) {
-        return uniform_location_cache[name];
-    }
-    
-    CHECK_GL_ERROR(int location = glGetUniformLocation(id, name.c_str()));
-    if (location == -1) {
-        std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
-    }
-
-    uniform_location_cache[name] = location;
-    return location;
-}
-
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
     type = AssetType::SHADER;
 }
@@ -111,20 +95,20 @@ void Shader::set_wireframe() {
 }
 
 void Shader::set_bool(const std::string& name, bool value) {
-    CHECK_GL_ERROR(glUniform1i(get_location(id, name), value));
+    CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
 void Shader::set_int(const std::string& name, int value) {
-    CHECK_GL_ERROR(glUniform1i(get_location(id, name), value));
+    CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
 void Shader::set_float(const std::string& name, float value) {
-    CHECK_GL_ERROR(glUniform1f(get_location(id, name), value));
+    CHECK_GL_ERROR(glUniform1f(get_location(name), value));
 }
 
 void Shader::set_image(const std::string& name, int* samplers) {
     int count = sizeof(samplers) / sizeof(int);
-    CHECK_GL_ERROR(glUniform1iv(get_location(id, name), count, samplers));
+    CHECK_GL_ERROR(glUniform1iv(get_location(name), count, samplers));
 }
 
 void Shader::set_image(const std::string& name, int sampler) {
@@ -132,5 +116,19 @@ void Shader::set_image(const std::string& name, int sampler) {
 }
 
 void Shader::set_matrix(const std::string& name, const glm::mat4& matrix) {
-    CHECK_GL_ERROR(glUniformMatrix4fv(get_location(id, name), 1, GL_FALSE, &matrix[0][0]));
+    CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, &matrix[0][0]));
+}
+
+int Shader::get_location(const std::string& name) {
+    if (uniform_location_cache.find(name) != uniform_location_cache.end()) {
+        return uniform_location_cache[name];
+    }
+    
+    CHECK_GL_ERROR(int location = glGetUniformLocation(id, name.c_str()));
+    if (location == -1) {
+        std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
+    }
+
+    uniform_location_cache[name] = location;
+    return location;
 }

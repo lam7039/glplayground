@@ -46,8 +46,8 @@ const std::string& AssetManager::get_workspace() const {
     return workspace;
 }
 
-std::shared_ptr<AssetManager>& get_asset_manager() {
-    static std::shared_ptr<AssetManager> instance = std::make_shared<AssetManager>();
+const std::shared_ptr<AssetManager>& get_asset_manager() {
+    static const std::shared_ptr<AssetManager> instance = std::make_shared<AssetManager>();
     return instance;
 }
 
