@@ -9,7 +9,6 @@ enum ShaderType {
     Fragment = GL_FRAGMENT_SHADER
 };
 
-
 static std::string read_file(const std::string& path) {
     std::stringstream result;
     std::ifstream file;

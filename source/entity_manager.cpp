@@ -1,5 +1,4 @@
 #include "entity_manager.hpp"
-#include <iostream>
 
 void EntityManager::add_entity(std::shared_ptr<Entity> entity) {
     entity->set_id(identifier);

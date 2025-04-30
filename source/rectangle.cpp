@@ -36,22 +36,22 @@ const std::shared_ptr<Mesh>& Rectangle::get_mesh() const {
 void Rectangle::generate_vertices(glm::vec3 position, glm::vec3 size) {
     vertices.push_back({
         position,
-        glm::vec4 {1.0f},
+        glm::uvec4 {255},
         glm::vec2 {0.0f, 0.0f}
     });
     vertices.push_back({
         glm::vec3 {position.x + size.x, position.y, 0.0f},
-        glm::vec4 {1.0f},
+        glm::uvec4 {255},
         glm::vec2 {1.0f, 0.0f}
     });
     vertices.push_back({
         position + size,
-        glm::vec4 {1.0f},
+        glm::uvec4 {255},
         glm::vec2 {1.0f, 1.0f}
     });
     vertices.push_back({
         glm::vec3 {position.x, position.y + size.y, 0.0f},
-        glm::vec4 {1.0f},
+        glm::uvec4 {255},
         glm::vec2 {0.0f, 1.0f}
     });
 }

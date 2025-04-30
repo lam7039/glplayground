@@ -1,7 +1,18 @@
 #include "gl/gl_renderer.hpp"
 #include "gl/gl.hpp"
 
+static void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
+    std::cout << "[GL DEBUG] "
+              << "Type: " << type
+              << ", Severity: " << severity
+              << ", Message: " << message << std::endl;
+}
+
 void GLRenderer::init() {
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageCallback(MessageCallback, nullptr);
+
     // CHECK_GL_ERROR(glEnable(GL_DEPTH_TEST));
     // CHECK_GL_ERROR(glDepthFunc(GL_LEQUAL));
     CHECK_GL_ERROR(glEnable(GL_BLEND));
