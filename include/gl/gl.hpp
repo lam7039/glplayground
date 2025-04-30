@@ -4,7 +4,6 @@
 
 #include "glad/gl.h"
 
-
 #if NDEBUG
     #define CHECK_GL_ERROR(GL_CALL) GL_CALL;
 #else

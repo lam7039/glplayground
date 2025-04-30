@@ -24,7 +24,7 @@ class Window {
         void operator()(GLFWwindow* window);
     };
 public:
-    Window(const std::string& title, glm::vec2 size = {1280, 720}, glm::vec2 position = {-1, -1});
+    Window(const std::string& title, const glm::vec2& size = {1280, 720}, const glm::vec2& position = {-1, -1});
     
     glm::vec2 size() const;
     bool running();

@@ -13,8 +13,6 @@ public:
     void set_size(float x, float y, float z);
     
 private:
-    glm::vec3 position {0.0f, 0.0f, 0.0f};
-    glm::vec3 size {1.0f, 1.0f, 1.0f};
     unsigned int identifier;
 
     std::shared_ptr<Shader> shader;

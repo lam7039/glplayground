@@ -7,7 +7,7 @@ void Window::GLFWwindowDeleter::operator()(GLFWwindow* window) {
     glfwDestroyWindow(window);
 }
 
-Window::Window(const std::string& title, glm::vec2 size, glm::vec2 position) {
+Window::Window(const std::string& title, const glm::vec2& size, const glm::vec2& position) {
     if (!glfwInit()) {
         std::cout << "Failed to initialize GLFW" << std::endl;
         return;
