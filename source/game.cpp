@@ -3,8 +3,9 @@
 #include "entities/player.hpp"
 #include "entities/background.hpp"
 
-Game::Game(Renderer& renderer) : renderer(renderer) {
+Game::Game(const std::string& workspace, Renderer& renderer) : renderer(renderer) {
     asset_manager = get_asset_manager();
+    asset_manager->set_workspace(workspace);
 }
 
 void Game::init(glm::vec2 viewport) {
@@ -17,7 +18,8 @@ void Game::init(glm::vec2 viewport) {
     asset_manager->load_texture("mario", "/assets/mario.png");
     asset_manager->init_assets();
 
-    renderer.set_shader(*asset_manager->get_shader("main"));
+    auto& shader = *asset_manager->get_shader("main");
+    renderer.set_shader(shader);
 
     //TODO: create entities with a file using a SceneLoader
     entity_manager = std::make_unique<EntityManager>();

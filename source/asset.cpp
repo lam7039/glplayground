@@ -1,5 +1,4 @@
 #include "asset.hpp"
-#include <filesystem>
 
 unsigned int Asset::get_id() const {
     return id;

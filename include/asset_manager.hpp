@@ -19,10 +19,11 @@ public:
     void init_assets();
     void destroy_assets();
 
+    void set_workspace(const std::string& path);
     const std::string& get_workspace() const;
 private:
     std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
-    const std::string workspace = std::filesystem::current_path();
+    std::string workspace;
 };
 
 const std::shared_ptr<AssetManager>& get_asset_manager();

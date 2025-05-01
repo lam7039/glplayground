@@ -6,7 +6,7 @@
 
 class Game {
 public:
-    Game(Renderer& renderer);
+    Game(const std::string& workspace, Renderer& renderer);
     void init(glm::vec2 viewport);
     void quit();
 

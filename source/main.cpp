@@ -4,12 +4,8 @@
 #include "renderer.hpp"
 #include "gl/gl_renderer.hpp"
 
-#include <filesystem>
-
 //TODO: move .hpp to source unless they're for a public API
 int main(int argc, char** argv) {
-    std::filesystem::current_path(std::filesystem::path(argv[0]).parent_path().parent_path());
-
     Window window("glplayground");
     // ImGuiWrapper imgui(window.size());
 
@@ -17,7 +13,7 @@ int main(int argc, char** argv) {
     renderer.set_renderer(std::make_unique<GLRenderer>());
     renderer.init();
 
-    Game game(renderer);
+    Game game(argv[0], renderer);
     game.init(window.size());
 
     // imgui.attach(window.instance());
