@@ -17,18 +17,18 @@ void Entity::set_size(float x, float y, float z) {
     size = {x, y, z};
 }
 
-unsigned int& Entity::getId() {
+unsigned int& Entity::get_id() {
     return identifier;
 }
 
-glm::vec3& Entity::getPosition() {
+glm::vec3& Entity::get_position() {
     return position;
 }
 
-glm::vec3& Entity::getSize() {
+glm::vec3& Entity::get_size() {
     return size;
 }
 
-// Mesh& Entity::getMesh() {
+// Mesh& Entity::get_mesh() {
 //     return* rectangle.getMesh();
 // }

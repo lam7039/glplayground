@@ -48,13 +48,13 @@ void ImGuiWrapper::end_frame() {
 }
 
 void ImGuiWrapper::transform_box(std::shared_ptr<Entity>& entity) {
-    auto identifier = std::to_string(entity->getId());
+    auto identifier = std::to_string(entity->get_id());
     ImGui::Text("Entity ID: %s", identifier.c_str());
-    ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->getPosition().x, 0.0f, viewport.x - entity->getSize().x);
-    ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->getPosition().y, 0.0f, viewport.y - entity->getSize().y);
-    ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &entity->getPosition().z, -100.0f, 100.0f);
-    ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &entity->getSize().x, 0.0f, viewport.x);
-    ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &entity->getSize().y, 0.0f, viewport.y);
+    ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->get_position().x, 0.0f, viewport.x - entity->get_size().x);
+    ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &entity->get_position().y, 0.0f, viewport.y - entity->get_size().y);
+    ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &entity->get_position().z, -100.0f, 100.0f);
+    ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &entity->get_size().x, 0.0f, viewport.x);
+    ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &entity->get_size().y, 0.0f, viewport.y);
     ImGui::Separator();
 }
 
