@@ -4,7 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera(glm::vec2 viewport) {
-    set_position(0.0f, 0.0f, 0.0f);
     set_size(viewport.x, viewport.y, 1.0f);
 }
 
