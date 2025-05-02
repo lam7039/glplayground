@@ -8,10 +8,6 @@ public:
     void init() override final;
     void update() override final;
     void destroy() override final;
-    
-    void set_position(float x, float y, float z);
-    void set_size(float x, float y, float z);
-    
 private:
     unsigned int identifier;
 
