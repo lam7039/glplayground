@@ -9,8 +9,4 @@ public:
     void update() override final;
     void draw() override final;
     void destroy() override final;
-
-private:
-    int width;
-    int height;
 };

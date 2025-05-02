@@ -1,18 +1,16 @@
 #include "entities/background.hpp"
 
-Background::Background(int width, int height) : width(width), height(height) {
-    
+Background::Background(int width, int height) {
+    size = {width, height, 1.0f};
 }
 
 void Background::init() {
-    position = glm::vec3 {0.0f};
-    size = glm::vec3 {width, height, 0.0f};
     asset = "background";
     rectangle = std::make_unique<Rectangle>(position, size, asset);
 }
 
 void Background::update() {
-
+    rectangle->transform(position, size);
 }
 
 void Background::draw() {
@@ -20,5 +18,5 @@ void Background::draw() {
 }
 
 void Background::destroy() {
-
+    rectangle->destroy();
 }

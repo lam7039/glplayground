@@ -7,10 +7,9 @@
 class Rectangle {
 public:
     Rectangle(const std::string& texture);
-    Rectangle(glm::vec3& position, glm::vec3& size, const std::string& texture);
-    // ~Rectangle();
+    Rectangle(const glm::vec3& position, const glm::vec3& size, const std::string& texture);
 
-    void transform(glm::vec3& position, glm::vec3& size);
+    void transform(const glm::vec3& position, const glm::vec3& size);
     void destroy();
 
     const std::shared_ptr<Mesh>& get_mesh() const;
@@ -18,9 +17,6 @@ private:
     unsigned int vertex_buffer_index {0};
     std::vector<Vertex> vertices;
     std::shared_ptr<Mesh> mesh;
-
-    void generate_vertices(glm::vec3 position, glm::vec3 size);
-    std::vector<unsigned int> generate_indices();
 };
 
 class Sprite {
@@ -29,7 +25,6 @@ public:
 private:
     
 };
-
 
 //Rectangle as a geometric concept only (position, size, rotation, tranforms)
 //Sprite class as Drawable includes Rectangle
