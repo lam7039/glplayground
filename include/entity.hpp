@@ -36,8 +36,8 @@ protected:
     // Geometry geometry_visual;
     // Geometry geometry_logic;
 
-    glm::vec3 position {0.0f, 0.0f, 0.0f};
-    glm::vec3 size {1.0f, 1.0f, 1.0f};
+    glm::vec3 position {0.0f};
+    glm::vec3 size {1.0f};
 
 private:
     unsigned int identifier;

@@ -26,7 +26,6 @@ void Game::init(glm::vec2 viewport) {
     entity_manager->add_entity(std::make_shared<Camera>(viewport));
     entity_manager->add_entity(std::make_shared<Background>(viewport.x, viewport.y));
     entity_manager->add_entity(std::make_shared<Player>());
-
     entity_manager->init_entities();
 }
 
