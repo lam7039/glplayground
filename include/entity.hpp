@@ -28,8 +28,6 @@ public:
     unsigned int& get_id();
     glm::vec3& get_position();
     glm::vec3& get_size();
-    // Mesh& get_mesh();
-
 protected:
     //TODO: generic geometry to pass what you want in, something like Entity<Rectangle>() or Entity<Cube>();
 

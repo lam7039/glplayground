@@ -28,7 +28,3 @@ glm::vec3& Entity::get_position() {
 glm::vec3& Entity::get_size() {
     return size;
 }
-
-// Mesh& Entity::get_mesh() {
-//     return* rectangle.getMesh();
-// }
