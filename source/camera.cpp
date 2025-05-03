@@ -14,7 +14,7 @@ void Camera::init() {
 
 void Camera::update() {
     projection = glm::ortho(position.x, position.x + size.x, position.y, position.y + size.y, -1.0f, 1.0f);
-    shader->set_matrix("mvp_matrix", projection);
+    shader->set_matrix("uMvpMatrix", projection);
 }
 
 void Camera::destroy() {
