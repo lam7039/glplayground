@@ -43,8 +43,7 @@ void AssetManager::destroy_assets() {
 }
 
 void AssetManager::set_workspace(const std::string& path) {
-    std::filesystem::current_path(std::filesystem::path(path).parent_path().parent_path());
-    workspace = std::filesystem::current_path();
+    workspace = std::filesystem::absolute(std::filesystem::path(path)).parent_path().parent_path().string();
 }
 
 const std::string& AssetManager::get_workspace() const {

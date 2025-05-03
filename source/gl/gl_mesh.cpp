@@ -29,11 +29,11 @@ static void vertex_attrib_pointer(unsigned int index, unsigned int size, unsigne
 
 //TODO: texture should be in material?
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::string texture) : vertex_data(vertices), index_data(indices), texture(texture) {
-    CHECK_GL_ERROR(glCreateVertexArrays(1, &input_layout_object));
+    CHECK_GL_ERROR(glCreateVertexArrays(1, &vertex_array_object));
     input_layout_bind();
 
     bind_object(DrawMode::ArrayBuffer, &vertex_buffer_object, get_vertex_data_size(), nullptr, DrawUsage::Dynamic);
-    bind_object(DrawMode::ElementArrayBuffer, &element_buffer_object, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
+    bind_object(DrawMode::ElementArrayBuffer, &index_buffer_object, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
     vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color), DataType::UnsignedInt, GL_TRUE);
@@ -43,34 +43,40 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     input_layout_unbind();
 }
 
-unsigned int Mesh::get_vertex_data_size() const {
+const unsigned int Mesh::get_vertex_data_size() const {
     return static_cast<unsigned int>(vertex_data.size() * sizeof(Vertex));
 }
 
-unsigned int Mesh::get_index_count() const {
-    return static_cast<unsigned int>(index_data.size() * 6);
+const unsigned int Mesh::get_index_count() const {
+    return static_cast<unsigned int>(index_data.size());
 }
 
 const std::string& Mesh::get_texture() const {
     return texture;
 }
 
-void Mesh::bind(std::vector<Vertex>& vertices) {
+void Mesh::bind() const {
     CHECK_GL_ERROR(glBindBuffer(DrawMode::ArrayBuffer, vertex_buffer_object));
-    CHECK_GL_ERROR(glBufferSubData(DrawMode::ArrayBuffer, 0, get_vertex_data_size(), vertices.data()));
+    CHECK_GL_ERROR(glBufferSubData(DrawMode::ArrayBuffer, 0, get_vertex_data_size(), vertex_data.data()));
+}
+
+//TODO: use shared_ptr for vertices so we don't have to constantly pass vertices to bind?
+void Mesh::bind(std::vector<Vertex>& vertices) const {
+    CHECK_GL_ERROR(glBindBuffer(DrawMode::ArrayBuffer, vertex_buffer_object));
+    CHECK_GL_ERROR(glBufferSubData(DrawMode::ArrayBuffer, 0, vertices.size() * sizeof(Vertex), vertices.data()));
 }
 
 void Mesh::input_layout_bind() const {
-    CHECK_GL_ERROR(glBindVertexArray(input_layout_object));
+    CHECK_GL_ERROR(glBindVertexArray(vertex_array_object));
 }
 
 void Mesh::input_layout_unbind() const {
     CHECK_GL_ERROR(glBindVertexArray(0));
 }
 
-void Mesh::destroy() {
-    CHECK_GL_ERROR(glDeleteVertexArrays(1, &input_layout_object));
+void Mesh::destroy() const {
+    CHECK_GL_ERROR(glDeleteVertexArrays(1, &vertex_array_object));
     CHECK_GL_ERROR(glDeleteBuffers(1, &vertex_buffer_object));
-    CHECK_GL_ERROR(glDeleteBuffers(1, &element_buffer_object));
-    CHECK_GL_ERROR(glDeleteTextures(1, &element_buffer_object));
+    CHECK_GL_ERROR(glDeleteBuffers(1, &index_buffer_object));
+    CHECK_GL_ERROR(glDeleteTextures(1, &index_buffer_object));
 }
