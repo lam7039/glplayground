@@ -4,7 +4,7 @@
 #include "scene.hpp"
 
 int main(int argc, char** argv) {
-    Window window("test");
+    Window window("glplayground");
     
     CHECK_GL_ERROR(glEnable(GL_BLEND));
     CHECK_GL_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
