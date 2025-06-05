@@ -54,6 +54,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+// //TODO: fetch third party libraries with cmake instead of saving them in the repo
 
 
 
@@ -104,5 +105,3 @@ int main(int argc, char** argv) {
     
 //     return 0;
 // }
-
-// //TODO: fetch third party libraries with cmake instead of saving them in the repo

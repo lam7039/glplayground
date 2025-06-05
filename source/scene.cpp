@@ -2,8 +2,6 @@
 #include "camera.hpp"
 #include "rectangle.hpp"
 
-#include <iostream>
-
 entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::vec3 size, const std::string& texture) {
     Rectangle rectangle(position, size);
     auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
@@ -25,8 +23,8 @@ Scene::Scene(const glm::vec2& viewport) {
     auto camera = registry.create();
     registry.emplace<Camera>(camera, viewport);
 
-    auto player = create_sprite(registry, glm::vec3 {700.0f, 500.0f, 0.0f}, glm::vec3 {100.0f, 150.0f, 0.0f}, "mario");
-    auto background = create_sprite(registry, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec3 {viewport, 0.0f}, "background");
+    auto player = create_sprite(registry, {700.0f, 500.0f, 0.0f}, {100.0f, 150.0f, 0.0f}, "mario");
+    auto background = create_sprite(registry, {0.0f, 0.0f, 0.0f}, {viewport, 0.0f}, "background");
 }
 
 void Scene::init() {
