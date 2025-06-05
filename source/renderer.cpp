@@ -7,7 +7,8 @@ void Renderer::init() {
 void Renderer::render(const DrawableMapAlias& drawables) {
     api->clear_color();
     for (auto& [id, drawable] : drawables) {
-        api->draw_mesh(*drawable->get_mesh());
+        auto mesh = drawable->get_mesh();
+        // api->draw_mesh(*mesh);
     }
 }
 

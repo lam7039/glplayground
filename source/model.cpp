@@ -18,5 +18,3 @@ void Model::add_mesh(Mesh& mesh, Material& material) {
 const std::vector<std::shared_ptr<Mesh>>& Model::get_meshes() const {
     return meshes;
 }
-
-//TODO: Model consists of a Mesh and a Material, a Material consists of Textures and other properties

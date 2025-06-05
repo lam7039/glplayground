@@ -6,6 +6,9 @@
 #include <string>
 #include <memory>
 
+//TODO: Model consists of a Geometric shape, Mesh, Skeleton and a Material, a Material consists of Textures and other properties
+//TODO: unify Model and Sprite with a Renderable class, Renderable is for Asset/Data (Geometry, Material, etc.), Drawable is for Scene/Entity (Visibility)
+
 class Model {
 public:
     Model(const std::string& path);

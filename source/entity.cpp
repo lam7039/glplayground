@@ -7,6 +7,8 @@ void Entity::set_id(unsigned int id) {
 void Entity::transform(glm::vec3& position, glm::vec3& size) {
     this->position = position;
     this->size = size;
+
+    // shader->set_matrix("model", glm::mat4 {1.0f}); //TODO: per entity
 }
 
 void Entity::set_position(float x, float y, float z) {
@@ -17,14 +19,14 @@ void Entity::set_size(float x, float y, float z) {
     size = {x, y, z};
 }
 
-unsigned int& Entity::get_id() {
+unsigned int Entity::get_id() const {
     return identifier;
 }
 
-glm::vec3& Entity::get_position() {
+const glm::vec3& Entity::get_position() const {
     return position;
 }
 
-glm::vec3& Entity::get_size() {
+const glm::vec3& Entity::get_size() const {
     return size;
 }

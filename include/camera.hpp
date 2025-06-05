@@ -11,6 +11,8 @@ public:
 private:
     unsigned int identifier;
 
-    std::shared_ptr<Shader> shader;
     glm::mat4 projection;
+    glm::mat4 view {1.0f};
 };
+
+//TODO: use Rectangle class in EnTT instead of inheriting position and size from an Entity class

@@ -3,19 +3,23 @@
 
 #include "stb/stb_image.h"
 
-Texture::Texture(const std::string& path, bool mipmap) : mipmap(mipmap) {
-    type = AssetType::IMAGE;
-    stbi_set_flip_vertically_on_load(1);
-    
-    pixels = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-    
-    if (!pixels) {
-        std::cout << "Failed to load texture at path: " << path << std::endl;
-    }
+Texture::Texture(const std::string& source, bool mipmap) : mipmap(mipmap) {
+    this->source = source;
+    this->type = AssetType::IMAGE;
 }
 
-void Texture::init() {
-    CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));
+void Texture::load() {
+    int width, height, channels_in_file;
+    unsigned char* pixels = stbi_load(this->source.c_str(), &width, &height, &channels_in_file, 0);
+    
+    if (!pixels) {
+        std::cout << "Failed to load texture at path: " << this->source << std::endl;
+    }
+    
+    // CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));
+
+    CHECK_GL_ERROR(glGenTextures(1, &id));
+    CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, id));
 
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
@@ -23,22 +27,28 @@ void Texture::init() {
     // float borderColor[] = {1.0f, 1.0f, 0.0f, 1.0f};
     // CHECK_GL_ERROR(glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
 
-    CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+    // CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+    CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
     CHECK_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    
-    int mode = nrChannels == 4 ? GL_RGBA : GL_RGB;
+
+    int mode = channels_in_file == 4 ? GL_RGBA : GL_RGB;
     CHECK_GL_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels));
 
     if (mipmap) {
         CHECK_GL_ERROR(glGenerateMipmap(GL_TEXTURE_2D));
     }
 
-    stbi_image_free(pixels);
+    if (pixels) {
+        stbi_image_free(pixels);
+    }
 }
 
 void Texture::bind() {
+    // CHECK_GL_ERROR(glActiveTexture(GL_TEXTURE0 + slot));
+    CHECK_GL_ERROR(glActiveTexture(GL_TEXTURE0));
     CHECK_GL_ERROR(glBindTexture(GL_TEXTURE_2D, id));
     // CHECK_GL_ERROR(glBindTextureUnit(0, id));
+    
 
     // int max_texture_image_units;
     // glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_texture_image_units);

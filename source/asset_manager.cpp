@@ -1,45 +1,57 @@
 #include "asset_manager.hpp"
 
-std::shared_ptr<Asset> AssetManager::get_asset(const std::string& name) {
-    return assets[name];
+std::weak_ptr<Shader> AssetManager::get_shader(const std::string& name) const {
+    auto shader = shaders.find(name);
+    return shader != shaders.end() ? shader->second : std::weak_ptr<Shader>();
 }
 
-std::shared_ptr<Shader> AssetManager::get_shader(const std::string& name) {
-    return std::static_pointer_cast<Shader>(get_asset(name));
-}
-
-std::shared_ptr<Texture> AssetManager::get_texture(const std::string& name) {
-    return std::static_pointer_cast<Texture>(get_asset(name));
-}
-
-void AssetManager::load_asset(const std::string& name, std::shared_ptr<Asset> asset) {
-    assets[name] = std::move(asset);
+std::weak_ptr<Texture> AssetManager::get_texture(const std::string& name) const {
+    auto texture = textures.find(name);
+    return texture != textures.end() ? texture->second : std::weak_ptr<Texture>();
 }
 
 void AssetManager::load_shader(const std::string& name, const std::string& vertex, const std::string& fragment) {
-    load_asset(name, std::make_shared<Shader>(workspace + vertex, workspace + fragment));
+    shaders[name] = std::make_shared<Shader>(workspace + vertex, workspace + fragment);
 }
 
 void AssetManager::load_texture(const std::string& name, const std::string& path) {
-    load_asset(name, std::make_shared<Texture>(workspace + path, true));
+    textures[name] = std::make_shared<Texture>(workspace + path, true);
 }
 
-void AssetManager::remove_asset(const std::string& name) {
-    assets[name]->destroy();
-    assets.erase(name);
+void AssetManager::remove_shader(const std::string& name) {
+    auto shader = shaders.find(name);
+    if (shader != shaders.end()) {
+        shader->second->destroy();
+        shaders.erase(name);
+    }
+}
+
+void AssetManager::remove_texture(const std::string& name) {
+    auto texture = textures.find(name);
+    if (texture != textures.end()) {
+        texture->second->destroy();
+        textures.erase(name);
+    }
 }
 
 void AssetManager::init_assets() {
-    for (auto& [name, asset] : assets) {
-        asset->init();
+    for (auto& [name, shader] : shaders) {
+        shader->load();
+    }
+    for (auto& [name, texture] : textures) {
+        texture->load();
     }
 }
 
 void AssetManager::destroy_assets() {
-    for (auto& [name, asset] : assets) {
-        asset->destroy();
+    for (auto& [name, shader] : shaders) {
+        shader->destroy();
     }
-    assets.clear();
+    for (auto& [name, texture] : textures) {
+        texture->destroy();
+    }
+    shaders.clear();
+    textures.clear();
 }
 
 void AssetManager::set_workspace(const std::string& path) {

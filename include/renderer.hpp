@@ -10,10 +10,11 @@ class GraphicsApiInterface {
 public:
     virtual void init() = 0;
     virtual void draw_mesh(const Mesh& mesh) = 0;
-    virtual void draw_sprite(const Rectangle& sprite) = 0;
     virtual void draw(const Model& model) = 0;
     
     virtual void set_shader(Shader& shader) = 0;
+    virtual void set_wireframe() = 0;
+    
     virtual void clear_color(glm::vec4 color = {0.2f, 0.2f, 0.2f, 1.0f}) = 0;
     virtual void clear() = 0;
 };

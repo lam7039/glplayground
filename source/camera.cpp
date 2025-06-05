@@ -8,13 +8,19 @@ Camera::Camera(glm::vec2 viewport) {
 }
 
 void Camera::init() {
-    shader = get_asset_manager()->get_shader("main");
-    update();
+    
 }
 
 void Camera::update() {
-    projection = glm::ortho(position.x, position.x + size.x, position.y, position.y + size.y, -1.0f, 1.0f);
-    shader->set_matrix("uMvpMatrix", projection);
+    //TODO: return view/projection/model and separate shader from camera
+    auto shader = get_asset_manager()->get_shader("main").lock();
+
+    projection = glm::ortho(0.0f, size.x, size.y, 0.0f, 0.01f, 1000.0f);
+    glm::vec3 negated_position = glm::vec3 {-position.x, -position.y, -1.0f};
+    view = glm::translate(glm::mat4 {1.0f}, negated_position);
+
+    shader->set_matrix("view", view);
+    shader->set_matrix("projection", projection);
 }
 
 void Camera::destroy() {

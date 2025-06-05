@@ -3,6 +3,8 @@
 
 #include <fstream>
 #include <sstream>
+#include <glm/gtc/type_ptr.hpp>
+#include <string>
 
 enum ShaderType {
     Vertex = GL_VERTEX_SHADER,
@@ -71,14 +73,33 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
     return id;
 }
 
-Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
-    type = AssetType::SHADER;
+Shader::Shader(const std::string& source) {
+    this->source = source;
+    this->type = AssetType::SHADER;
 }
 
-void Shader::init() {
+Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
+    this->type = AssetType::SHADER;
+}
+
+void Shader::load() {
     auto vertex_shader = compile_shader(ShaderType::Vertex, read_file(vertex_source).c_str());
     auto fragment_shader = compile_shader(ShaderType::Fragment, read_file(fragment_source).c_str());
     id = create_program(vertex_shader, fragment_shader);
+
+    // std::unordered_map<ShaderType, std::string> shader_sources;
+
+    // create_program();
+    // for (auto& [type, source] : shader_sources) {
+    //     compile_shader(type, source);
+    // }
+
+    // link_program();
+    // for (auto& [type, source] : shader_sources) {
+    //     CHECK_GL_ERROR(glDeleteShader(source));
+    // }
+
+    // destroy();
 }
 
 void Shader::bind() {
@@ -89,10 +110,7 @@ void Shader::destroy() {
     CHECK_GL_ERROR(glDeleteProgram(id));
 }
 
-void Shader::set_wireframe() {
-    CHECK_GL_ERROR(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
-}
-
+//TODO: separate set_uniforms from shaders somehow, perhaps a separate header with static definitions and defining the static definitions here
 void Shader::set_bool(const std::string& name, bool value) {
     CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
@@ -115,7 +133,7 @@ void Shader::set_image(const std::string& name, int sampler) {
 }
 
 void Shader::set_matrix(const std::string& name, const glm::mat4& matrix) {
-    CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, &matrix[0][0]));
+    CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
 int Shader::get_location(const std::string& name) {

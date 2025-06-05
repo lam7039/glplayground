@@ -31,20 +31,13 @@ void GLRenderer::init() {
     asset_manager = get_asset_manager();
 }
 
+//TODO: replace with draw_sprite
 void GLRenderer::draw_mesh(const Mesh& mesh) {
-    asset_manager->get_texture(mesh.get_texture())->bind();
-    mesh.input_layout_bind();
-    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
-    mesh.input_layout_unbind();
-}
-
-//TODO: replace rectangle with a Sprite class
-void GLRenderer::draw_sprite(const Rectangle& sprite) {
-    //TODO: this is copied from draw_mesh
-    // asset_manager->get_texture(sprite->get_texture())->bind();
-    // sprite->input_layout_bind();
-    // CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh->get_index_count(), GL_UNSIGNED_INT, nullptr));
-    // sprite->input_layout_unbind();
+    // asset_manager->get_texture(mesh.get_texture())->bind();
+    // mesh.input_layout_bind();
+    // mesh.bind();
+    // CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
+    // mesh.input_layout_unbind();
 }
 
 void GLRenderer::draw(const Model& model) {
@@ -57,6 +50,10 @@ void GLRenderer::set_shader(Shader& shader) {
     shader.bind();
     shader.set_image("uTexture", 0);
     // shader.set_wireframe();
+}
+
+void GLRenderer::set_wireframe() {
+    CHECK_GL_ERROR(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 }
 
 void GLRenderer::clear() {

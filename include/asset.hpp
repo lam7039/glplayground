@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 enum AssetType {
     IMAGE,
     SOUND,
@@ -9,7 +11,7 @@ enum AssetType {
 
 class AssetInterface {
 public:
-    virtual void init() = 0;
+    virtual void load() = 0;
     virtual void bind() = 0;
     virtual void destroy() = 0;
 };
@@ -25,4 +27,5 @@ protected:
     AssetType type;
     unsigned int id {0};
     unsigned int reference_count {0};
+    std::string source;
 };

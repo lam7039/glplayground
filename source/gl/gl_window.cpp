@@ -23,6 +23,10 @@ Window::Window(const std::string& title, const glm::vec2& size, const glm::vec2&
     }
     glfwSwapInterval(1);
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     //TODO: use fmt for text output (https://github.com/fmtlib/fmt)
     std::cout << "Vendor graphic card:  " << glGetString(GL_VENDOR) << std::endl
               << "Renderer:             " << glGetString(GL_RENDERER) << std::endl
