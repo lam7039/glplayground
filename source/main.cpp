@@ -9,7 +9,6 @@ int main(int argc, char** argv) {
     CHECK_GL_ERROR(glEnable(GL_BLEND));
     CHECK_GL_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    //TODO: refactor asset manager with EnTT resource manager
     auto asset_manager = get_asset_manager();
     asset_manager->set_workspace(argv[0]);
     asset_manager->load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
