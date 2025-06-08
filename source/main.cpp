@@ -16,8 +16,7 @@ int main(int argc, char** argv) {
     asset_manager->load_texture("background", "/assets/image.jpg");
     asset_manager->load_texture("mario", "/assets/mario.png");
 
-    auto shader = asset_manager->get_shader("main").lock();
-    shader->load();
+    auto shader = asset_manager->get_shader("main");
     shader->bind();
 
     Scene scene(window.size());
@@ -54,7 +53,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-// //TODO: fetch third party libraries with cmake instead of saving them in the repo
+//TODO: fetch third party libraries with cmake instead of saving them in the repo
 
 
 

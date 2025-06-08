@@ -13,7 +13,7 @@ void Camera::init() {
 
 void Camera::update() {
     //TODO: return view/projection/model and separate shader from camera
-    auto shader = get_asset_manager()->get_shader("main").lock();
+    auto shader = get_asset_manager()->get_shader("main");
 
     projection = glm::ortho(0.0f, size.x, size.y, 0.0f, 0.01f, 1000.0f);
     glm::vec3 negated_position = glm::vec3 {-position.x, -position.y, -1.0f};

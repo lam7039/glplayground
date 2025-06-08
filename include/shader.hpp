@@ -8,7 +8,6 @@
 //TODO: load shaders separately and load them into a shader program class
 class Shader : public Asset {
 public:
-    Shader(const std::string& source);
     Shader(const std::string& vertex_source = "/shaders/vertex.glsl", const std::string& fragment_source = "/shaders/fragment.glsl");
     
     void load() override;

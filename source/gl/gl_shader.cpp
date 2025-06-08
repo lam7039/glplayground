@@ -73,11 +73,6 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
     return id;
 }
 
-Shader::Shader(const std::string& source) {
-    this->source = source;
-    this->type = AssetType::SHADER;
-}
-
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
     this->type = AssetType::SHADER;
 }

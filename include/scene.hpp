@@ -13,7 +13,7 @@ public:
     void destroy();
 
     auto get_renderables() {
-        return registry.view<Mesh, std::shared_ptr<Texture>>();
+        return registry.view<Mesh, entt::resource<Texture>>();
     }
 private:
     entt::registry registry;

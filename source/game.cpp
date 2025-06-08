@@ -12,10 +12,8 @@ void Game::init(glm::vec2 viewport) {
     asset_manager->load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
     asset_manager->load_texture("background", "/assets/image.jpg");
     asset_manager->load_texture("mario", "/assets/mario.png");
-    asset_manager->init_assets();
 
-    auto shader = asset_manager->get_shader("main").lock();
-    shader->load();
+    auto shader = asset_manager->get_shader("main");
     shader->bind();
 
     // scene.init();

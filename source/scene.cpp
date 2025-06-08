@@ -11,7 +11,7 @@ entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::ve
     auto entity = registry.create();
     registry.emplace<Rectangle>(entity, rectangle);
     registry.emplace<Mesh>(entity, mesh);
-    registry.emplace<std::shared_ptr<Texture>>(entity, texture_manager->get_texture(texture).lock());
+    registry.emplace<entt::resource<Texture>>(entity, texture_manager->get_texture(texture));
     
     return entity;
 }
@@ -32,9 +32,9 @@ void Scene::init() {
         camera.init();
     });
     
-    registry.view<Mesh, std::shared_ptr<Texture>>().each([](auto& mesh, auto& texture) {
+    registry.view<Mesh, entt::resource<Texture>>().each([](auto& mesh, auto& texture) {
         mesh.bind();
-        texture->load();
+        texture->bind();
     });
 }
 
@@ -45,8 +45,7 @@ void Scene::update() {
 }
 
 void Scene::destroy() {
-    registry.view<Mesh, std::shared_ptr<Texture>>().each([](auto& mesh, auto& texture) {
-        texture->destroy();
+    registry.view<Mesh>().each([](auto& mesh) {
         mesh.destroy();
     });
 }
