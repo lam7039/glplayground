@@ -1,6 +1,5 @@
 #include "scene.hpp"
-
-#include <glm/gtc/matrix_transform.hpp>
+#include "components/render.hpp"
 
 entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::vec3 size, const std::string& texture) {
     Rectangle rectangle(position, size);
@@ -15,12 +14,6 @@ entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::ve
     
     return entity;
 }
-
-struct CameraComponent {
-    bool orthographic {true};
-    glm::mat4 projection {1.0f};
-    glm::mat4 view {1.0f};
-};
 
 entt::entity create_camera(entt::registry& registry, glm::vec3 position, glm::vec3 size) {
     Rectangle rectangle(position, size);
