@@ -5,7 +5,6 @@
 #include "scene.hpp"
 
 #include <glm/glm.hpp>
-#include <entt/entt.hpp>
 
 class GraphicsApiInterface {
 public:

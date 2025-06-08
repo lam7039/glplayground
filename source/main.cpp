@@ -1,9 +1,8 @@
 #include "window.hpp"
-#include "gl/gl_renderer.hpp"
-#include "asset_manager.hpp"
-#include "scene.hpp"
-
 #include "renderer.hpp"
+#include "gl/gl_renderer.hpp"
+#include "game.hpp"
+
 
 int main(int argc, char** argv) {
     Window window("glplayground");
@@ -12,32 +11,20 @@ int main(int argc, char** argv) {
     renderer.set_renderer(std::make_unique<GLRenderer>());
     renderer.init();
 
-    auto asset_manager = get_asset_manager();
-    asset_manager->set_workspace(argv[0]);
-    asset_manager->load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");
-    asset_manager->load_texture("background", "/assets/image.jpg");
-    asset_manager->load_texture("mario", "/assets/mario.png");
-
-    auto shader = asset_manager->get_shader("main");
-    renderer.set_shader(shader);
-
-    Scene scene(window.size());
-    scene.init();
+    Game game(argv[0], renderer);
+    game.init(window.size());
 
     while (window.running()) {
-        scene.update();
+        game.update();
 
         renderer.clear();
-
-        renderer.set_shader(shader);
-        renderer.render_scene(scene);
+        game.render();
 
         window.swap();
         window.poll_events();
     }
 
-    scene.destroy();
-    shader->destroy();
+    game.quit();
     renderer.destroy();
     window.destroy();
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "renderer.hpp"
 #include "asset_manager.hpp"
+#include "renderer.hpp"
 #include "scene.hpp"
 
 class Game {
@@ -15,5 +15,5 @@ public:
 private:
     Renderer& renderer;
     std::shared_ptr<AssetManager> asset_manager;
-    // Scene scene;
+    std::shared_ptr<Scene> scene;
 };

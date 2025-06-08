@@ -6,6 +6,7 @@ Game::Game(const std::string& workspace, Renderer& renderer) : renderer(renderer
 }
 
 void Game::init(glm::vec2 viewport) {
+    //use std::format/print or fmt
     std::printf("Current workspace: %s\n", asset_manager->get_workspace().c_str());
 
     //TODO: create assets with a file using an AssetLoader
@@ -16,23 +17,21 @@ void Game::init(glm::vec2 viewport) {
     auto shader = asset_manager->get_shader("main");
     shader->bind();
 
-    // scene.init();
+    scene = std::make_shared<Scene>(viewport);
+    scene->init();
 }
 
 void Game::quit() {
-    // scene.destroy();
+    scene->destroy();
     asset_manager->destroy_assets();
 }
 
 void Game::update() {
-    // scene.update();
+    scene->update();
 }
 
 void Game::render() {
-    // auto& shader = asset_manager->get_shader("main");
-    // renderer.set_shader(shader);
-
-    //TODO: render only a specific scene
-    // auto drawables = entity_manager->get_drawables();
-    // renderer.render(entity_manager->get_drawables());
+    auto shader = asset_manager->get_shader("main");
+    renderer.set_shader(shader);
+    renderer.render_scene(*scene);
 }
