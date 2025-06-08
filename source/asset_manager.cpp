@@ -50,6 +50,3 @@ const std::shared_ptr<AssetManager>& get_asset_manager() {
     static const std::shared_ptr<AssetManager> instance = std::make_shared<AssetManager>();
     return instance;
 }
-
-//TODO: implement reference counting, aka how many times an object has been loaded, so it doesn't unload an asset if other objects still use it in the scene
-//TODO: implement a preventUnload boolean for preventing unloading of a commonly used asset
