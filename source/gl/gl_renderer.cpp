@@ -27,17 +27,12 @@ void GLRenderer::init() {
 
     clear_color();
     clear();
-
-    asset_manager = get_asset_manager();
 }
 
-//TODO: replace with draw_sprite
 void GLRenderer::draw_mesh(const Mesh& mesh) {
-    // asset_manager->get_texture(mesh.get_texture())->bind();
-    // mesh.input_layout_bind();
-    // mesh.bind();
-    // CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
-    // mesh.input_layout_unbind();
+    mesh.input_layout_bind();
+    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
+    mesh.input_layout_unbind();
 }
 
 void GLRenderer::draw(const Model& model) {

@@ -4,12 +4,15 @@ void Renderer::init() {
     api->init();
 }
 
-void Renderer::render(const DrawableMapAlias& drawables) {
+void Renderer::render_scene(const Scene& scene) {
+    auto drawables = scene.get_renderables();
     api->clear_color();
-    for (auto& [id, drawable] : drawables) {
-        auto mesh = drawable->get_mesh();
-        // api->draw_mesh(*mesh);
-    }
+
+    drawables.each([this](auto& mesh, auto& texture) {
+        mesh.bind();
+        texture->bind();
+        api->draw_mesh(mesh);
+    });
 }
 
 void Renderer::destroy() {

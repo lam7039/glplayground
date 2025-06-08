@@ -1,10 +1,11 @@
 #pragma once
 
 #include "model.hpp"
-#include "drawable.hpp"
 #include "shader.hpp"
+#include "scene.hpp"
 
 #include <glm/glm.hpp>
+#include <entt/entt.hpp>
 
 class GraphicsApiInterface {
 public:
@@ -22,7 +23,8 @@ public:
 class Renderer {
 public:
     void init();
-    void render(const DrawableMapAlias& drawables);
+
+    void render_scene(const Scene& scene);
     void destroy();
 
     void set_renderer(std::unique_ptr<GraphicsApiInterface> backend); 
@@ -33,5 +35,4 @@ private:
 
     //TODO: figure out what to do with this stuff, probably put this (initially in GraphicsApiInterface) here as a todo or something
     // shader program, texture, material, mesh, render state (blend/depth), render layer (fore/background), z-order/depth, lighting, object type/category
-    // std::unordered_map<std::string, std::vector<std::unique_ptr>> batch_queue;
 };

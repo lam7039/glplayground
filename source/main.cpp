@@ -1,13 +1,16 @@
 #include "window.hpp"
-#include "gl/gl.hpp"
+#include "gl/gl_renderer.hpp"
 #include "asset_manager.hpp"
 #include "scene.hpp"
 
+#include "renderer.hpp"
+
 int main(int argc, char** argv) {
     Window window("glplayground");
-    
-    CHECK_GL_ERROR(glEnable(GL_BLEND));
-    CHECK_GL_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+    Renderer renderer;
+    renderer.set_renderer(std::make_unique<GLRenderer>());
+    renderer.init();
 
     auto asset_manager = get_asset_manager();
     asset_manager->set_workspace(argv[0]);
@@ -16,30 +19,18 @@ int main(int argc, char** argv) {
     asset_manager->load_texture("mario", "/assets/mario.png");
 
     auto shader = asset_manager->get_shader("main");
-    shader->bind();
+    renderer.set_shader(shader);
 
     Scene scene(window.size());
     scene.init();
 
-    auto renderables = scene.get_renderables();
-
     while (window.running()) {
         scene.update();
 
-        CHECK_GL_ERROR(glClearColor(0.2f, 0.2f, 0.2f, 0.2f));
-        CHECK_GL_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+        renderer.clear();
 
-        shader->bind();
-        shader->set_image("uTexture", 0);
-
-        renderables.each([](auto& mesh, auto& texture) {
-            mesh.bind();
-            texture->bind();
-
-            mesh.input_layout_bind();
-            CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, nullptr));
-            mesh.input_layout_unbind();
-        });
+        renderer.set_shader(shader);
+        renderer.render_scene(scene);
 
         window.swap();
         window.poll_events();
@@ -47,6 +38,7 @@ int main(int argc, char** argv) {
 
     scene.destroy();
     shader->destroy();
+    renderer.destroy();
     window.destroy();
 
     return 0;

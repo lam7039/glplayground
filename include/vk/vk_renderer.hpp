@@ -1,7 +1,6 @@
 #pragma once
 
 #include "renderer.hpp"
-#include "shader.hpp"
 
 class VKRenderer : GraphicsApiInterface {
 public:

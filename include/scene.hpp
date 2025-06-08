@@ -11,7 +11,7 @@ public:
     void update();
     void destroy();
 
-    auto get_renderables() {
+    auto get_renderables() const {
         return registry.view<Mesh, entt::resource<Texture>>();
     }
 private:
