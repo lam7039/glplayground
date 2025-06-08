@@ -1,18 +1,17 @@
 #pragma once
 
-#include "asset.hpp"
-
 #include <glm/glm.hpp>
 #include <unordered_map>
+#include <string>
 
 //TODO: load shaders separately and load them into a shader program class
-class Shader : public Asset {
+class Shader {
 public:
     Shader(const std::string& vertex_source = "/shaders/vertex.glsl", const std::string& fragment_source = "/shaders/fragment.glsl");
     
-    void load() override;
-    void bind() override;
-    void destroy() override;
+    void load();
+    void bind();
+    void destroy();
 
     void set_bool(const std::string& name, bool value);
     void set_int(const std::string& name, int value);
@@ -22,6 +21,7 @@ public:
     void set_matrix(const std::string& name, const glm::mat4& matrix);
 
 private:
+    unsigned int program_id;
     const std::string vertex_source;
     const std::string fragment_source;
 

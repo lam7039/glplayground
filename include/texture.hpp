@@ -1,19 +1,19 @@
 #pragma once
 
-#include "asset.hpp"
-
 #include <string>
 
-class Texture : public Asset {
+class Texture {
 public:
     //TODO: std::string_view
     Texture(const std::string& source, bool mipmap = false);
 
-    void load() override;
-    void bind() override;
+    void load();
+    void bind();
     void bind(int index);
-    void destroy() override;
+    void destroy();
 private:
     bool mipmap;
+    unsigned int id {0};
     unsigned int slot {0};
+    const std::string& source;
 };

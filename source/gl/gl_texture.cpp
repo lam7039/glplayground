@@ -3,17 +3,14 @@
 
 #include "stb/stb_image.h"
 
-Texture::Texture(const std::string& source, bool mipmap) : mipmap(mipmap) {
-    this->source = source;
-    this->type = AssetType::IMAGE;
-}
+Texture::Texture(const std::string& source, bool mipmap) : source(source), mipmap(mipmap) {}
 
 void Texture::load() {
     int width, height, channels_in_file;
-    unsigned char* pixels = stbi_load(this->source.c_str(), &width, &height, &channels_in_file, 0);
+    unsigned char* pixels = stbi_load(source.c_str(), &width, &height, &channels_in_file, 0);
     
     if (!pixels) {
-        std::cout << "Failed to load texture at path: " << this->source << std::endl;
+        std::cout << "Failed to load texture at path: " << source << std::endl;
     }
     
     // CHECK_GL_ERROR(glCreateTextures(GL_TEXTURE_2D, 1, &id));

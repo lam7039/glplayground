@@ -7,11 +7,11 @@ entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::ve
     auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
     Mesh mesh(vertices, mesh_utils::generate_indices(vertices.size()));
 
-    auto texture_manager = get_asset_manager();
+    auto asset_manager = get_asset_manager();
     auto entity = registry.create();
     registry.emplace<Rectangle>(entity, rectangle);
     registry.emplace<Mesh>(entity, mesh);
-    registry.emplace<entt::resource<Texture>>(entity, texture_manager->get_texture(texture));
+    registry.emplace<entt::resource<Texture>>(entity, asset_manager->get_texture(texture));
     
     return entity;
 }
@@ -42,13 +42,6 @@ Scene::Scene(const glm::vec2& viewport) {
 }
 
 void Scene::init() {
-    registry.view<Mesh, entt::resource<Texture>>().each([](auto& mesh, auto& texture) {
-        mesh.bind();
-        texture->bind();
-    });
-}
-
-void Scene::update() {
     registry.view<Rectangle, CameraComponent>().each([](auto& rectangle, auto& camera_component) {
         auto shader = get_asset_manager()->get_shader("main");
         auto position = rectangle.get_position();
@@ -61,6 +54,15 @@ void Scene::update() {
         shader->set_matrix("view", camera_component.view);
         shader->set_matrix("projection", camera_component.projection);
     });
+    
+    registry.view<Mesh, entt::resource<Texture>>().each([](auto& mesh, auto& texture) {
+        mesh.bind();
+        texture->bind();
+    });
+}
+
+void Scene::update() {
+
 }
 
 void Scene::destroy() {

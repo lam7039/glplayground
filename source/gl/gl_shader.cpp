@@ -4,7 +4,6 @@
 #include <fstream>
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp>
-#include <string>
 
 enum ShaderType {
     Vertex = GL_VERTEX_SHADER,
@@ -49,19 +48,19 @@ static unsigned int compile_shader(ShaderType type, const char* source) {
 }
 
 static unsigned int create_program(unsigned int vertex_shader, unsigned int fragment_shader) {
-    CHECK_GL_ERROR(unsigned int id = glCreateProgram());
-    CHECK_GL_ERROR(glAttachShader(id, vertex_shader));
-    CHECK_GL_ERROR(glAttachShader(id, fragment_shader));
-    CHECK_GL_ERROR(glLinkProgram(id));
+    CHECK_GL_ERROR(unsigned int program_id = glCreateProgram());
+    CHECK_GL_ERROR(glAttachShader(program_id, vertex_shader));
+    CHECK_GL_ERROR(glAttachShader(program_id, fragment_shader));
+    CHECK_GL_ERROR(glLinkProgram(program_id));
 
     int success;
-    CHECK_GL_ERROR(glGetProgramiv(id, GL_LINK_STATUS, &success));
+    CHECK_GL_ERROR(glGetProgramiv(program_id, GL_LINK_STATUS, &success));
     if (!success) {
         int length;
-        CHECK_GL_ERROR(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length))
+        CHECK_GL_ERROR(glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &length))
 
         char message[length];
-        CHECK_GL_ERROR(glGetProgramInfoLog(id, length, &length, message));
+        CHECK_GL_ERROR(glGetProgramInfoLog(program_id, length, &length, message));
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << message << std::endl;
 
         return 0;
@@ -70,17 +69,15 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
     CHECK_GL_ERROR(glDeleteShader(fragment_shader));
     CHECK_GL_ERROR(glDeleteShader(vertex_shader));
     
-    return id;
+    return program_id;
 }
 
-Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {
-    this->type = AssetType::SHADER;
-}
+Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {}
 
 void Shader::load() {
     auto vertex_shader = compile_shader(ShaderType::Vertex, read_file(vertex_source).c_str());
     auto fragment_shader = compile_shader(ShaderType::Fragment, read_file(fragment_source).c_str());
-    id = create_program(vertex_shader, fragment_shader);
+    program_id = create_program(vertex_shader, fragment_shader);
 
     // std::unordered_map<ShaderType, std::string> shader_sources;
 
@@ -98,11 +95,11 @@ void Shader::load() {
 }
 
 void Shader::bind() {
-    CHECK_GL_ERROR(glUseProgram(id));
+    CHECK_GL_ERROR(glUseProgram(program_id));
 }
 
 void Shader::destroy() {
-    CHECK_GL_ERROR(glDeleteProgram(id));
+    CHECK_GL_ERROR(glDeleteProgram(program_id));
 }
 
 //TODO: separate set_uniforms from shaders somehow, perhaps a separate header with static definitions and defining the static definitions here
@@ -136,7 +133,7 @@ int Shader::get_location(const std::string& name) {
         return uniform_location_cache[name];
     }
     
-    CHECK_GL_ERROR(int location = glGetUniformLocation(id, name.c_str()));
+    CHECK_GL_ERROR(int location = glGetUniformLocation(program_id, name.c_str()));
     if (location == -1) {
         std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
     }
