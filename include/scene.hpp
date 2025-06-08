@@ -1,8 +1,7 @@
 #pragma once
 
-#include <entt/entt.hpp>
-#include "mesh.hpp"
 #include "asset_manager.hpp"
+#include "mesh.hpp"
 
 class Scene {
 public:

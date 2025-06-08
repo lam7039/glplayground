@@ -50,3 +50,5 @@ const std::shared_ptr<AssetManager>& get_asset_manager() {
     static const std::shared_ptr<AssetManager> instance = std::make_shared<AssetManager>();
     return instance;
 }
+
+//TODO: don't destroy commonly used assets on scene unload
