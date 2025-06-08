@@ -1,8 +1,7 @@
 // #pragma once
 
-// #include "entity.hpp"
-
 // #include <glm/glm.hpp>
+// #include "rectangle.hpp"
 
 // struct GLFWwindow;
 
@@ -16,8 +15,8 @@
 //     void new_frame();
 //     void end_frame();
 
-//     void set(std::vector<std::shared_ptr<Entity>> entities);
-//     void transform_box(std::shared_ptr<Entity>& entity);
+//     void set(Scene& scene);
+//     void transform_box(Rectangle& entity);
 
 //     void render();
 //     // void label(const std::string& text);

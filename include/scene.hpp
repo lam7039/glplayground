@@ -2,6 +2,7 @@
 
 #include "asset_manager.hpp"
 #include "mesh.hpp"
+#include "rectangle.hpp"
 
 class Scene {
 public:
@@ -13,6 +14,9 @@ public:
 
     auto get_renderables() const {
         return registry.view<Mesh, entt::resource<Texture>>();
+    }
+    auto get_transformables() const {
+        return registry.view<Rectangle>();
     }
 private:
     entt::registry registry;

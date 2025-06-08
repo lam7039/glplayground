@@ -4,7 +4,6 @@
 #include "gl/gl_renderer.hpp"
 #include "game.hpp"
 
-
 int main(int argc, char** argv) {
     Window window("glplayground");
     // ImGuiWrapper imgui(window.size());

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "asset_manager.hpp"
 #include "renderer.hpp"
-#include "scene.hpp"
 
 class Game {
 public:

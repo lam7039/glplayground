@@ -47,7 +47,7 @@
 //     ImGui::EndFrame();
 // }
 
-// void ImGuiWrapper::transform_box(std::shared_ptr<Entity>& entity) {
+// void ImGuiWrapper::transform_box(Rectangle& rectangle) {
 //     // auto identifier = std::to_string(entity->get_id());
 //     // ImGui::Text("Entity ID: %s", identifier.c_str());
 //     // ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &entity->get_position().x, 0.0f, viewport.x - entity->get_size().x);
@@ -58,15 +58,17 @@
 //     // ImGui::Separator();
 // }
 
-// void ImGuiWrapper::set(std::vector<std::shared_ptr<Entity>> entities) {
+// void ImGuiWrapper::set(Scene& scene) {
+//     auto transformables = scene.get_transformables();
+
 //     new_frame();
 
 //     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
 //     ImGui::Begin("Entities");
 
-//     for (auto& entity : entities) {
-//         transform_box(entity);
+//     for (auto& transformable : transformables) {
+//         transform_box(transformable);
 //     }
     
 //     ImGui::End();
