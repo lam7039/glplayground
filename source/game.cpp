@@ -1,13 +1,13 @@
 #include "game.hpp"
 
-Game::Game(const std::string& workspace, Renderer& renderer) : renderer(renderer) {
+Game::Game(std::string_view workspace, Renderer& renderer) : renderer(renderer) {
     asset_manager = get_asset_manager();
     asset_manager->set_workspace(workspace);
 }
 
 void Game::init(glm::vec2 viewport) {
-    //use std::format/print or fmt
-    std::printf("Current workspace: %s\n", asset_manager->get_workspace().c_str());
+    //TODO: use fmt
+    std::printf("Current workspace: %s\n", asset_manager->get_workspace().data());
 
     //TODO: create assets with a file using an AssetLoader
     asset_manager->load_shader("main", "/shaders/vertex.glsl", "/shaders/fragment.glsl");

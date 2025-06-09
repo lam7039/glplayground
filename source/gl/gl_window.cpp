@@ -7,13 +7,13 @@ void Window::GLFWwindowDeleter::operator()(GLFWwindow* window) {
     glfwDestroyWindow(window);
 }
 
-Window::Window(const std::string& title, const glm::vec2& size, const glm::vec2& position) {
+Window::Window(std::string_view title, const glm::vec2& size, const glm::vec2& position) {
     if (!glfwInit()) {
         std::cout << "Failed to initialize GLFW" << std::endl;
         return;
     }
 
-    window.reset(glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr));
+    window.reset(glfwCreateWindow(size.x, size.y, title.data(), nullptr, nullptr));
 
     glfwMakeContextCurrent(window.get());
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {

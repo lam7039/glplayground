@@ -11,7 +11,7 @@
 
 class Model {
 public:
-    Model(const std::string& path);
+    Model(std::string_view path);
     ~Model();
 
     void add_mesh(Mesh& mesh, Material& material);

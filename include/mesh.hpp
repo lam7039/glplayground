@@ -15,6 +15,7 @@ struct MeshData {
     std::vector<uint32_t> indices;
 };
 
+//TODO: should MeshFactory and mesh_utils in the same namespace?
 namespace MeshFactory {
     MeshData generate_cube(float size);
     MeshData generate_rectangle(float width, float height);
@@ -33,7 +34,6 @@ public:
     void destroy();
     
     const unsigned int get_index_count() const;
-    const std::string& get_texture() const;
 private:
     std::vector<Vertex> vertex_data;
     std::vector<unsigned int> index_data;

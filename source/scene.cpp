@@ -1,7 +1,7 @@
 #include "scene.hpp"
 #include "components/render.hpp"
 
-entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::vec3 size, const std::string& texture) {
+entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::vec3 size, std::string_view texture) {
     Rectangle rectangle(position, size);
     auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
     Mesh mesh(vertices, mesh_utils::generate_indices(vertices.size()));
@@ -62,4 +62,5 @@ void Scene::destroy() {
     registry.view<Mesh>().each([](auto& mesh) {
         mesh.destroy();
     });
+    registry.clear();
 }

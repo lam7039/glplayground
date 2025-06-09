@@ -1,6 +1,6 @@
 #include "model.hpp"
 
-Model::Model(const std::string& path) : path(path) {
+Model::Model(std::string_view path) : path(std::string(path)) {
 
 }
 

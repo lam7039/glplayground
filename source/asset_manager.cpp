@@ -42,7 +42,7 @@ void AssetManager::set_workspace(std::string_view path) {
     workspace = std::filesystem::absolute(std::filesystem::path(path.data())).parent_path().parent_path().string();
 }
 
-const std::string& AssetManager::get_workspace() const {
+std::string_view AssetManager::get_workspace() const {
     return workspace;
 }
 

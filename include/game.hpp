@@ -4,7 +4,7 @@
 
 class Game {
 public:
-    Game(const std::string& workspace, Renderer& renderer);
+    Game(std::string_view workspace, Renderer& renderer);
     void init(glm::vec2 viewport);
     void quit();
 

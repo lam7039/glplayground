@@ -19,7 +19,7 @@ public:
     void destroy_assets();
 
     void set_workspace(std::string_view path);
-    const std::string& get_workspace() const;
+    std::string_view get_workspace() const;
 private:
     struct ShaderLoader final {
         using result_type = std::shared_ptr<Shader>;

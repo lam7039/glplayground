@@ -8,7 +8,7 @@ struct TextureComponent {
     bool mipmap {false};
     uint32_t id {0};
     uint32_t slot {0};
-    const std::string& source;
+    const std::string source;
 };
 
 struct CameraComponent {

@@ -44,7 +44,6 @@ void GLRenderer::draw(const Model& model) {
 void GLRenderer::set_shader(Shader& shader) {
     shader.bind();
     shader.set_image("uTexture", 0);
-    // shader.set_wireframe();
 }
 
 void GLRenderer::set_wireframe() {
