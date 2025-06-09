@@ -7,24 +7,24 @@
 
 class AssetManager {
 public:
-    entt::resource<Shader> get_shader(const std::string& name);
-    entt::resource<Texture> get_texture(const std::string& name);
+    entt::resource<Shader> get_shader(std::string_view name);
+    entt::resource<Texture> get_texture(std::string_view name);
     
-    void load_shader(const std::string& name, const std::string& vertex, const std::string& fragment);
-    void load_texture(const std::string& name, const std::string& source);
+    void load_shader(std::string_view name, std::string_view vertex, std::string_view fragment);
+    void load_texture(std::string_view name, std::string_view source);
 
-    void remove_shader(const std::string& name);
-    void remove_texture(const std::string& name);
+    void remove_shader(std::string_view name);
+    void remove_texture(std::string_view name);
 
     void destroy_assets();
 
-    void set_workspace(const std::string& path);
+    void set_workspace(std::string_view path);
     const std::string& get_workspace() const;
 private:
     struct ShaderLoader final {
         using result_type = std::shared_ptr<Shader>;
 
-        result_type operator()(const std::string& vertex, const std::string& fragment) const {
+        result_type operator()(std::string_view vertex, std::string_view fragment) const {
             auto shader = std::make_shared<Shader>(vertex, fragment);
             shader->load();
             return shader;
@@ -34,7 +34,7 @@ private:
     struct TextureLoader final {
         using result_type = std::shared_ptr<Texture>;
         
-        result_type operator()(const std::string& source, bool mipmap) const {
+        result_type operator()(std::string_view source, bool mipmap) const {
             auto texture = std::make_shared<Texture>(source, mipmap);
             texture->load();
             return texture;

@@ -3,7 +3,7 @@
 
 #include "stb/stb_image.h"
 
-Texture::Texture(const std::string& source, bool mipmap) : source(source), mipmap(mipmap) {}
+Texture::Texture(std::string_view source, bool mipmap) : source(std::string(source)), mipmap(mipmap) {}
 
 void Texture::load() {
     int width, height, channels_in_file;

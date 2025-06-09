@@ -2,9 +2,12 @@
 
 #include <glm/glm.hpp>
 
+//TODO: figure out how to use RectangleComponent/TransformComponent
 struct RectangleComponent {
     glm::vec3 position {0.0f};
     glm::vec2 size {0.0f};
+
+    // void transform();
 };
 
 struct TransformComponent {

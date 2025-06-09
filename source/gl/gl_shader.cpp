@@ -10,12 +10,12 @@ enum ShaderType {
     Fragment = GL_FRAGMENT_SHADER
 };
 
-static std::string read_file(const std::string& path) {
+static std::string read_file(std::string_view path) {
     std::stringstream result;
     std::ifstream file;
     file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
-        file.open(path);
+        file.open(std::string(path));
         result << file.rdbuf();
         file.close();
     } catch (std::ifstream::failure e) {
@@ -72,7 +72,7 @@ static unsigned int create_program(unsigned int vertex_shader, unsigned int frag
     return program_id;
 }
 
-Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) : vertex_source(vertex_source), fragment_source(fragment_source) {}
+Shader::Shader(std::string_view vertex_source, std::string_view fragment_source) : vertex_source(std::string(vertex_source)), fragment_source(std::string(fragment_source)) {}
 
 void Shader::load() {
     auto vertex_shader = compile_shader(ShaderType::Vertex, read_file(vertex_source).c_str());
@@ -103,41 +103,41 @@ void Shader::destroy() {
 }
 
 //TODO: separate set_uniforms from shaders somehow, perhaps a separate header with static definitions and defining the static definitions here
-void Shader::set_bool(const std::string& name, bool value) {
+void Shader::set_bool(std::string_view name, bool value) {
     CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::set_int(const std::string& name, int value) {
+void Shader::set_int(std::string_view name, int value) {
     CHECK_GL_ERROR(glUniform1i(get_location(name), value));
 }
 
-void Shader::set_float(const std::string& name, float value) {
+void Shader::set_float(std::string_view name, float value) {
     CHECK_GL_ERROR(glUniform1f(get_location(name), value));
 }
 
-void Shader::set_image(const std::string& name, int* samplers) {
+void Shader::set_image(std::string_view name, int* samplers) {
     int count = sizeof(samplers) / sizeof(int);
     CHECK_GL_ERROR(glUniform1iv(get_location(name), count, samplers));
 }
 
-void Shader::set_image(const std::string& name, int sampler) {
+void Shader::set_image(std::string_view name, int sampler) {
     set_int(name, sampler);
 }
 
-void Shader::set_matrix(const std::string& name, const glm::mat4& matrix) {
+void Shader::set_matrix(std::string_view name, const glm::mat4& matrix) {
     CHECK_GL_ERROR(glUniformMatrix4fv(get_location(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
-int Shader::get_location(const std::string& name) {
-    if (uniform_location_cache.find(name) != uniform_location_cache.end()) {
-        return uniform_location_cache[name];
+int Shader::get_location(std::string_view name) {
+    if (uniform_location_cache.find(std::string(name)) != uniform_location_cache.end()) {
+        return uniform_location_cache[std::string(name)];
     }
     
-    CHECK_GL_ERROR(int location = glGetUniformLocation(program_id, name.c_str()));
+    CHECK_GL_ERROR(int location = glGetUniformLocation(program_id, name.data()));
     if (location == -1) {
         std::cout << "WARNING: uniform '" << name << "' doesn't exist" << std::endl;
     }
 
-    uniform_location_cache[name] = location;
+    uniform_location_cache[std::string(name)] = location;
     return location;
 }

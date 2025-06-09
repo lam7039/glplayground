@@ -4,8 +4,7 @@
 
 class Texture {
 public:
-    //TODO: std::string_view
-    Texture(const std::string& source, bool mipmap = false);
+    Texture(std::string_view source, bool mipmap = false);
 
     void load();
     void bind();
@@ -15,5 +14,5 @@ private:
     bool mipmap;
     unsigned int id {0};
     unsigned int slot {0};
-    const std::string& source;
+    std::string source;
 };

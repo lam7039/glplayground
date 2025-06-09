@@ -2,28 +2,28 @@
 
 #include <filesystem>
 
-entt::resource<Shader> AssetManager::get_shader(const std::string& name) {
-    return shader_cache[entt::hashed_string{name.c_str()}];
+entt::resource<Shader> AssetManager::get_shader(std::string_view name) {
+    return shader_cache[entt::hashed_string{name.data()}];
 }
 
-entt::resource<Texture> AssetManager::get_texture(const std::string& name) {
-    return texture_cache[entt::hashed_string{name.c_str()}];
+entt::resource<Texture> AssetManager::get_texture(std::string_view name) {
+    return texture_cache[entt::hashed_string{name.data()}];
 }
 
-void AssetManager::load_shader(const std::string& name, const std::string& vertex, const std::string& fragment) {
-    shader_cache.load(entt::hashed_string{name.c_str()}, workspace + vertex, workspace + fragment);
+void AssetManager::load_shader(std::string_view name, std::string_view vertex, std::string_view fragment) {
+    shader_cache.load(entt::hashed_string{name.data()}, workspace + vertex.data(), workspace + fragment.data());
 }
 
-void AssetManager::load_texture(const std::string& name, const std::string& source) {
-    texture_cache.load(entt::hashed_string{name.c_str()}, workspace + source, true);
+void AssetManager::load_texture(std::string_view name, std::string_view source) {
+    texture_cache.load(entt::hashed_string{name.data()}, workspace + source.data(), true);
 }
 
-void AssetManager::remove_shader(const std::string& name) {
-    shader_cache.erase(entt::hashed_string{name.c_str()});
+void AssetManager::remove_shader(std::string_view name) {
+    shader_cache.erase(entt::hashed_string{name.data()});
 }
 
-void AssetManager::remove_texture(const std::string& name) {
-    texture_cache.erase(entt::hashed_string{name.c_str()});
+void AssetManager::remove_texture(std::string_view name) {
+    texture_cache.erase(entt::hashed_string{name.data()});
 }
 
 void AssetManager::destroy_assets() {
@@ -38,8 +38,8 @@ void AssetManager::destroy_assets() {
     texture_cache.clear();
 }
 
-void AssetManager::set_workspace(const std::string& path) {
-    workspace = std::filesystem::absolute(std::filesystem::path(path)).parent_path().parent_path().string();
+void AssetManager::set_workspace(std::string_view path) {
+    workspace = std::filesystem::absolute(std::filesystem::path(path.data())).parent_path().parent_path().string();
 }
 
 const std::string& AssetManager::get_workspace() const {
