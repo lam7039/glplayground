@@ -35,8 +35,10 @@ Scene::Scene(const glm::vec2& viewport) {
 }
 
 void Scene::init() {
-    registry.view<Rectangle, CameraComponent>().each([](auto& rectangle, auto& camera_component) {
-        auto shader = get_asset_manager()->get_shader("main");
+    auto shader = get_asset_manager()->get_shader("main");
+    shader->bind();
+
+    registry.view<Rectangle, CameraComponent>().each([shader](auto& rectangle, auto& camera_component) {
         auto position = rectangle.get_position();
         auto size = rectangle.get_size();
 
@@ -48,7 +50,8 @@ void Scene::init() {
         shader->set_matrix("projection", camera_component.projection);
     });
     
-    registry.view<Mesh, entt::resource<Texture>>().each([](auto& mesh, auto& texture) {
+    registry.view<Mesh, entt::resource<Texture>>().each([shader](auto& mesh, auto& texture) {
+        shader->bind();
         mesh.bind();
         texture->bind();
     });

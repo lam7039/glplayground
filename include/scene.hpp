@@ -16,7 +16,7 @@ public:
         return registry.view<Mesh, entt::resource<Texture>>();
     }
     auto get_transformables() const {
-        return registry.view<Rectangle>();
+        return registry.view<Mesh, Rectangle>();
     }
 private:
     entt::registry registry;

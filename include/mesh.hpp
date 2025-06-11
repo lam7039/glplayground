@@ -24,10 +24,10 @@ namespace MeshFactory {
 
 class Mesh {
 public:
-    //TODO: somehow use a vertex_buffer_id intead of passing the entire list
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 
     void bind() const;
+    //TODO: somehow use a vertex_buffer_id intead of passing the entire list
     void bind(const std::vector<Vertex>& vertices);
     void input_layout_bind() const;
     void input_layout_unbind() const;
