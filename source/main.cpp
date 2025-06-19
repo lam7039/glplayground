@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
     renderer.set_renderer(std::make_unique<GLRenderer>());
     renderer.init();
 
+    //TODO: create a separate UI manager where I can also put the imgui wrapper in
     Game game(argv[0], renderer);
     game.init(window.size());
 
