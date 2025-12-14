@@ -17,3 +17,15 @@ void Rectangle::transform(glm::vec3 position, glm::vec3 size) {
     this->position = position;
     this->size = size;
 }
+
+bool Rectangle::is_dirty() const {
+    return dirty;
+}
+
+void Rectangle::set_dirty(bool dirty) {
+    this->dirty = dirty;
+}
+
+void Rectangle::clear_dirty() {
+    this->dirty = false;
+}

@@ -2,7 +2,6 @@
 
 #include <glm/glm.hpp>
 #include "scene.hpp"
-#include "rectangle.hpp"
 
 struct GLFWwindow;
 

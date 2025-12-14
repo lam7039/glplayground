@@ -8,9 +8,15 @@ void update_sprite(entt::registry& registry) {
     shader->bind();
 
     registry.view<Mesh, entt::resource<Texture>, Rectangle>().each([shader](auto& mesh, auto& texture, auto& rectangle) {
-    auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
+        if (! rectangle.is_dirty()) {
+            return;
+        }
+
+        auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
         shader->bind();
         mesh.bind(vertices);
         texture->bind();
+
+        rectangle.clear_dirty();
     });
 }
