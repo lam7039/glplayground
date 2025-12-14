@@ -52,8 +52,8 @@ void ImGuiWrapper::transform_box(int id, Rectangle& rectangle) {
 
     auto identifier = std::to_string(id);
     ImGui::Text("Entity ID: %s", identifier.c_str());
-    changed |= ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &rectangle.get_position().x, 0.0f, viewport.x - rectangle.get_size().x);
-    changed |= ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &rectangle.get_position().y, 0.0f, viewport.y - rectangle.get_size().y);
+    changed |= ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &rectangle.get_position().x, 0.0f, viewport.x);
+    changed |= ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &rectangle.get_position().y, 0.0f, viewport.y);
     changed |= ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &rectangle.get_position().z, -100.0f, 100.0f);
     changed |= ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &rectangle.get_size().x, 0.0f, viewport.x);
     changed |= ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &rectangle.get_size().y, 0.0f, viewport.y);
