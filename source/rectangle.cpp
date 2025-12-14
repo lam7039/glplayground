@@ -5,11 +5,11 @@ Rectangle::Rectangle(glm::vec3 position, glm::vec3 size) {
     this->size = size;
 }
 
-const glm::vec3 Rectangle::get_position() const {
+glm::vec3& Rectangle::get_position() {
     return position;
 }
 
-const glm::vec3 Rectangle::get_size() const {
+glm::vec3& Rectangle::get_size() {
     return size;
 }
 

@@ -10,6 +10,7 @@ public:
 
     void update();
     void render();
+    std::shared_ptr<Scene> get_current_scene();
 private:
     Renderer& renderer;
     std::shared_ptr<AssetManager> asset_manager;

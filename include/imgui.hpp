@@ -1,26 +1,27 @@
-// #pragma once
+#pragma once
 
-// #include <glm/glm.hpp>
-// #include "rectangle.hpp"
+#include <glm/glm.hpp>
+#include "scene.hpp"
+#include "rectangle.hpp"
 
-// struct GLFWwindow;
+struct GLFWwindow;
 
-// class ImGuiWrapper {
-// public:
-//     ImGuiWrapper(glm::vec2 viewport);
+class ImGuiWrapper {
+public:
+    ImGuiWrapper(glm::vec2 viewport);
 
-//     void attach(GLFWwindow* window);
-//     void detach();
+    void attach(GLFWwindow* window);
+    void detach();
 
-//     void new_frame();
-//     void end_frame();
+    void new_frame();
+    void end_frame();
 
-//     void set(Scene& scene);
-//     void transform_box(Rectangle& entity);
+    void set(Scene& scene);
+    void transform_box(int id, Rectangle& rectangle);
 
-//     void render();
-//     // void label(const std::string& text);
+    void render();
+    // void label(const std::string& text);
 
-// private:
-//     glm::vec2 viewport;
-// };
+private:
+    glm::vec2 viewport;
+};

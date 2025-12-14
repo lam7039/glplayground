@@ -1,8 +1,6 @@
 #include "systems/camera.hpp"
-
-#include "rectangle.hpp"
 #include "components/render.hpp"
-#include "asset_manager.hpp"
+#include "rectangle.hpp"
 
 void update_camera(entt::registry& registry) {
     auto shader = get_asset_manager()->get_shader("main");

@@ -42,7 +42,7 @@ void Scene::init() {
 }
 
 void Scene::update() {
-
+    update_sprite(registry);
 }
 
 void Scene::destroy() {

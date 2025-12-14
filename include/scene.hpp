@@ -15,7 +15,7 @@ public:
     auto get_renderables() const {
         return registry.view<Mesh, entt::resource<Texture>>();
     }
-    auto get_transformables() const {
+    auto get_transformables() {
         return registry.view<Mesh, Rectangle>();
     }
 private:

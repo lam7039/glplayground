@@ -1,5 +1,5 @@
 #pragma once
 
-#include <entt/entt.hpp>
+#include "asset_manager.hpp"
 
 void update_camera(entt::registry& registry);

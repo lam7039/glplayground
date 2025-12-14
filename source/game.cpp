@@ -31,3 +31,7 @@ void Game::render() {
     renderer.set_shader(shader);
     renderer.render_scene(*scene);
 }
+
+std::shared_ptr<Scene> Game::get_current_scene() {
+    return scene;
+}

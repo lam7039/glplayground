@@ -1,11 +1,11 @@
 #include "window.hpp"
-// #include "imgui.hpp"
+#include "imgui.hpp"
 #include "gl/gl_renderer.hpp"
 #include "game.hpp"
 
 int main(int argc, char** argv) {
     Window window("glplayground");
-    // ImGuiWrapper imgui(window.size());
+    ImGuiWrapper imgui(window.size());
 
     Renderer renderer;
     renderer.set_renderer(std::make_unique<GLRenderer>());
@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     Game game(argv[0], renderer);
     game.init(window.size());
 
-    // imgui.attach(window.instance());
+    imgui.attach(window.instance());
 
     while (window.running()) {
         game.update();
@@ -23,14 +23,14 @@ int main(int argc, char** argv) {
         renderer.clear();
         game.render();
 
-        // imgui.set(entities);
-        // imgui.render();
+        imgui.set(*game.get_current_scene());
+        imgui.render();
 
         window.swap();
         window.poll_events();
     }
 
-    // imgui.detach();
+    imgui.detach();
     game.quit();
     renderer.destroy();
     window.destroy();
