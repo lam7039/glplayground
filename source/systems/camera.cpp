@@ -3,10 +3,9 @@
 #include "rectangle.hpp"
 
 void update_camera(entt::registry& registry) {
-    auto shader = get_asset_manager()->get_shader("main");
-    shader->bind();
-
-    registry.view<Rectangle, CameraComponent>().each([shader](auto& rectangle, auto& camera_component) {
+    registry.view<entt::resource<Shader>, Rectangle, CameraComponent>().each([](auto& shader, auto& rectangle, auto& camera_component) {
+        shader->bind();
+        
         auto position = rectangle.get_position();
         auto size = rectangle.get_size();
 

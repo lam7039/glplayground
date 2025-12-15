@@ -4,10 +4,7 @@
 #include "rectangle.hpp"
 
 void update_sprite(entt::registry& registry) {
-    auto shader = get_asset_manager()->get_shader("main");
-    shader->bind();
-
-    registry.view<Mesh, entt::resource<Texture>, Rectangle>().each([shader](auto& mesh, auto& texture, auto& rectangle) {
+    registry.view<Mesh, entt::resource<Shader>, entt::resource<Texture>, Rectangle>().each([](auto& mesh, auto& shader, auto& texture, auto& rectangle) {
         if (! rectangle.is_dirty()) {
             return;
         }
