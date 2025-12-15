@@ -13,7 +13,6 @@ entt::entity create_sprite(entt::registry& registry, glm::vec3 position, glm::ve
 
     registry.emplace<Rectangle>(entity, rectangle);
     registry.emplace<Mesh>(entity, mesh);
-    registry.emplace<entt::resource<Shader>>(entity, asset_manager->get_shader("main"));
     registry.emplace<entt::resource<Texture>>(entity, asset_manager->get_texture(texture));
     
     return entity;
@@ -25,7 +24,6 @@ entt::entity create_camera(entt::registry& registry, glm::vec3 position, glm::ve
     auto asset_manager = get_asset_manager();
     auto camera = registry.create();
 
-    registry.emplace<entt::resource<Shader>>(camera, asset_manager->get_shader("main"));
     registry.emplace<Rectangle>(camera, rectangle);
     registry.emplace<CameraComponent>(camera);
 
