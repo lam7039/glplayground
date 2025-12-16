@@ -28,13 +28,14 @@ public:
 
     void bind() const;
     //TODO: somehow use a vertex_buffer_id intead of passing the entire list
-    void bind(const std::vector<Vertex>& vertices);
+    void update_vertices(const std::vector<Vertex>& vertices);
     void input_layout_bind() const;
     void input_layout_unbind() const;
     void destroy();
     
     const unsigned int get_index_count() const;
 private:
+    mutable bool dirty {true};
     std::vector<Vertex> vertex_data;
     std::vector<unsigned int> index_data;
 

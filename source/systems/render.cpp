@@ -6,8 +6,6 @@ RenderSystem::RenderSystem(Renderer& renderer) : renderer(renderer) {}
 
 void RenderSystem::init(std::shared_ptr<AssetManager> asset_manager) {
     shader = asset_manager->get_shader("main");
-    shader->bind();
-
     renderer.set_shader(shader);
 }
 
@@ -18,7 +16,7 @@ void RenderSystem::update(entt::registry& registry) {
         }
 
         auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
-        mesh.bind(vertices);
+        mesh.update_vertices(vertices);
 
         rectangle.clear_dirty();
     });

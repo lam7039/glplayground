@@ -50,17 +50,20 @@ const unsigned int Mesh::get_index_count() const {
     return static_cast<unsigned int>(index_data.size());
 }
 
-//TODO: rename to update_buffers, only call if data actually changes
 void Mesh::bind() const {
     CHECK_GL_ERROR(glBindBuffer(DrawMode::ArrayBuffer, vertex_buffer_object));
     CHECK_GL_ERROR(glBindBuffer(DrawMode::ElementArrayBuffer, index_buffer_object));
-    CHECK_GL_ERROR(glBufferSubData(DrawMode::ArrayBuffer, 0, get_vertex_data_size(), vertex_data.data()));
+
+    if (dirty) {
+        CHECK_GL_ERROR(glBufferSubData(DrawMode::ArrayBuffer, 0, get_vertex_data_size(), vertex_data.data()));
+        dirty = false;
+    }
 }
 
 //TODO: use shared_ptr for vertices so we don't have to constantly pass vertices to bind?
-void Mesh::bind(const std::vector<Vertex>& vertices) {
+void Mesh::update_vertices(const std::vector<Vertex>& vertices) {
     vertex_data = vertices;
-    bind();
+    dirty = true;
 }
 
 void Mesh::input_layout_bind() const {

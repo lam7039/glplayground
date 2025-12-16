@@ -19,6 +19,7 @@ void Renderer::set_renderer(std::unique_ptr<GraphicsApiInterface> backend) {
 }
 
 void Renderer::set_shader(Shader& shader) {
+    shader.bind();
     api->set_shader(shader);
 }
 
