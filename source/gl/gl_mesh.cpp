@@ -16,7 +16,7 @@ enum DataType {
     UnsignedInt = GL_UNSIGNED_INT
 };
 
-static void bind_object(DrawMode mode, unsigned int* object, unsigned int size, unsigned int* data, DrawUsage usage) {
+static void create_buffer(DrawMode mode, unsigned int* object, unsigned int size, unsigned int* data, DrawUsage usage) {
     CHECK_GL_ERROR(glGenBuffers(1, object));
     CHECK_GL_ERROR(glBindBuffer(mode, *object));
     CHECK_GL_ERROR(glBufferData(mode, size, data, usage));
@@ -31,8 +31,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) : ve
     CHECK_GL_ERROR(glGenVertexArrays(1, &vertex_array_object));
     input_layout_bind();
 
-    bind_object(DrawMode::ArrayBuffer, &vertex_buffer_object, get_vertex_data_size(), nullptr, DrawUsage::Dynamic);
-    bind_object(DrawMode::ElementArrayBuffer, &index_buffer_object, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
+    create_buffer(DrawMode::ArrayBuffer, &vertex_buffer_object, get_vertex_data_size(), nullptr, DrawUsage::Dynamic);
+    create_buffer(DrawMode::ElementArrayBuffer, &index_buffer_object, indices.size() * sizeof(unsigned int), indices.data(), DrawUsage::Static);
 
     vertex_attrib_pointer(0, 3, sizeof(Vertex), offsetof(Vertex, position));
     vertex_attrib_pointer(1, 4, sizeof(Vertex), offsetof(Vertex, color));
