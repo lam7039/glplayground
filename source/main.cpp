@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
         renderer.clear();
         game.render();
 
-        imgui.set(*game.get_current_scene());
+        imgui.set(game.registry());
         imgui.render();
 
         window.swap();

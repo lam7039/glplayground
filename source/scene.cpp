@@ -40,12 +40,11 @@ Scene::Scene(const glm::vec2& viewport) {
 }
 
 void Scene::init() {
-    update_camera(registry);
-    update_sprite(registry);
+    
 }
 
 void Scene::update() {
-    update_sprite(registry);
+    
 }
 
 void Scene::destroy() {
@@ -53,4 +52,8 @@ void Scene::destroy() {
         mesh.destroy();
     });
     registry.clear();
+}
+
+entt::registry& Scene::get_registry() {
+    return registry;
 }

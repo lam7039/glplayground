@@ -12,12 +12,7 @@ public:
     void update();
     void destroy();
 
-    auto get_renderables() const {
-        return registry.view<Mesh, entt::resource<Texture>>();
-    }
-    auto get_transformables() {
-        return registry.view<Mesh, Rectangle>();
-    }
+    entt::registry& get_registry();
 private:
     entt::registry registry;
 };

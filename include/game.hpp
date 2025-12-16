@@ -1,6 +1,9 @@
 #pragma once
 
 #include "renderer.hpp"
+#include "systems/camera.hpp"
+#include "systems/render.hpp"
+#include "scene.hpp"
 
 class Game {
 public:
@@ -10,9 +13,12 @@ public:
 
     void update();
     void render();
-    std::shared_ptr<Scene> get_current_scene();
+    entt::registry& registry();
 private:
     Renderer& renderer;
+    CameraSystem camera_system;
+    RenderSystem render_system;
+
     std::shared_ptr<AssetManager> asset_manager;
     std::shared_ptr<Scene> scene;
 };

@@ -4,11 +4,8 @@
 
 class CameraSystem {
 public:
-    CameraSystem(entt::registry& registry);
-    void update();
+    void init(std::shared_ptr<AssetManager> asset_manager);
+    void update(entt::registry& registry);
 private:
-    entt::registry& registry;
     entt::resource<Shader> shader;
 };
-
-void update_camera(entt::registry& registry);

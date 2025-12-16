@@ -1,7 +1,9 @@
 #pragma once
 
+#include "rectangle.hpp"
+
 #include <glm/glm.hpp>
-#include "scene.hpp"
+#include <entt/entt.hpp>
 
 struct GLFWwindow;
 
@@ -15,7 +17,7 @@ public:
     void new_frame();
     void end_frame();
 
-    void set(Scene& scene);
+    void set(entt::registry& registry);
     void transform_box(int id, Rectangle& rectangle);
 
     void render();

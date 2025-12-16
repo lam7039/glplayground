@@ -1,5 +1,6 @@
 #include "imgui.hpp"
 #include "window.hpp"
+#include "mesh.hpp"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
@@ -64,8 +65,8 @@ void ImGuiWrapper::transform_box(int id, Rectangle& rectangle) {
     }
 }
 
-void ImGuiWrapper::set(Scene& scene) {
-    auto transformables = scene.get_transformables();
+void ImGuiWrapper::set(entt::registry& registry) {
+    auto transformables = registry.view<Mesh, Rectangle>();
 
     new_frame();
 

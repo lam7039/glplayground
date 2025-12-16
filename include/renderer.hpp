@@ -2,9 +2,9 @@
 
 #include "model.hpp"
 #include "shader.hpp"
-#include "scene.hpp"
 
 #include <glm/glm.hpp>
+#include <entt/entt.hpp>
 
 class GraphicsApiInterface {
 public:
@@ -22,8 +22,7 @@ public:
 class Renderer {
 public:
     void init();
-
-    void render_scene(const Scene& scene);
+    void render(entt::registry& registry);
     void destroy();
 
     void set_renderer(std::unique_ptr<GraphicsApiInterface> backend); 

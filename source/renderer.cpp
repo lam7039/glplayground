@@ -1,11 +1,13 @@
 #include "renderer.hpp"
+#include "texture.hpp"
 
 void Renderer::init() {
     api->init();
 }
 
-void Renderer::render_scene(const Scene& scene) {
-    auto drawables = scene.get_renderables();
+void Renderer::render(entt::registry& registry) {
+    //TODO: renderer shouldn't use ECS, do that in RenderSystem
+    auto drawables = registry.view<Mesh, entt::resource<Texture>>();
     api->clear_color();
 
     drawables.each([this](auto& mesh, auto& texture) {
