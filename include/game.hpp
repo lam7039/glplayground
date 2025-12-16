@@ -1,8 +1,8 @@
 #pragma once
 
-#include "renderer.hpp"
 #include "systems/camera.hpp"
 #include "systems/render.hpp"
+#include "renderer.hpp"
 #include "scene.hpp"
 
 class Game {

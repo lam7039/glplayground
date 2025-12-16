@@ -33,8 +33,6 @@ void Game::update() {
 }
 
 void Game::render() {
-    auto shader = asset_manager->get_shader("main");
-    renderer.set_shader(shader);
     render_system.render(scene->get_registry());
 }
 
