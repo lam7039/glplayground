@@ -22,7 +22,7 @@ public:
 class Renderer {
 public:
     void init();
-    void render_texture(Mesh& mesh, Texture& texture);
+    void draw_mesh(Mesh& mesh, Texture& texture);
     void destroy();
 
     void set_renderer(std::unique_ptr<GraphicsApiInterface> backend); 

@@ -4,7 +4,7 @@ void Renderer::init() {
     api->init();
 }
 
-void Renderer::render_texture(Mesh& mesh, Texture& texture) {
+void Renderer::draw_mesh(Mesh& mesh, Texture& texture) {
     mesh.bind();
     texture.bind();
     api->draw_mesh(mesh);

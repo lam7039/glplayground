@@ -29,6 +29,6 @@ void RenderSystem::render(entt::registry& registry) {
     shader->bind();
 
     registry.view<Mesh, entt::resource<Texture>>().each([this](auto& mesh, auto& texture) {
-        renderer.render_texture(mesh, texture);
+        renderer.draw_mesh(mesh, texture);
     });
 }
