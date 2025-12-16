@@ -2,9 +2,9 @@
 
 #include "model.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 
 #include <glm/glm.hpp>
-#include <entt/entt.hpp>
 
 class GraphicsApiInterface {
 public:
@@ -22,12 +22,13 @@ public:
 class Renderer {
 public:
     void init();
-    void render(entt::registry& registry);
+    void render_texture(Mesh& mesh, Texture& texture);
     void destroy();
 
     void set_renderer(std::unique_ptr<GraphicsApiInterface> backend); 
     void set_shader(Shader& shader);
     void clear();
+    void clear_color();
 private:
     std::unique_ptr<GraphicsApiInterface> api;
 

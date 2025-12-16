@@ -1,20 +1,13 @@
 #include "renderer.hpp"
-#include "texture.hpp"
 
 void Renderer::init() {
     api->init();
 }
 
-void Renderer::render(entt::registry& registry) {
-    //TODO: renderer shouldn't use ECS, do that in RenderSystem
-    auto drawables = registry.view<Mesh, entt::resource<Texture>>();
-    api->clear_color();
-
-    drawables.each([this](auto& mesh, auto& texture) {
-        mesh.bind();
-        texture->bind();
-        api->draw_mesh(mesh);
-    });
+void Renderer::render_texture(Mesh& mesh, Texture& texture) {
+    mesh.bind();
+    texture.bind();
+    api->draw_mesh(mesh);
 }
 
 void Renderer::destroy() {
@@ -31,4 +24,8 @@ void Renderer::set_shader(Shader& shader) {
 
 void Renderer::clear() {
     api->clear();
+}
+
+void Renderer::clear_color() {
+    api->clear_color();
 }
