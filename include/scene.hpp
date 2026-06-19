@@ -2,7 +2,6 @@
 
 #include "asset_manager.hpp"
 #include "mesh.hpp"
-#include "rectangle.hpp"
 
 class Scene {
 public:

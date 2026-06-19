@@ -1,32 +1,29 @@
 #include "systems/render.hpp"
 #include "mesh.hpp"
-#include "rectangle.hpp"
+#include "components/render.hpp"
+#include "components/transform.hpp"
 
 RenderSystem::RenderSystem(Renderer& renderer) : renderer(renderer) {}
 
+//TODO: don't pass the entire asset manager to the system, instead let the renderer own the shader and let the system request rendering with IDs or pipelines, something like: renderer.use_pipeline("main");
 void RenderSystem::init(std::shared_ptr<AssetManager> asset_manager) {
     shader = asset_manager->get_shader("main");
     renderer.set_shader(shader);
 }
 
-void RenderSystem::update(entt::registry& registry) {
-    registry.view<Mesh, Rectangle>().each([this](auto& mesh, auto& rectangle) {
-        if (!rectangle.is_dirty()) {
-            return;
-        }
-
-        auto vertices = mesh_utils::generate_vertices(rectangle.get_position(), rectangle.get_size());
-        mesh.update_vertices(vertices);
-
-        rectangle.clear_dirty();
-    });
-}
-
 void RenderSystem::render(entt::registry& registry) {
-    renderer.clear_color();
-    shader->bind();
+    auto camera = *registry.view<CameraComponent>().begin();
+    const auto& active_camera = registry.get<CameraComponent>(camera);
 
-    registry.view<Mesh, entt::resource<Texture>>().each([this](auto& mesh, auto& texture) {
+    renderer.clear_color();
+
+    shader->bind();
+    shader->set_matrix("projection", active_camera.projection);
+    shader->set_matrix("view", active_camera.view);
+
+    registry.view<Mesh, TransformComponent, entt::resource<Texture>>().each([this](auto& mesh, auto& transform, auto& texture) {
+        shader->set_matrix("model", transform.matrix());
+
         renderer.draw_mesh(mesh, texture);
     });
 }

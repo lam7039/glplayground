@@ -1,24 +1,18 @@
 #include "systems/camera.hpp"
 #include "components/render.hpp"
-#include "rectangle.hpp"
+#include "components/transform.hpp"
 
-void CameraSystem::init(std::shared_ptr<AssetManager> asset_manager) {
-    shader = asset_manager->get_shader("main");
-    shader->bind();
+void CameraSystem::init() {
+    
 }
 
 void CameraSystem::update(entt::registry& registry) {
-    shader->bind();
-    
-    registry.view<Rectangle, CameraComponent>().each([this](auto& rectangle, auto& camera_component) {
-        auto position = rectangle.get_position();
-        auto size = rectangle.get_size();
+    registry.view<TransformComponent, CameraComponent>().each([this](auto& transform, auto& camera_component) {
+        auto position = transform.position;
+        auto scale = transform.scale;
 
-        camera_component.projection = glm::ortho(position.x, position.x + size.x, position.y + size.y, position.y, 0.01f, 1000.0f);
+        camera_component.projection = glm::ortho(position.x, position.x + scale.x, position.y + scale.y, position.y, 0.01f, 1000.0f);
         glm::vec3 negated_position = glm::vec3 {-position.x, -position.y, -1.0f};
         camera_component.view = glm::translate(glm::mat4 {1.0f}, negated_position);
-    
-        shader->set_matrix("view", camera_component.view);
-        shader->set_matrix("projection", camera_component.projection);
     });
 }

@@ -13,7 +13,7 @@ void Game::init(glm::vec2 viewport) {
     asset_manager->load_texture("background", "/assets/image.jpg");
     asset_manager->load_texture("mario", "/assets/mario.png");
 
-    camera_system.init(asset_manager);
+    camera_system.init();
     render_system.init(asset_manager);
 
     //TODO: make a scene manager
@@ -28,7 +28,6 @@ void Game::quit() {
 
 void Game::update() {
     camera_system.update(scene->get_registry());
-    render_system.update(scene->get_registry());
     // scene->update();
 }
 

@@ -1,11 +1,9 @@
 #pragma once
 
-#include "asset_manager.hpp"
+#include <entt/entt.hpp>
 
 class CameraSystem {
 public:
-    void init(std::shared_ptr<AssetManager> asset_manager);
+    void init();
     void update(entt::registry& registry);
-private:
-    entt::resource<Shader> shader;
 };

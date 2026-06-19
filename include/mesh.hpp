@@ -15,20 +15,11 @@ struct MeshData {
     std::vector<uint32_t> indices;
 };
 
-//TODO: should MeshFactory and mesh_utils in the same namespace?
-namespace MeshFactory {
-    MeshData generate_cube(float size);
-    MeshData generate_rectangle(float width, float height);
-    MeshData generate_sphere(float radius, int segments);
-}
-
 class Mesh {
 public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 
     void bind() const;
-    //TODO: somehow use a vertex_buffer_id intead of passing the entire list
-    void update_vertices(const std::vector<Vertex>& vertices);
     void input_layout_bind() const;
     void input_layout_unbind() const;
     void destroy();
@@ -47,6 +38,6 @@ private:
 };
 
 namespace mesh_utils {
-    std::vector<Vertex> generate_vertices(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color = {1.0f, 0.0f, 0.0f, 1.0f});
+    std::vector<Vertex> generate_vertices(const glm::vec4& color = {1.0f, 0.0f, 0.0f, 1.0f});
     std::vector<uint32_t> generate_indices(unsigned int count_vertices);
 }

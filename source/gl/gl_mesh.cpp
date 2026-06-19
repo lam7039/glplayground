@@ -60,12 +60,6 @@ void Mesh::bind() const {
     }
 }
 
-//TODO: use shared_ptr for vertices so we don't have to constantly pass vertices to bind?
-void Mesh::update_vertices(const std::vector<Vertex>& vertices) {
-    vertex_data = vertices;
-    dirty = true;
-}
-
 void Mesh::input_layout_bind() const {
     CHECK_GL_ERROR(glBindVertexArray(vertex_array_object));
 }
@@ -84,28 +78,12 @@ void Mesh::destroy() {
 }
 
 namespace mesh_utils {
-    std::vector<Vertex> generate_vertices(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color) {
+    std::vector<Vertex> generate_vertices(const glm::vec4& color) {
         return {
-            {
-                position,
-                color,
-                glm::vec2 {0.0f, 0.0f}
-            },
-            {
-                glm::vec3 {position.x + size.x, position.y, 0.0f},
-                color,
-                glm::vec2 {1.0f, 0.0f}
-            },
-            {
-                position + size,
-                color,
-                glm::vec2 {1.0f, 1.0f}
-            },
-            {
-                glm::vec3 {position.x, position.y + size.y, 0.0f},
-                color,
-                glm::vec2 {0.0f, 1.0f}
-            }
+            {{0,0,0}, color, {0,0}},
+            {{1,0,0}, color, {1,0}},
+            {{1,1,0}, color, {1,1}},
+            {{0,1,0}, color, {0,1}}
         };
     }
 

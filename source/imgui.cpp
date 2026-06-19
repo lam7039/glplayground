@@ -48,25 +48,25 @@ void ImGuiWrapper::end_frame() {
     ImGui::EndFrame();
 }
 
-void ImGuiWrapper::transform_box(int id, Rectangle& rectangle) {
+void ImGuiWrapper::transform_box(int id, TransformComponent& transform) {
     bool changed = false;
 
     auto identifier = std::to_string(id);
     ImGui::Text("Entity ID: %s", identifier.c_str());
-    changed |= ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &rectangle.get_position().x, 0.0f, viewport.x);
-    changed |= ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &rectangle.get_position().y, 0.0f, viewport.y);
-    changed |= ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &rectangle.get_position().z, -100.0f, 100.0f);
-    changed |= ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &rectangle.get_size().x, 0.0f, viewport.x);
-    changed |= ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &rectangle.get_size().y, 0.0f, viewport.y);
+    changed |= ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &transform.position.x, 0.0f, viewport.x);
+    changed |= ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &transform.position.y, 0.0f, viewport.y);
+    changed |= ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &transform.position.z, -100.0f, 100.0f);
+    changed |= ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &transform.scale.x, 0.0f, viewport.x);
+    changed |= ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &transform.scale.y, 0.0f, viewport.y);
     ImGui::Separator();
     
     if (changed) {
-        rectangle.set_dirty(changed);
+        // transform.dirty = true;
     }
 }
 
 void ImGuiWrapper::set(entt::registry& registry) {
-    auto transformables = registry.view<Mesh, Rectangle>();
+    auto transformables = registry.view<Mesh, TransformComponent>();
 
     new_frame();
 
@@ -74,9 +74,9 @@ void ImGuiWrapper::set(entt::registry& registry) {
 
     ImGui::Begin("Entities");
 
-    for (auto [entity, mesh, rectangle] : transformables.each()) {
+    for (auto [entity, mesh, transform] : transformables.each()) {
         auto id = entt::to_entity(entity);
-        transform_box(id, rectangle);
+        transform_box(id, transform);
     }
     
     ImGui::End();

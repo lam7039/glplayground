@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rectangle.hpp"
+#include "components/transform.hpp"
 
 #include <glm/glm.hpp>
 #include <entt/entt.hpp>
@@ -18,7 +18,7 @@ public:
     void end_frame();
 
     void set(entt::registry& registry);
-    void transform_box(int id, Rectangle& rectangle);
+    void transform_box(int id, TransformComponent& transform);
 
     void render();
     // void label(const std::string& text);

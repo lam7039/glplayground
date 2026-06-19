@@ -11,6 +11,7 @@ struct TextureComponent {
     const std::string source;
 };
 
+//TODO: separate components into their own files
 struct CameraComponent {
     bool orthographic {true};
     glm::mat4 projection {1.0f};
