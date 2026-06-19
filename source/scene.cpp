@@ -1,6 +1,6 @@
 #include "scene.hpp"
-#include "components/render.hpp"
 #include "components/transform.hpp"
+#include "components/camera.hpp"
 #include "systems/camera.hpp"
 #include "systems/render.hpp"
 

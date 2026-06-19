@@ -1,6 +1,6 @@
 #include "systems/render.hpp"
 #include "mesh.hpp"
-#include "components/render.hpp"
+#include "components/camera.hpp"
 #include "components/transform.hpp"
 
 RenderSystem::RenderSystem(Renderer& renderer) : renderer(renderer) {}

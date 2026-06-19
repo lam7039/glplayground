@@ -1,5 +1,5 @@
 #include "systems/camera.hpp"
-#include "components/render.hpp"
+#include "components/camera.hpp"
 #include "components/transform.hpp"
 
 void CameraSystem::init() {
