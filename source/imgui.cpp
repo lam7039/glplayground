@@ -49,20 +49,14 @@ void ImGuiWrapper::end_frame() {
 }
 
 void ImGuiWrapper::transform_box(int id, TransformComponent& transform) {
-    bool changed = false;
-
     auto identifier = std::to_string(id);
     ImGui::Text("Entity ID: %s", identifier.c_str());
-    changed |= ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &transform.position.x, 0.0f, viewport.x);
-    changed |= ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &transform.position.y, 0.0f, viewport.y);
-    changed |= ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &transform.position.z, -100.0f, 100.0f);
-    changed |= ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &transform.scale.x, 0.0f, viewport.x);
-    changed |= ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &transform.scale.y, 0.0f, viewport.y);
+    ImGui::SliderFloat(("Position X##" + identifier + "PositionX").c_str(), &transform.position.x, 0.0f, viewport.x);
+    ImGui::SliderFloat(("Position Y##" + identifier + "PositionY").c_str(), &transform.position.y, 0.0f, viewport.y);
+    ImGui::SliderFloat(("Position Z##" + identifier + "PositionZ").c_str(), &transform.position.z, -100.0f, 100.0f);
+    ImGui::SliderFloat(("Size X##" + identifier + "SizeX").c_str(), &transform.scale.x, 0.0f, viewport.x);
+    ImGui::SliderFloat(("Size Y##" + identifier + "SizeY").c_str(), &transform.scale.y, 0.0f, viewport.y);
     ImGui::Separator();
-    
-    if (changed) {
-        // transform.dirty = true;
-    }
 }
 
 void ImGuiWrapper::set(entt::registry& registry) {
